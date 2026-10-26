@@ -65,6 +65,25 @@ enum VoiceSettings {
         get { UserDefaults.standard.string(forKey: "voiceElevenGender") ?? "female" }
         set { UserDefaults.standard.set(newValue, forKey: "voiceElevenGender") }
     }
+    /// Mac voice: speak with the voice chosen in System Settings for the answer's language.
+    /// Default: on.
+    static var useSystemVoice: Bool {
+        get {
+            let d = UserDefaults.standard
+            if d.object(forKey: "voiceUseSystemVoice") == nil { return true }
+            return d.bool(forKey: "voiceUseSystemVoice")
+        }
+        set { UserDefaults.standard.set(newValue, forKey: "voiceUseSystemVoice") }
+    }
+
+    /// Mac voice speed, as a multiple of the system's normal rate (Settings → Voice). Default 1.1,
+    /// the speed Coucou always used.
+    static let defaultSpeechRate = 1.1
+    static let speechRateRange = 0.6...1.8
+    static var speechRate: Double {
+        let v = UserDefaults.standard.double(forKey: "voiceSpeechRate")
+        return v == 0 ? defaultSpeechRate : min(speechRateRange.upperBound, max(speechRateRange.lowerBound, v))
+    }
 
     /// Mac voice pitch per voice type (Settings → Voice). The male default is higher than
     /// the voice's own, so it sounds younger. Range 0.8–1.6 (AVSpeech accepts 0.5–2).

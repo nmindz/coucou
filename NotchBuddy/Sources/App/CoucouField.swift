@@ -15,8 +15,9 @@ private struct CoucouFieldChrome: ViewModifier {
     private var fill: Color {
         scheme == .dark ? Color(hex: "#1F2024") : Color(nsColor: .textBackgroundColor)
     }
+    /// 3:1 against the field and its surroundings, so the field can be told apart (WCAG 1.4.11).
     private var border: Color {
-        scheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.12)
+        scheme == .dark ? Color.white.opacity(0.34) : Color.black.opacity(0.46)
     }
 
     func body(content: Content) -> some View {
@@ -24,16 +25,17 @@ private struct CoucouFieldChrome: ViewModifier {
         HStack(spacing: 7) {
             if let icon {
                 Image(systemName: icon)
-                    .font(.system(size: 11, weight: .medium))
+                    .coucouFont(size: 12, weight: .medium)
                     .foregroundStyle(focused ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
                     .frame(width: 14)
             }
             content
                 .textFieldStyle(.plain)
-                .font(monospaced ? .system(size: 12, design: .monospaced) : .system(size: 13))
+                .coucouText(monospaced ? .mono : .body)
                 .focused($focused)
         }
         .padding(.horizontal, 11)
+        .padding(.vertical, 5)
         .frame(minHeight: height)
         .background(shape.fill(fill))
         .overlay(shape.strokeBorder(focused ? AnyShapeStyle(.tint) : AnyShapeStyle(border),

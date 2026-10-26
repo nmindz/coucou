@@ -122,7 +122,7 @@ struct UpdateSettingsSection: View {
                 Toggle(String(localized: "update.settings.toggle"), isOn: $enabled)
                     .onChange(of: enabled) { _, on in updater.setEnabled(on) }
                 Text(String(localized: "update.settings.footer"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack(spacing: 10) {
@@ -136,7 +136,7 @@ struct UpdateSettingsSection: View {
                     status
                 }
                 Text(String(format: String(localized: "update.you-have %@"), MacUpdater.currentVersion))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
             }
             .padding(6)
@@ -146,8 +146,8 @@ struct UpdateSettingsSection: View {
     @ViewBuilder private var status: some View {
         switch updater.lastCheck {
         case .checking: ProgressView().controlSize(.small)
-        case .upToDate: Text(String(localized: "update.up-to-date")).font(.system(size: 11)).foregroundColor(.secondary)
-        case .unreachable: Text(String(localized: "update.settings.unreachable")).font(.system(size: 11)).foregroundColor(.secondary)
+        case .upToDate: Text(String(localized: "update.up-to-date")).coucouFont(size: 14).foregroundColor(.secondary)
+        case .unreachable: Text(String(localized: "update.settings.unreachable")).coucouFont(size: 14).foregroundColor(.secondary)
         case .none: EmptyView()
         }
     }

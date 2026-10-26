@@ -1,5 +1,6 @@
 #if !APPSTORE
 import AVFoundation
+import AppKit
 
 // MARK: - VoiceSpeaker
 //
@@ -102,10 +103,15 @@ final class VoiceSpeaker: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDe
     private func speakSystem(_ text: String, locale: Locale?) {
         let utt = AVSpeechUtterance(string: text)
         let gender = VoiceSettings.elevenGender
-        // Pitch per voice type (Settings → Voice): the male voice a bit higher sounds younger.
-        utt.pitchMultiplier = Float(VoiceSettings.pitch(for: gender))
-        utt.rate = AVSpeechUtteranceDefaultSpeechRate * 1.1
-        utt.voice = Self.bestVoice(for: locale, gender: gender)
+        utt.rate = min(AVSpeechUtteranceMaximumSpeechRate,
+                       AVSpeechUtteranceDefaultSpeechRate * Float(VoiceSettings.speechRate))
+        if let system = Self.chosenSystemVoice(for: locale) {
+            utt.voice = system   // as set in System Settings, pitch included
+        } else {
+            // Pitch per voice type (Settings → Voice): the male voice a bit higher sounds younger.
+            utt.pitchMultiplier = Float(VoiceSettings.pitch(for: gender))
+            utt.voice = Self.bestVoice(for: locale, gender: gender)
+        }
         currentUtterance = utt
         synth.speak(utt)
     }
@@ -188,9 +194,42 @@ final class VoiceSpeaker: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDe
         }
     }
 
+    /// The voice chosen in System Settings → Accessibility → Read & Speak (Spoken Content before
+    /// macOS 26) for the answer's language, when "Use the system voice" is on. Read fresh each
+    /// time, so a change there applies to the next answer.
+    static func chosenSystemVoice(for locale: Locale?) -> AVSpeechSynthesisVoice? {
+        guard VoiceSettings.useSystemVoice, let lang = locale?.language.languageCode?.identifier else { return nil }
+        let speaks = { (v: AVSpeechSynthesisVoice) in v.language == lang || v.language.hasPrefix(lang + "-") }
+        if let id = systemVoiceSelections()[lang], let v = AVSpeechSynthesisVoice(identifier: id), speaks(v) {
+            return v
+        }
+        // No choice saved for this language: the global system voice, when it speaks it.
+        if let v = AVSpeechSynthesisVoice(identifier: NSSpeechSynthesizer.defaultVoice.rawValue), speaks(v) {
+            return v
+        }
+        return nil
+    }
+
+    /// Language code → voice id, as System Settings saves them (one per language, kept even when
+    /// "Detect languages" is off). Stored as [language, selection, language, selection, …].
+    private static func systemVoiceSelections() -> [String: String] {
+        let domain = "com.apple.Accessibility" as CFString
+        CFPreferencesAppSynchronize(domain)
+        guard let list = CFPreferencesCopyAppValue("SpokenContentDefaultVoiceSelectionsByLanguage" as CFString,
+                                                   domain) as? [Any] else { return [:] }
+        var result: [String: String] = [:]
+        for i in stride(from: 0, to: list.count - 1, by: 2) {
+            guard let lang = list[i] as? String,
+                  let id = (list[i + 1] as? [String: Any])?["voiceId"] as? String else { continue }
+            let code = Locale(identifier: lang).language.languageCode?.identifier ?? lang
+            if result[code] == nil { result[code] = id }
+        }
+        return result
+    }
+
     /// "Ava (Premium)" — shown in Settings so it is clear which voice Coucou uses.
     static func macVoiceName(for locale: Locale, gender: String) -> String {
-        guard let v = bestVoice(for: locale, gender: gender) else { return "—" }
+        guard let v = chosenSystemVoice(for: locale) ?? bestVoice(for: locale, gender: gender) else { return "—" }
         switch v.quality {
         case .premium:  return "\(v.name) (Premium)"
         case .enhanced: return "\(v.name) (Enhanced)"

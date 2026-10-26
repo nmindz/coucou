@@ -72,10 +72,26 @@ enum ProviderEndpointTests {
             }
         }
 
+        print("AnthropicTools — what a backend that refuses web search gets instead")
+        let webSearch: [String: Any] = ["type": "web_search_20250305", "name": "web_search", "max_uses": 5]
+        let custom: [String: Any] = ["name": "open_app", "input_schema": ["type": "object"]]
+        let chat: [String: Any] = ["model": "m", "tools": [webSearch], "messages": []]
+        let stripped = AnthropicTools.withoutTypedTools(chat)
+        check("web search only → no tools key", stripped != nil && stripped?["tools"] == nil && stripped?["model"] as? String == "m")
+        let voice = AnthropicTools.withoutTypedTools(["tools": [custom, webSearch]])
+        check("own tools kept", (voice?["tools"] as? [[String: Any]])?.map { $0["name"] as? String } == ["open_app"])
+        check("no typed tool → nil (nothing to retry)", AnthropicTools.withoutTypedTools(["tools": [custom]]) == nil)
+        check("no tools → nil", AnthropicTools.withoutTypedTools(["model": "m"]) == nil)
+        check("\"custom\" type kept", AnthropicTools.withoutTypedTools(["tools": [["type": "custom", "name": "x"]]]) == nil)
+        check("claude-lb's error names a tool entry",
+              AnthropicTools.namesToolEntry("tools.0.web_search_20250305.name: Input should be 'web_search'"))
+        check("other 400s don't", !AnthropicTools.namesToolEntry("messages: at least one message is required"))
+        check("a word ending in tools doesn't", !AnthropicTools.namesToolEntry("mytools.1.x"))
         if failures > 0 {
             print("\(failures) failure(s)")
             exit(1)
         }
+
         print("All provider endpoint tests passed.")
     }
 }

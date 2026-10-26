@@ -140,9 +140,9 @@ struct OverviewView: View {
                         } else {
                             // Claude and Codex both on: the header shows only the Claude pill,
                             // Codex is a third row here that opens its own card.
-                            let bothPlans = state.showPlanInNotch && state.planRelayInstalled
-                                && state.showCodexPlanInNotch
+                            let bothPlans = state.claudePlanAvailable && state.showCodexPlanInNotch
                             ClaudePlanCardView(usage: state.claudePlanUsage,
+                                               sourceNote: state.planFromClaudeLB ? state.claudeLBSourceNote : nil,
                                                codexRow: bothPlans,
                                                codexUsage: state.codexPlanUsage,
                                                onCodex: {
@@ -292,6 +292,11 @@ struct OverviewView: View {
             #if !APPSTORE
             TerminalTarget.activate(sessionBundleId: nil)
             #endif
+        case "agent_omp":
+            #if !APPSTORE
+            // A workspace pill: the session's terminal is known.
+            TerminalTarget.activate(sessionBundleId: task.sessionBundleId)
+            #endif
         case "ai_anthropic":
             switchChatProvider(.anthropic)
         case "ai_google":
@@ -406,10 +411,11 @@ struct ApprovalView: View {
                         PrimaryButton("Allow") {
                             HookServer.shared.sendApprovalDecision("allow", for: shownId)
                         }
-                        // Codex, Copilot CLI and Muse Code do not support updatedPermissions
+                        // Codex, Copilot CLI, Muse Code and OMP do not support updatedPermissions
                         let hideAlways = approval?.pillId == "agent_codex"
                             || approval?.pillId == "agent_copilot"
                             || approval?.pillId == "agent_muse"
+                            || approval?.pillId == "agent_omp"
                         if !hideAlways {
                             SecondaryButton("Always") {
                                 HookServer.shared.sendApprovalDecision("always", for: shownId)
@@ -1973,6 +1979,12 @@ struct IntegrationCardView: View {
             #else
             return false
             #endif
+        case "agent_omp":
+            #if !APPSTORE
+            return HookServer.ompExtensionInstalled()
+            #else
+            return false
+            #endif
         case "agent_hermes":
             #if !APPSTORE
             return HookServer.hermesPluginInstalled()
@@ -2161,7 +2173,8 @@ struct IntegrationCardView: View {
                    || task.id == "agent_antigravity"  || task.id == "agent_cursor"
                    || task.id == "agent_codex"        || task.id == "agent_copilot"
                    || task.id == "agent_muse"         || task.id == "agent_opencode"
-                   || task.id == "agent_amp"          || task.id == "agent_hermes"
+                   || task.id == "agent_amp"          || task.id == "agent_omp"
+                   || task.id == "agent_hermes"
         let isAI    = ChatProvider(pillID: task.id) != nil
         if isConfigured {
             if isHooks { return String(localized: "Hooks installed") }

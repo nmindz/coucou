@@ -72,11 +72,11 @@ struct HubHomePage: View {
                 Spacer()
                 HStack(spacing: 7) {
                     Image(systemName: "magnifyingglass")
-                        .font(.system(size: 12))
+                        .coucouFont(size: 14)
                         .foregroundColor(HubTheme.muted)
                     TextField(String(localized: "hub.search"), text: $query)
                         .textFieldStyle(.plain)
-                        .font(.system(size: 13))
+                        .coucouFont(size: 15)
                         .frame(width: 170)
                 }
                 .padding(.horizontal, 10)
@@ -91,14 +91,14 @@ struct HubHomePage: View {
                 }
             } else if groups.isEmpty {
                 Text("hub.search-empty")
-                    .font(.system(size: 13))
+                    .coucouFont(size: 15)
                     .foregroundColor(HubTheme.secondary)
             }
             LazyVStack(alignment: .leading, spacing: 18) {
                 ForEach(groups) { group in
                     VStack(alignment: .leading, spacing: 8) {
                         Text(Self.dayTitle(group.date))
-                            .font(.system(size: 12, weight: .semibold))
+                            .coucouFont(size: 14, weight: .semibold)
                             .foregroundColor(HubTheme.secondary)
                         VStack(spacing: 0) {
                             ForEach(Array(group.entries.enumerated()), id: \.element.id) { index, entry in
@@ -137,11 +137,11 @@ private struct HubEntryRow: View {
         HStack(alignment: .top, spacing: 18) {
             VStack(alignment: .leading, spacing: 7) {
                 Text(entry.date.formatted(date: .omitted, time: .shortened))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.muted)
                 if let app = entry.app, !app.isEmpty {
                     Text(app)
-                        .font(.system(size: 11))
+                        .coucouFont(size: 13)
                         .foregroundColor(Color(hex: "#A4A9B1"))
                         .lineLimit(1)
                         .padding(.horizontal, 6)
@@ -151,7 +151,7 @@ private struct HubEntryRow: View {
             }
             .frame(width: 70, alignment: .leading)
             Text(entry.text)
-                .font(.system(size: 14))
+                .coucouFont(size: 16)
                 .lineSpacing(3)
                 .foregroundColor(HubTheme.body)
                 .textSelection(.enabled)
@@ -188,9 +188,9 @@ private struct HubTotalsCard: View {
             HubDivider()
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "checkmark")
-                    .font(.system(size: 12, weight: .bold))
+                    .coucouFont(size: 14, weight: .bold)
                 Text("hub.unlimited")
-                    .font(.system(size: 13, weight: .semibold))
+                    .coucouFont(size: 15, weight: .semibold)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .foregroundColor(HubTheme.green)
@@ -200,11 +200,11 @@ private struct HubTotalsCard: View {
     private func big(_ value: String, _ label: String) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text(value)
-                .font(.system(size: 30, weight: .bold))
+                .coucouFont(size: 30, weight: .bold)
                 .tracking(-0.8)
                 .monospacedDigit()
             Text(label)
-                .font(.system(size: 14))
+                .coucouFont(size: 16)
                 .foregroundColor(HubTheme.secondary)
         }
     }
@@ -217,15 +217,15 @@ private struct HubNotesPromo: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("hub.notes-promo-title")
-                .font(.system(size: 15, weight: .bold))
+                .coucouFont(size: 17, weight: .bold)
             Text("hub.notes-promo")
-                .font(.system(size: 13))
+                .coucouFont(size: 15)
                 .lineSpacing(2)
                 .foregroundColor(Color(hex: "#A4A9B1"))
                 .fixedSize(horizontal: false, vertical: true)
             Button { router.page = .notes } label: {
                 Text("hub.notes-promo-open")
-                    .font(.system(size: 13, weight: .bold))
+                    .coucouFont(size: 15, weight: .bold)
                     .foregroundColor(HubTheme.accent)
             }
             .buttonStyle(.plain)
@@ -252,15 +252,15 @@ struct HubSetupCard: View {
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: flow.isEnabled ? "lock.shield" : "mic.badge.plus")
-                .font(.system(size: 20))
+                .coucouFont(size: 20)
                 .foregroundColor(HubTheme.accent)
                 .frame(width: 26)
             VStack(alignment: .leading, spacing: 8) {
                 Text(flow.isEnabled ? String(localized: "hub.setup-access-title") : String(localized: "hub.setup-title"))
-                    .font(.system(size: 15, weight: .bold))
+                    .coucouFont(size: 17, weight: .bold)
                 Text(flow.isEnabled ? String(localized: "flow.accessibility")
                      : String(format: String(localized: "hub.setup %@"), flow.key.label))
-                    .font(.system(size: 13))
+                    .coucouFont(size: 15)
                     .foregroundColor(Color(hex: "#C7CAD0"))
                     .fixedSize(horizontal: false, vertical: true)
                 if flow.isEnabled {

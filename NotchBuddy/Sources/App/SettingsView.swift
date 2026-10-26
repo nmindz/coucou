@@ -5,6 +5,7 @@ import AppKit
 struct SettingsView: View {
     @ObservedObject private var state = AppState.shared
     @ObservedObject private var demoEngine = DemoEngine.shared
+    @AppStorage(TextSize.key) private var textScale: Double = 1
 
     // Claude model — dynamic list fetched from the API, static fallback if unavailable
     private static let fallbackModels: [(id: String, label: String)] = [
@@ -71,6 +72,14 @@ struct SettingsView: View {
     @State private var showAmpDiff: Bool = false
     @State private var pendingAmpContent: String = ""
     @State private var ampPendingInstall: Bool = true
+
+    @State private var ompExtensionInstalled: Bool = HookServer.ompExtensionInstalled()
+    @State private var showOmpDiff: Bool = false
+    @State private var pendingOmpContent: String = ""
+    @State private var ompPendingInstall: Bool = true
+    @AppStorage("ompApprovalsEnabled") private var ompApprovalsEnabled: Bool = false
+    @AppStorage("ompReplyJump") private var ompReplyJump: Bool = true
+    @State private var ompGatedTools: [String] = HookServer.ompGatedTools()
 
     @State private var hermesPluginInstalled: Bool = HookServer.hermesPluginInstalled()
     @State private var showHermesPluginDiff: Bool = false
@@ -211,6 +220,8 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 18) {
                         sectionContent
                     }
+                    .coucouText(.body)
+                    .modifier(EmbeddedHubStyle(active: embeddedSection != nil))
                     .padding(.horizontal, embeddedSection == nil ? 20 : 28)
                     .padding(.top, embeddedSection == nil ? 0 : 20)
                     .padding(.bottom, 16)
@@ -219,13 +230,14 @@ struct SettingsView: View {
                 if !statusMessage.isEmpty {
                     Divider()
                     Text(statusMessage)
-                        .font(.system(size: 12))
+                        .coucouText(.detail)
                         .foregroundColor(statusMessage.hasPrefix("❌") ? .red : .secondary)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
                 }
             }
         }
+        .environment(\.coucouTextScale, CGFloat(textScale))
         .onAppear {
             #if !APPSTORE
             state.refreshPlanRelayState()
@@ -272,17 +284,35 @@ struct SettingsView: View {
     // MARK: - General section
 
     @ViewBuilder private var generalSection: some View {
+        GroupBox(String(localized: "text-size.title")) {
+            VStack(alignment: .leading, spacing: 8) {
+                Picker(String(localized: "text-size.title"), selection: $textScale) {
+                    ForEach(TextSize.options, id: \.scale) { option in
+                        Text(option.label).tag(option.scale)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .frame(maxWidth: 420)
+                Text(String(localized: "text-size.description"))
+                    .coucouText(.detail)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(6)
+        }
+
         GroupBox(String(localized: "demo.groupbox.title")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(String(localized: "demo.description"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Button(demoEngine.isActive ? String(localized: "demo.stop") : String(localized: "demo.start")) {
                     if demoEngine.isActive { DemoEngine.shared.stop() }
                     else { DemoEngine.shared.start() }
                 }
-                .buttonStyle(.borderedProminent)
+                .coucouButton(primary: true)
             }
             .padding(6)
         }
@@ -292,11 +322,11 @@ struct SettingsView: View {
                 Toggle("Enable sounds", isOn: $state.soundEnabled)
                 HStack(spacing: 8) {
                     Text("Volume")
-                        .frame(width: 56, alignment: .leading)
+                        .fixedSize()
                     Slider(value: $state.soundVolume, in: 0...0.2)
                         .disabled(!state.soundEnabled)
                     Text("\(Int(state.soundVolume / 0.2 * 100)) %")
-                        .frame(width: 36, alignment: .trailing)
+                        .fixedSize()
                         .monospacedDigit()
                 }
                 HStack(spacing: 8) {
@@ -308,13 +338,13 @@ struct SettingsView: View {
                     }
                     if customSoundCount > 0 {
                         Text(String(format: String(localized: "%lld custom"), Int64(customSoundCount)))
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                     }
                 }
                 .disabled(!state.soundEnabled)
                 Text("Drop a file named like one of Mochi's sounds (finish.wav, approval.mp3, greet.m4a…) in the sounds folder to replace it, then Reload.")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -362,7 +392,7 @@ struct SettingsView: View {
                 }
                 .frame(maxWidth: 360)
                 Text("On a screen without a notch, Mochi sits in a small bar at the top. Follow the mouse moves it to your cursor's screen while it is closed.")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -380,7 +410,7 @@ struct SettingsView: View {
                     get: { MachineVitals.shared.enabled },
                     set: { MachineVitals.shared.enabled = $0 }))
                 Text("vitals.about")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -407,7 +437,7 @@ struct SettingsView: View {
                                 HotKeyCenter.shared.reregister(.toggleIsland)
                             }
                         Text("presses this → island opens")
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                     }
                 }
@@ -429,7 +459,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Toggle(String(localized: "Keep a history of my coding sessions"), isOn: $state.recapEnabled)
                 Text(String(localized: "Stored locally on your Mac. Nothing leaves your Mac. Retained for 12 weeks."))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Toggle(String(localized: "Hide project names in shared images"), isOn: $state.recapHideProjects)
@@ -478,9 +508,9 @@ struct SettingsView: View {
                         try? task.run()
                         NSApp.terminate(nil)
                     }
-                    .buttonStyle(.bordered)
+                    .coucouButton()
                     Text(String(localized: "Applies on next launch"))
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                         .foregroundColor(.secondary)
                 }
             }
@@ -493,14 +523,14 @@ struct SettingsView: View {
                 Toggle(String(localized: "iphone.sync.toggle"), isOn: $iPhoneSyncEnabled)
                     .onChange(of: iPhoneSyncEnabled) { _, on in CloudProbe.shared.setEnabled(on) }
                 Text(String(localized: "iphone.sync.description"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Toggle(String(localized: "iphone.live-activity.toggle"), isOn: $iPhoneLiveActivityEnabled)
                     .disabled(!iPhoneSyncEnabled)
                     .onChange(of: iPhoneLiveActivityEnabled) { _, on in LiveActivityRelay.shared.setEnabled(on) }
                 Text(String(localized: "iphone.live-activity.description"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 #if !APPSTORE
@@ -508,7 +538,7 @@ struct SettingsView: View {
                     .disabled(!iPhoneSyncEnabled)
                     .onChange(of: iPhoneInstructionsEnabled) { _, on in InstructionRunner.shared.setEnabled(on) }
                 Text(String(localized: "iphone.instruction.description"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 #endif
@@ -531,11 +561,11 @@ struct SettingsView: View {
         GroupBox {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Choose the tools you use. Coucou only shows what you declare here.")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
 
                 Text(String(format: String(localized: "settings.slots-used %lld"), Int64(state.activeIntegrations.count)))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(state.activeIntegrations.count >= 4 ? .orange : .secondary)
 
                 Picker(String(localized: "settings.main-pill"), selection: $state.mainPillId) {
@@ -552,7 +582,7 @@ struct SettingsView: View {
                     if !catPills.isEmpty {
                         Divider()
                         Text(cat.title)
-                            .font(.system(size: 11, weight: .semibold))
+                            .coucouFont(size: 14, weight: .semibold)
                             .foregroundColor(.secondary)
                         ForEach(catPills, id: \.id) { def in
                             pillRow(def)
@@ -574,7 +604,7 @@ struct SettingsView: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundColor(.orange)
                         Text(String(localized: "hooks.outdated"))
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.orange)
                     }
                     #if APPSTORE
@@ -585,28 +615,28 @@ struct SettingsView: View {
                 }
                 #if APPSTORE
                 Text("~/.claude/coucou/nb-hook")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { installHooksAppStore() }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { uninstallHooksAppStore() }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 #else
                 Text("nb-hook : \(HookServer.hookScriptPath)")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { installHooks() }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { uninstallHooks() }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 #endif
                 Toggle("Answer questions and permissions from terminal sessions in the notch", isOn: $terminalCardsEnabled)
                 Text("Off: sessions in Warp, Terminal, iTerm… show in the notch, but their questions and permission requests are asked in the terminal. On: the notch shows them first, and the terminal waits until you answer there or close the island (up to 2 min).")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -614,7 +644,7 @@ struct SettingsView: View {
                 if showDiff {
                     ScrollView {
                         Text(pendingHookJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -623,9 +653,9 @@ struct SettingsView: View {
 
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmInstall() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showDiff = false; pendingHookJSON = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
                 #endif
@@ -641,18 +671,18 @@ struct SettingsView: View {
                 Text(geminiHooksInstalled
                      ? String(localized: "hooks.gemini.installed")
                      : "~/.gemini/settings.json")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { triggerGeminiPreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerGeminiPreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showGeminiDiff {
                     ScrollView {
                         Text(pendingGeminiJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -660,9 +690,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmGeminiOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showGeminiDiff = false; pendingGeminiJSON = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
@@ -674,18 +704,18 @@ struct SettingsView: View {
                 Text(agyHooksInstalled
                      ? String(localized: "hooks.antigravity.installed")
                      : "~/.gemini/config/hooks.json")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { triggerAgyPreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerAgyPreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showAgyDiff {
                     ScrollView {
                         Text(pendingAgyJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -693,9 +723,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmAgyOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showAgyDiff = false; pendingAgyJSON = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
@@ -707,18 +737,18 @@ struct SettingsView: View {
                 Text(codexHooksInstalled
                      ? String(localized: "hooks.codex.installed")
                      : "~/.codex/hooks.json")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { triggerCodexPreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerCodexPreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showCodexDiff {
                     ScrollView {
                         Text(pendingCodexJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -726,9 +756,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmCodexOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showCodexDiff = false; pendingCodexJSON = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
@@ -740,18 +770,18 @@ struct SettingsView: View {
                 Text(copilotHooksInstalled
                      ? String(localized: "hooks.copilot.installed")
                      : "~/.copilot/hooks/coucou.json")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { triggerCopilotPreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerCopilotPreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showCopilotDiff {
                     ScrollView {
                         Text(pendingCopilotJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -759,9 +789,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmCopilotOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showCopilotDiff = false; pendingCopilotJSON = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
@@ -773,18 +803,18 @@ struct SettingsView: View {
                 Text(museHooksInstalled
                      ? String(localized: "hooks.muse.installed")
                      : "~/.config/muse/settings.json")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "hooks.install")) { triggerMusePreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerMusePreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showMuseDiff {
                     ScrollView {
                         Text(pendingMuseJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -792,9 +822,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmMuseOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showMuseDiff = false; pendingMuseJSON = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
@@ -806,18 +836,18 @@ struct SettingsView: View {
                 Text(openCodePluginInstalled
                      ? String(localized: "plugin.opencode.installed")
                      : "~/.config/opencode/plugins/coucou.js")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "plugin.install")) { triggerOpenCodePreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerOpenCodePreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showOpenCodeDiff {
                     ScrollView {
                         Text(pendingOpenCodeContent)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -825,9 +855,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmOpenCodeOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showOpenCodeDiff = false; pendingOpenCodeContent = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
@@ -839,18 +869,18 @@ struct SettingsView: View {
                 Text(ampPluginInstalled
                      ? String(localized: "plugin.amp.installed")
                      : "~/.config/amp/plugins/coucou.ts")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     Button(String(localized: "plugin.install")) { triggerAmpPreview(install: true) }
-                        .buttonStyle(.borderedProminent)
+                        .coucouButton(primary: true)
                     Button(String(localized: "hooks.uninstall")) { triggerAmpPreview(install: false) }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                 }
                 if showAmpDiff {
                     ScrollView {
                         Text(pendingAmpContent)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 140)
@@ -858,35 +888,99 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmAmpOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showAmpDiff = false; pendingAmpContent = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
             }
             .padding(6)
         }
 
+        GroupBox(String(localized: "plugin.omp.title")) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(ompExtensionInstalled
+                     ? String(localized: "plugin.omp.installed")
+                     : String(localized: "plugin.omp.path"))
+                    .coucouFont(size: 14, design: .monospaced)
+                    .foregroundColor(.secondary)
+                HStack(spacing: 10) {
+                    Button(String(localized: "plugin.install")) { triggerOmpPreview(install: true) }
+                        .coucouButton(primary: true)
+                    Button(String(localized: "hooks.uninstall")) { triggerOmpPreview(install: false) }
+                        .coucouButton()
+                }
+                if showOmpDiff {
+                    ScrollView {
+                        Text(pendingOmpContent)
+                            .coucouFont(size: 13, design: .monospaced)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .frame(height: 180)
+                    .background(Color(NSColor.textBackgroundColor))
+                    .cornerRadius(6)
+                    HStack {
+                        Button(String(localized: "hooks.confirm-write")) { confirmOmpOp() }
+                            .coucouButton(primary: true)
+                        Button(String(localized: "Cancel")) { showOmpDiff = false; pendingOmpContent = "" }
+                            .coucouButton()
+                    }
+                }
+                if ompExtensionInstalled {
+                    Divider()
+                    Toggle(String(localized: "plugin.omp.reply-jump"), isOn: $ompReplyJump)
+                    Text(String(localized: "plugin.omp.reply-jump.footer"))
+                        .coucouText(.detail)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Divider()
+                    Toggle(String(localized: "plugin.omp.approvals"), isOn: $ompApprovalsEnabled)
+                        .onChange(of: ompApprovalsEnabled) { _, _ in
+                            HookServer.shared.syncOmpGateFile()
+                        }
+                    Text(ompApprovalsEnabled
+                         ? String(localized: "plugin.omp.approvals.enabled")
+                         : String(localized: "plugin.omp.approvals.disabled"))
+                        .coucouFont(size: 14)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if ompApprovalsEnabled {
+                        Text(String(localized: "plugin.omp.tools.hint"))
+                            .coucouFont(size: 14)
+                            .foregroundColor(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        ForEach(HookServer.ompGateableTools, id: \.self) { tool in
+                            Toggle(tool, isOn: ompGatedBinding(tool))
+                                .coucouFont(size: 15, design: .monospaced)
+                        }
+                    }
+                }
+            }
+            .padding(6)
+        }
+
+        CoucouMCPSettingsSection(statusMessage: $statusMessage)
+
         GroupBox(String(localized: "plugin.hermes.title")) {
             VStack(alignment: .leading, spacing: 10) {
                 Text(hermesPluginInstalled
                      ? String(localized: "plugin.hermes.installed")
                      : "~/.hermes/plugins/coucou/__init__.py")
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouFont(size: 14, design: .monospaced)
                     .foregroundColor(.secondary)
                 HStack(spacing: 10) {
                     if !hermesPluginInstalled {
                         Button(String(localized: "plugin.install")) { triggerHermesPluginPreview(install: true) }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                     } else {
                         Button(String(localized: "hooks.uninstall")) { triggerHermesPluginPreview(install: false) }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
                 if showHermesPluginDiff {
                     ScrollView {
                         Text(pendingHermesPluginContent)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 180)
@@ -894,9 +988,9 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmHermesPluginOp() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) { showHermesPluginDiff = false; pendingHermesPluginContent = "" }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     }
                 }
 
@@ -907,21 +1001,21 @@ struct SettingsView: View {
                         .disabled(!hermesSupportsApprovals)
                     if !hermesSupportsApprovals {
                         Text("Requires a newer version of Hermes — run: hermes update")
-                            .font(.caption)
+                            .coucouText(.detail)
                             .foregroundColor(.orange)
                             .fixedSize(horizontal: false, vertical: true)
                     } else {
                         Text(hermesApprovalsEnabled
                              ? String(localized: "plugin.hermes.approvals.enabled")
                              : String(localized: "plugin.hermes.approvals.disabled"))
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     if showHermesConfigDiff {
                         ScrollView {
                             Text(pendingHermesConfigContent)
-                                .font(.system(size: 10, design: .monospaced))
+                                .coucouFont(size: 13, design: .monospaced)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         .frame(height: 120)
@@ -929,9 +1023,9 @@ struct SettingsView: View {
                         .cornerRadius(6)
                         HStack {
                             Button(String(localized: "hooks.confirm-write")) { confirmHermesConfigOp() }
-                                .buttonStyle(.borderedProminent)
+                                .coucouButton(primary: true)
                             Button(String(localized: "Cancel")) { showHermesConfigDiff = false; pendingHermesConfigContent = "" }
-                                .buttonStyle(.bordered)
+                                .coucouButton()
                         }
                     }
                 }
@@ -951,14 +1045,14 @@ struct SettingsView: View {
         GroupBox(String(localized: "plan.title")) {
             VStack(alignment: .leading, spacing: 10) {
                 Text(String(localized: "plan.description"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Toggle(String(localized: "plan.show-in-notch"), isOn: Binding(
                     get: { state.showPlanInNotch || planTogglePending },
                     set: { on in
                         if on {
-                            if state.planRelayInstalled {
+                            if state.planRelayInstalled || state.planFromClaudeLB {
                                 state.showPlanInNotch = true
                             } else {
                                 planTogglePending = true
@@ -973,22 +1067,22 @@ struct SettingsView: View {
                 HStack(spacing: 10) {
                     if state.planRelayInstalled {
                         Text(String(localized: "plan.relay.installed"))
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                         Button(String(localized: "plan.relay.uninstall")) { uninstallStatusLine() }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                     } else {
                         Text(String(localized: "plan.relay.not-installed"))
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                         Button(String(localized: "plan.relay.install")) { installStatusLine() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                     }
                 }
                 if showStatusLineDiff {
                     ScrollView {
                         Text(pendingStatusLineJSON)
-                            .font(.system(size: 10, design: .monospaced))
+                            .coucouFont(size: 13, design: .monospaced)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(height: 100)
@@ -996,18 +1090,20 @@ struct SettingsView: View {
                     .cornerRadius(6)
                     HStack {
                         Button(String(localized: "hooks.confirm-write")) { confirmStatusLine() }
-                            .buttonStyle(.borderedProminent)
+                            .coucouButton(primary: true)
                         Button(String(localized: "Cancel")) {
                             showStatusLineDiff = false
                             pendingStatusLineJSON = ""
                             planTogglePending = false
                         }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                     }
                 }
                 Divider()
+                ClaudeLBPlanSourceView(statusMessage: $statusMessage)
+                Divider()
                 Text("Shows your Codex plan usage (weekly limit and free resets left) in the notch header. Coucou asks the Codex CLI (codex app-server) when the pill shows; nothing is installed. Codex must be signed in with ChatGPT.")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Toggle("Show Codex plan in the notch", isOn: Binding(
@@ -1056,7 +1152,7 @@ struct SettingsView: View {
                 }
 
                 Text(String(localized: "chat.model.description"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
             }
             .padding(6)
@@ -1065,10 +1161,10 @@ struct SettingsView: View {
         GroupBox(String(localized: "chat.other-providers.title")) {
             VStack(alignment: .leading, spacing: 12) {
                 Text(String(localized: "chat.other-providers.description"))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 15)
                     .foregroundColor(.secondary)
                 Text(String(localized: "chat.compatible.hint"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -1095,16 +1191,16 @@ struct SettingsView: View {
         GroupBox(String(localized: "chat.local.title")) {
             VStack(alignment: .leading, spacing: 12) {
                 Text(String(localized: "chat.local.description"))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 15)
                     .foregroundColor(.secondary)
 
                 // ── Ollama ──────────────────────────────────────────────────────
                 HStack(spacing: 8) {
                     Circle().fill(Color(hex: "#FACC15")).frame(width: 8, height: 8)
-                    Text("Ollama").font(.system(size: 12, weight: .semibold))
+                    Text("Ollama").coucouFont(size: 15, weight: .semibold)
                     if !state.ollamaServerURL.isEmpty {
                         Text(String(localized: "Connected"))
-                            .font(.system(size: 10))
+                            .coucouFont(size: 13)
                             .foregroundColor(Color(hex: "#22C55E"))
                     }
                 }
@@ -1114,11 +1210,11 @@ struct SettingsView: View {
                     Button(connectingOllama ? String(localized: "chat.connecting") : String(localized: "chat.connect")) {
                         Task { await connectLocal(provider: .ollama) }
                     }
-                    .buttonStyle(.borderedProminent)
+                    .coucouButton(primary: true)
                     .disabled(connectingOllama)
                 } else {
                     Text(state.ollamaServerURL)
-                        .font(.system(size: 11, design: .monospaced))
+                        .coucouFont(size: 14, design: .monospaced)
                         .foregroundColor(.secondary)
                     Button(String(localized: "chat.disconnect")) {
                         state.ollamaServerURL = ""
@@ -1128,7 +1224,7 @@ struct SettingsView: View {
                         if state.chatProvider == .ollama { state.chatProvider = .anthropic }
                         statusMessage = String(localized: "status.local.ollama-disconnected")
                     }
-                    .buttonStyle(.bordered)
+                    .coucouButton()
                 }
 
                 Divider()
@@ -1136,10 +1232,10 @@ struct SettingsView: View {
                 // ── LM Studio ───────────────────────────────────────────────────
                 HStack(spacing: 8) {
                     Circle().fill(Color(hex: "#A3E635")).frame(width: 8, height: 8)
-                    Text("LM Studio").font(.system(size: 12, weight: .semibold))
+                    Text("LM Studio").coucouFont(size: 15, weight: .semibold)
                     if !state.lmstudioServerURL.isEmpty {
                         Text(String(localized: "Connected"))
-                            .font(.system(size: 10))
+                            .coucouFont(size: 13)
                             .foregroundColor(Color(hex: "#22C55E"))
                     }
                 }
@@ -1149,11 +1245,11 @@ struct SettingsView: View {
                     Button(connectingLMStudio ? String(localized: "chat.connecting") : String(localized: "chat.connect")) {
                         Task { await connectLocal(provider: .lmstudio) }
                     }
-                    .buttonStyle(.borderedProminent)
+                    .coucouButton(primary: true)
                     .disabled(connectingLMStudio)
                 } else {
                     Text(state.lmstudioServerURL)
-                        .font(.system(size: 11, design: .monospaced))
+                        .coucouFont(size: 14, design: .monospaced)
                         .foregroundColor(.secondary)
                     Button(String(localized: "chat.disconnect")) {
                         state.lmstudioServerURL = ""
@@ -1163,7 +1259,7 @@ struct SettingsView: View {
                         if state.chatProvider == .lmstudio { state.chatProvider = .anthropic }
                         statusMessage = String(localized: "status.local.lmstudio-disconnected")
                     }
-                    .buttonStyle(.bordered)
+                    .coucouButton()
                 }
             }
             .padding(.vertical, 4)
@@ -1180,7 +1276,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#22C55E")).frame(width: 8, height: 8)
-                        Text("Resend").font(.system(size: 12, weight: .semibold))
+                        Text("Resend").coucouFont(size: 15, weight: .semibold)
                     }
                     SecureField("API key  (re_…)", text: $resendKey)
                         .coucouField()
@@ -1192,7 +1288,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#F29B38")).frame(width: 8, height: 8)
-                        Text("n8n").font(.system(size: 12, weight: .semibold))
+                        Text("n8n").coucouFont(size: 15, weight: .semibold)
                     }
                     TextField("Instance URL  (https://…)", text: $n8nUrl)
                         .coucouField()
@@ -1211,7 +1307,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#7C5CFF")).frame(width: 8, height: 8)
-                        Text("Vercel").font(.system(size: 12, weight: .semibold))
+                        Text("Vercel").coucouFont(size: 15, weight: .semibold)
                     }
                     SecureField("Token", text: $vercelToken)
                         .coucouField()
@@ -1228,12 +1324,12 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#F4505E")).frame(width: 8, height: 8)
-                        Text("GitHub").font(.system(size: 12, weight: .semibold))
+                        Text("GitHub").coucouFont(size: 15, weight: .semibold)
                     }
                     SecureField("Personal Access Token", text: $githubToken)
                         .coucouField()
                     Text(String(localized: "integrations.github.token-hint"))
-                        .font(.system(size: 10))
+                        .coucouFont(size: 13)
                         .foregroundColor(Color(hex: "#8E939C"))
                 }
 
@@ -1241,7 +1337,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#0570DE")).frame(width: 8, height: 8)
-                        Text("Stripe").font(.system(size: 12, weight: .semibold))
+                        Text("Stripe").coucouFont(size: 15, weight: .semibold)
                     }
                     SecureField("Secret key  (sk_live_… or sk_test_…)", text: $stripeKey)
                         .coucouField()
@@ -1251,7 +1347,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#C9956A")).frame(width: 8, height: 8)
-                        Text("Cal.com").font(.system(size: 12, weight: .semibold))
+                        Text("Cal.com").coucouFont(size: 15, weight: .semibold)
                     }
                     SecureField("API key  (cal_live_…)", text: $calcomKey)
                         .coucouField()
@@ -1261,7 +1357,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#E8E8E8")).frame(width: 8, height: 8)
-                        Text("Notion").font(.system(size: 12, weight: .semibold))
+                        Text("Notion").coucouFont(size: 15, weight: .semibold)
                     }
                     SecureField("Integration token  (secret_…)", text: $notionKey)
                         .coucouField()
@@ -1271,7 +1367,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(spacing: 6) {
                         Circle().fill(Color(hex: "#F7931A")).frame(width: 8, height: 8)
-                        Text(verbatim: "Crypto").font(.system(size: 12, weight: .semibold))
+                        Text(verbatim: "Crypto").coucouFont(size: 15, weight: .semibold)
                     }
                     Picker(String(localized: "crypto.exchange"), selection: $cryptoExchange) {
                         ForEach(CryptoExchange.allCases, id: \.rawValue) { ex in
@@ -1296,7 +1392,7 @@ struct SettingsView: View {
                         }
                     }
                     Text(String(localized: "crypto.hint"))
-                        .font(.system(size: 10))
+                        .coucouFont(size: 13)
                         .foregroundColor(Color(hex: "#8E939C"))
                 }
                 .onChange(of: cryptoExchange) { _, _ in CryptoController.shared.settingsChanged() }
@@ -1316,7 +1412,7 @@ struct SettingsView: View {
                     saveIntegrations()
                     CryptoController.shared.settingsChanged()
                 }
-                    .buttonStyle(.borderedProminent)
+                    .coucouButton(primary: true)
             }
             .padding(6)
         }
@@ -1333,6 +1429,10 @@ struct SettingsView: View {
     @AppStorage("voiceElevenGender")   private var elevenGender: String = "female"
     @AppStorage("voicePitchFemale")    private var pitchFemale: Double = VoiceSettings.defaultPitchFemale
     @AppStorage("voicePitchMale")      private var pitchMale: Double = VoiceSettings.defaultPitchMale
+    @AppStorage("voiceSpeechRate")     private var speechRate: Double = VoiceSettings.defaultSpeechRate
+    @AppStorage("voiceUseSystemVoice") private var useSystemVoice: Bool = true
+    /// Bumped when the window comes back to the front: the system voice may have changed meanwhile.
+    @State private var voiceRefresh = 0
     @State private var webKeySaved: Bool = !(KeychainStore.shared.get("anthropic-api-key") ?? "").isEmpty
     @State private var elevenKeyDraft: String = ""
     @State private var elevenKeySaved: Bool = KeychainStore.shared.get(ElevenLabsTTS.keyName) != nil
@@ -1360,7 +1460,7 @@ struct SettingsView: View {
                         .foregroundColor(webKeySaved ? .green : .orange)
                     Text(webKeySaved ? String(localized: "voice.setting-web-desc")
                                      : String(localized: "voice.setting-web-nokey"))
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -1371,7 +1471,7 @@ struct SettingsView: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundColor(.orange)
                         Text("No speech recognition model available on this device. Install one in System Settings \u{2192} Keyboard \u{2192} Dictation.")
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -1382,7 +1482,7 @@ struct SettingsView: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundColor(.red)
                         Text("\(String(localized: "Microphone unavailable")): \(err)")
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -1395,7 +1495,7 @@ struct SettingsView: View {
                             voicePermissionsGranted = ok
                         }
                     }
-                    .buttonStyle(.borderedProminent)
+                    .coucouButton(primary: true)
                 }
             }
             .padding(6)
@@ -1475,27 +1575,49 @@ struct SettingsView: View {
                 .onChange(of: elevenGender) { _, _ in ElevenLabsTTS.shared.reset() }
 
                 if ttsEngine == "system" {
+                    Toggle(String(localized: "voice.use-system-voice"), isOn: $useSystemVoice)
+                    if !useSystemVoice {
+                        HStack(spacing: 8) {
+                            Text(String(localized: "voice.tts-pitch"))
+                            Slider(value: elevenGender == "male" ? $pitchMale : $pitchFemale,
+                                   in: 0.8...1.6, step: 0.05,
+                                   onEditingChanged: { editing in
+                                       // Released: hear the new pitch right away.
+                                       if !editing { speakVoiceSample() }
+                                   })
+                            .frame(maxWidth: 180)
+                        }
+                    }
                     HStack(spacing: 8) {
-                        Text(String(localized: "voice.tts-pitch"))
-                        Slider(value: elevenGender == "male" ? $pitchMale : $pitchFemale,
-                               in: 0.8...1.6, step: 0.05,
+                        Text(String(localized: "voice.speed"))
+                        Slider(value: $speechRate, in: VoiceSettings.speechRateRange, step: 0.05,
                                onEditingChanged: { editing in
-                                   // Released: hear the new pitch right away.
+                                   // Released: hear the new speed right away.
                                    if !editing { speakVoiceSample() }
                                })
                         .frame(maxWidth: 180)
+                        .accessibilityValue(String(format: "%.2f×", speechRate))
+                        Text(String(format: "%.2f×", speechRate))
+                            .monospacedDigit()
+                            .fixedSize()
+                            .foregroundColor(.secondary)
                     }
                     let current = VoiceSpeaker.macVoiceName(for: Locale(identifier: voiceLanguage == "fr" ? "fr-FR" : "en-US"),
                                                             gender: elevenGender)
                     Text(String(format: String(localized: "voice.mac-voice-current %@"), current))
-                        .font(.system(size: 11))
+                        .coucouText(.detail)
                         .foregroundColor(.secondary)
-                    Text(String(localized: "voice.mac-voices-help"))
-                        .font(.system(size: 11))
+                        .id(voiceRefresh)
+                        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in
+                            voiceRefresh &+= 1
+                        }
+                    Text(Self.macVoicesHelp)
+                        .coucouFont(size: 14)
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                     Button(String(localized: "voice.mac-voices-open")) {
-                        if let url = URL(string: "x-apple.systempreferences:com.apple.Accessibility-Settings.extension") {
+                        // Same pane on macOS 15 (Spoken Content) and 26 (Read & Speak).
+                        if let url = URL(string: "x-apple.systempreferences:com.apple.Accessibility-Settings.extension?TextToSpeech") {
                             NSWorkspace.shared.open(url)
                         }
                     }
@@ -1508,6 +1630,13 @@ struct SettingsView: View {
     }
 
     #if !APPSTORE
+    /// macOS 26 renamed Accessibility → Spoken Content to Read & Speak.
+    private static var macVoicesHelp: String {
+        ProcessInfo.processInfo.isOperatingSystemAtLeast(OperatingSystemVersion(majorVersion: 26, minorVersion: 0, patchVersion: 0))
+            ? String(localized: "voice.mac-voices-help-26")
+            : String(localized: "voice.mac-voices-help")
+    }
+
     private func localModelStatusLabel(_ status: LocalModelStatus) -> String {
         switch status {
         case .available:            return String(localized: "voice.model-available")
@@ -1531,10 +1660,10 @@ struct SettingsView: View {
                                 ForEach(history.entries) { entry in
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(verbatim: entry.transcript)
-                                            .font(.system(size: 11, design: .monospaced))
+                                            .coucouFont(size: 14, design: .monospaced)
                                             .foregroundColor(.primary)
                                         Text(verbatim: "→ \(entry.intent)  [\(entry.origin.rawValue)]")
-                                            .font(.system(size: 10, design: .monospaced))
+                                            .coucouFont(size: 13, design: .monospaced)
                                             .foregroundColor(.secondary)
                                     }
                                     .padding(.vertical, 2)
@@ -1916,6 +2045,47 @@ struct SettingsView: View {
         }
     }
 
+    private func ompGatedBinding(_ tool: String) -> Binding<Bool> {
+        Binding(
+            get: { ompGatedTools.contains(tool) },
+            set: { on in
+                ompGatedTools = (ompGatedTools.filter { $0 != tool } + (on ? [tool] : [])).sorted()
+                UserDefaults.standard.set(ompGatedTools, forKey: "ompApprovalTools")
+                HookServer.shared.syncOmpGateFile()
+            })
+    }
+
+    private func triggerOmpPreview(install: Bool) {
+        do {
+            ompPendingInstall = install
+            pendingOmpContent = try HookServer.shared.previewOmpExtension(install: install)
+            showOmpDiff = true
+            statusMessage = String(localized: "plugin.review-content")
+        } catch let e as NSError where e.domain == "CoucouNoop" {
+            statusMessage = e.localizedDescription
+        } catch {
+            statusMessage = "❌ \(error.localizedDescription)"
+        }
+    }
+
+    private func confirmOmpOp() {
+        do {
+            if ompPendingInstall {
+                try HookServer.shared.writeOmpExtension()
+            } else {
+                try HookServer.shared.removeOmpExtension()
+            }
+            showOmpDiff = false
+            pendingOmpContent = ""
+            ompExtensionInstalled = ompPendingInstall
+            statusMessage = ompPendingInstall
+                ? String(localized: "status.omp-extension-installed")
+                : String(localized: "status.omp-extension-removed")
+        } catch {
+            statusMessage = "❌ \(error.localizedDescription)"
+        }
+    }
+
     private func triggerHermesPluginPreview(install: Bool) {
         do {
             hermesPluginPendingInstall = install
@@ -2133,6 +2303,7 @@ struct SettingsView: View {
             if def.id == "agent_muse"          && !HookServer.museHooksInstalled()       { return String(localized: "Hooks not installed") }
             if def.id == "agent_opencode"      && !HookServer.openCodePluginInstalled()  { return String(localized: "Plugin not installed") }
             if def.id == "agent_amp"           && !HookServer.ampPluginInstalled()       { return String(localized: "Plugin not installed") }
+            if def.id == "agent_omp"           && !HookServer.ompExtensionInstalled()    { return String(localized: "Plugin not installed") }
             if def.id == SpotifyController.pillId && !SpotifyController.shared.isInstalled { return String(localized: "Not installed") }
             #endif
             if def.category == .ai {
@@ -2174,17 +2345,17 @@ struct SettingsView: View {
                 )
             }
             Text(def.name)
-                .font(.system(size: 12))
+                .coucouFont(size: 15)
                 .foregroundColor(atMax ? .secondary : .primary)
             Spacer()
             if isMain {
                 Text("Main")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
             } else {
                 if let h = hint {
                     Text(h)
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                         .foregroundColor(.secondary)
                 }
                 Toggle("", isOn: Binding(
@@ -2229,7 +2400,7 @@ private struct CloudProviderSettings: View {
             if let title {
                 HStack(spacing: 8) {
                     Circle().fill(Color(hex: provider.accentHex)).frame(width: 8, height: 8)
-                    Text(title).font(.system(size: 12, weight: .semibold))
+                    Text(title).coucouFont(size: 15, weight: .semibold)
                 }
             }
             SecureField(keyPlaceholder, text: $key)
@@ -2246,7 +2417,7 @@ private struct CloudProviderSettings: View {
                 }
             }
             Button(String(localized: "Save"), action: save)
-                .buttonStyle(.borderedProminent)
+                .coucouButton(primary: true)
         }
         // A model picked in the chat replaces the name typed here.
         .onChange(of: state.customChatModels[provider]) { _, custom in model = custom ?? "" }
@@ -2308,6 +2479,20 @@ private struct PillColorPalette: View {
     }
 }
 
+/// The Coucou window's Notch pages share the Flow pages' look; the App Store build's own Settings
+/// window keeps the system's.
+private struct EmbeddedHubStyle: ViewModifier {
+    let active: Bool
+
+    func body(content: Content) -> some View {
+        #if !APPSTORE
+        if active { content.hubSettingsStyle() } else { content }
+        #else
+        content
+        #endif
+    }
+}
+
 // MARK: - Sidebar background (NSVisualEffectView .sidebar)
 
 struct SidebarBackground: NSViewRepresentable {
@@ -2354,19 +2539,19 @@ struct IntegrationFilterRow: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 6) {
                 Text(label)
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                 Spacer()
                 if loading {
                     ProgressView().scaleEffect(0.6)
                 } else {
                     Button(items.isEmpty ? "Load list" : "Refresh") { onLoad() }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                         .controlSize(.mini)
                 }
                 if !filter.isEmpty {
                     Button("Clear") { filter = [] }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                         .controlSize(.mini)
                         .foregroundColor(.secondary)
                 }
@@ -2385,14 +2570,14 @@ struct IntegrationFilterRow: View {
                                 }
                             }
                         ))
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                         .toggleStyle(.checkbox)
                     }
                 }
                 .padding(.leading, 4)
                 if !filter.isEmpty {
                     Text(String(format: String(localized: "Watching %lld of %lld"), Int64(filter.count), Int64(items.count)))
-                        .font(.system(size: 10))
+                        .coucouFont(size: 13)
                         .foregroundColor(.secondary)
                 }
             }
@@ -2425,7 +2610,7 @@ struct ShortcutRecorderButton: View {
             }
         } label: {
             Text(isRecording ? "Press keys…" : shortcutLabel)
-                .font(.system(size: 11, design: .monospaced))
+                .coucouFont(size: 14, design: .monospaced)
                 .padding(.horizontal, 8).padding(.vertical, 3)
                 .background(isRecording ? Color.accentColor.opacity(0.12) : Color(NSColor.controlBackgroundColor))
                 .cornerRadius(5)

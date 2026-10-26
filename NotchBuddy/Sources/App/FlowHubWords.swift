@@ -33,7 +33,7 @@ struct HubDictionaryPage: View {
             HubLabel(String(localized: "hub.replacements"))
             HubCard {
                 Text("hub.replacements-sub")
-                    .font(.system(size: 13))
+                    .coucouFont(size: 15)
                     .foregroundColor(HubTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack(spacing: 8) {
@@ -49,14 +49,14 @@ struct HubDictionaryPage: View {
                     HubDivider()
                     HStack(spacing: 12) {
                         Text(replacement.from)
-                            .font(.system(size: 13))
+                            .coucouFont(size: 15)
                             .foregroundColor(HubTheme.secondary)
                             .frame(width: 200, alignment: .leading)
                         Image(systemName: "arrow.right")
-                            .font(.system(size: 11))
+                            .coucouFont(size: 13)
                             .foregroundColor(HubTheme.muted)
                         Text(replacement.to)
-                            .font(.system(size: 13, weight: .semibold))
+                            .coucouFont(size: 15, weight: .semibold)
                         Spacer()
                         HubIconButton(symbol: "trash", help: String(localized: "hub.delete")) {
                             store.replacements.removeAll { $0.id == replacement.id }
@@ -87,10 +87,10 @@ private struct HubChip: View {
 
     var body: some View {
         HStack(spacing: 6) {
-            Text(text).font(.system(size: 13))
+            Text(text).coucouFont(size: 15)
             Button(action: remove) {
                 Image(systemName: "xmark")
-                    .font(.system(size: 9, weight: .bold))
+                    .coucouFont(size: 11, weight: .bold)
                     .foregroundColor(hover ? HubTheme.text : HubTheme.muted)
             }
             .buttonStyle(.plain)
@@ -119,10 +119,10 @@ struct HubSnippetsPage: View {
                         subtitle: String(localized: "hub.snippets-sub")) {
             HubCard {
                 Text(editing == nil ? String(localized: "hub.snippet-new") : String(localized: "hub.snippet-edit"))
-                    .font(.system(size: 14, weight: .bold))
+                    .coucouFont(size: 16, weight: .bold)
                 HubField(placeholder: String(localized: "hub.trigger-placeholder"), text: $trigger)
                 TextEditor(text: $text)
-                    .font(.system(size: 13))
+                    .coucouFont(size: 15)
                     .scrollContentBackground(.hidden)
                     .padding(8)
                     .frame(height: 90)
@@ -131,7 +131,7 @@ struct HubSnippetsPage: View {
                     .overlay(alignment: .topLeading) {
                         if text.isEmpty {
                             Text("hub.snippet-text-placeholder")
-                                .font(.system(size: 13))
+                                .coucouFont(size: 15)
                                 .foregroundColor(HubTheme.muted)
                                 .padding(.horizontal, 13)
                                 .padding(.vertical, 8)
@@ -155,10 +155,10 @@ struct HubSnippetsPage: View {
                 HubCard {
                     HStack(spacing: 8) {
                         Text("hub.you-say")
-                            .font(.system(size: 12))
+                            .coucouFont(size: 14)
                             .foregroundColor(HubTheme.secondary)
                         Text("« \(snippet.trigger) »")
-                            .font(.system(size: 13, weight: .semibold))
+                            .coucouFont(size: 15, weight: .semibold)
                             .foregroundColor(Color(hex: "#FDBA74"))
                             .padding(.horizontal, 9)
                             .padding(.vertical, 3)
@@ -175,7 +175,7 @@ struct HubSnippetsPage: View {
                         }
                     }
                     Text(snippet.text)
-                        .font(.system(size: 13))
+                        .coucouFont(size: 15)
                         .lineSpacing(2)
                         .foregroundColor(Color(hex: "#D5D7DB"))
                         .textSelection(.enabled)
@@ -227,7 +227,7 @@ struct HubStylesPage: View {
                         Image(systemName: "key")
                             .foregroundColor(HubTheme.accent)
                         Text("hub.cleanup-key")
-                            .font(.system(size: 12.5))
+                            .coucouFont(size: 14.5)
                             .foregroundColor(Color(hex: "#C7CAD0"))
                             .fixedSize(horizontal: false, vertical: true)
                         Spacer()
@@ -265,7 +265,7 @@ struct HubStylesPage: View {
                     if index > 0 { HubDivider() }
                     HStack(spacing: 12) {
                         HubAppIcon(bundleID: app.bundleID)
-                        Text(app.name).font(.system(size: 13.5, weight: .medium))
+                        Text(app.name).coucouFont(size: 15.5, weight: .medium)
                         Spacer()
                         stylePicker(Binding(
                             get: { store.appStyles.first(where: { $0.id == app.id })?.style ?? .natural },
@@ -283,15 +283,15 @@ struct HubStylesPage: View {
             HubCard {
                 ForEach(FlowStyle.allCases) { style in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(style.label).font(.system(size: 13, weight: .semibold))
+                        Text(style.label).coucouFont(size: 15, weight: .semibold)
                         Text(style.detail)
-                            .font(.system(size: 12.5))
+                            .coucouFont(size: 14.5)
                             .foregroundColor(HubTheme.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 Text("hub.cleanup-privacy")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }

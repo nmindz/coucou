@@ -291,11 +291,11 @@ struct HubHero<Trailing: View>: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(title)
-                        .font(.system(size: compact ? 24 : 30, weight: .bold))
+                        .coucouFont(size: compact ? 24 : 30, weight: .bold)
                         .tracking(-0.6)
                     if let subtitle {
                         Text(subtitle)
-                            .font(.system(size: 14))
+                            .coucouFont(size: 16)
                             .foregroundColor(Color(hex: "#B7BBC2"))
                             .fixedSize(horizontal: false, vertical: true)
                             .frame(maxWidth: 420, alignment: .leading)
@@ -502,7 +502,7 @@ struct HubEmptyState: View {
             HubLiveMochi(color: color, size: 54, state: state)
                 .frame(height: 54)
             Text(text)
-                .font(.system(size: 13.5))
+                .coucouFont(size: 15.5)
                 .foregroundColor(HubTheme.secondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)

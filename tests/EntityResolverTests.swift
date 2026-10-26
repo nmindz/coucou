@@ -36,6 +36,8 @@ enum EntityResolverTests {
         check("musique alias",     resolve("musique"),      "integration_music")
         check("muse alias",        resolve("muse"),         "agent_muse")
         check("amp alias",         resolve("amp"),          "agent_amp")
+        check("omp alias",         resolve("omp"),          "agent_omp")
+        check("oh-my-pi alias",    resolve("oh-my-pi"),     "agent_omp")
 
         // ── Case/diacritic insensitive ────────────────────────────────────────
         check("GITHUB caps",       resolve("GITHUB"),       "integration_github")

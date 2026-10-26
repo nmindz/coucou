@@ -17,7 +17,7 @@ struct PortfolioSettingsSection: View {
         VStack(alignment: .leading, spacing: 5) {
             HStack(spacing: 6) {
                 Circle().fill(Color(hex: "#FFD700")).frame(width: 8, height: 8)
-                Text("Portfolio").font(.system(size: 12, weight: .semibold))
+                Text("Portfolio").coucouFont(size: 15, weight: .semibold)
             }
 
             // Connected exchanges
@@ -43,13 +43,13 @@ struct PortfolioSettingsSection: View {
             // Add buttons
             HStack(spacing: 8) {
                 Button(String(localized: "portfolio.add-exchange")) { showAddExchange = true }
-                    .buttonStyle(.bordered)
+                    .coucouButton()
                 Button(String(localized: "portfolio.add-wallet")) { showAddWallet = true }
-                    .buttonStyle(.bordered)
+                    .coucouButton()
             }
 
             Text(String(localized: "portfolio.hint"))
-                .font(.system(size: 10))
+                .coucouFont(size: 13)
                 .foregroundColor(Color(hex: "#8E939C"))
         }
         .sheet(isPresented: $showAddExchange) {
@@ -83,12 +83,12 @@ private struct ExchangeRow: View {
     var body: some View {
         HStack(spacing: 6) {
             Image(systemName: "checkmark.circle.fill").foregroundColor(.green).imageScale(.small)
-            Text(verbatim: exchange.name).font(.system(size: 11))
+            Text(verbatim: exchange.name).coucouFont(size: 14)
             Text(String(localized: "portfolio.read-only"))
-                .font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C"))
+                .coucouFont(size: 13).foregroundColor(Color(hex: "#8E939C"))
             Spacer()
             Button(String(localized: "portfolio.remove")) { confirmRemove = true }
-                .font(.system(size: 11))
+                .coucouFont(size: 14)
                 .foregroundColor(.red)
                 .buttonStyle(.plain)
         }
@@ -116,12 +116,12 @@ private struct WalletRow: View {
         HStack(spacing: 6) {
             Image(systemName: "checkmark.circle.fill").foregroundColor(.green).imageScale(.small)
             Text(verbatim: wallet.label.isEmpty ? shortAddress : wallet.label)
-                .font(.system(size: 11))
+                .coucouFont(size: 14)
             Text(verbatim: wallet.kind.name)
-                .font(.system(size: 10)).foregroundColor(Color(hex: "#8E939C"))
+                .coucouFont(size: 13).foregroundColor(Color(hex: "#8E939C"))
             Spacer()
             Button(String(localized: "portfolio.remove")) { confirmRemove = true }
-                .font(.system(size: 11))
+                .coucouFont(size: 14)
                 .foregroundColor(.red)
                 .buttonStyle(.plain)
         }
@@ -150,13 +150,13 @@ private struct AddExchangeSheet: View {
         VStack(alignment: .leading, spacing: 0) {
             // Title bar
             Text(String(localized: "portfolio.add-exchange"))
-                .font(.system(size: 13, weight: .semibold))
+                .coucouFont(size: 15.5, weight: .semibold)
                 .padding(.bottom, 16)
 
             // Exchange dropdown (menu, not segmented — 5 items is too wide)
             HStack {
                 Text(String(localized: "portfolio.exchange"))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 15)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .frame(width: 80, alignment: .leading)
                 Picker("", selection: $selectedExchange) {
@@ -172,7 +172,7 @@ private struct AddExchangeSheet: View {
 
             // Instructions
             instructions(for: selectedExchange)
-                .font(.system(size: 11))
+                .coucouFont(size: 14)
                 .foregroundColor(Color(hex: "#6B7079"))
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.bottom, 12)
@@ -186,7 +186,7 @@ private struct AddExchangeSheet: View {
 
             if let err = error {
                 Text(verbatim: err)
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(Color(hex: "#F4505E"))
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 4)
@@ -211,7 +211,7 @@ private struct AddExchangeSheet: View {
                         Text(String(localized: "portfolio.test-save"))
                     }
                 }
-                .buttonStyle(.borderedProminent)
+                .coucouButton(primary: true)
                 .keyboardShortcut(.defaultAction)
                 .disabled(testing || apiKey.isEmpty || apiSecret.isEmpty
                           || (selectedExchange.needsPassphrase && passphrase.isEmpty))
@@ -225,7 +225,7 @@ private struct AddExchangeSheet: View {
     private func fieldRow(label: String, text: Binding<String>, isSecret: Bool = false) -> some View {
         HStack(alignment: .center, spacing: 8) {
             Text(label)
-                .font(.system(size: 12))
+                .coucouFont(size: 15)
                 .foregroundColor(Color(hex: "#8E939C"))
                 .frame(width: 80, alignment: .leading)
             Group {
@@ -301,13 +301,13 @@ private struct AddWalletSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(String(localized: "portfolio.add-wallet"))
-                .font(.system(size: 13, weight: .semibold))
+                .coucouFont(size: 15.5, weight: .semibold)
                 .padding(.bottom, 16)
 
             // Network picker — only 3 items, menu is cleaner
             HStack {
                 Text(String(localized: "portfolio.network"))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 15)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .frame(width: 80, alignment: .leading)
                 Picker("", selection: $selectedKind) {
@@ -324,7 +324,7 @@ private struct AddWalletSheet: View {
             // Address field
             HStack(alignment: .center, spacing: 8) {
                 Text("Address")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 15)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .frame(width: 80, alignment: .leading)
                 TextField(selectedKind.placeholder, text: $address)
@@ -335,7 +335,7 @@ private struct AddWalletSheet: View {
             // Label field
             HStack(alignment: .center, spacing: 8) {
                 Text(String(localized: "portfolio.wallet-label"))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 15)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .frame(width: 80, alignment: .leading)
                 TextField("My wallet", text: $label)
@@ -344,13 +344,13 @@ private struct AddWalletSheet: View {
             .padding(.bottom, 10)
 
             Text(String(localized: "portfolio.wallet-hint"))
-                .font(.system(size: 11))
+                .coucouFont(size: 14)
                 .foregroundColor(Color(hex: "#6B7079"))
                 .fixedSize(horizontal: false, vertical: true)
 
             if let err = error {
                 Text(verbatim: err)
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(Color(hex: "#F4505E"))
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 4)
@@ -374,7 +374,7 @@ private struct AddWalletSheet: View {
                         Text(String(localized: "portfolio.verify-save"))
                     }
                 }
-                .buttonStyle(.borderedProminent)
+                .coucouButton(primary: true)
                 .keyboardShortcut(.defaultAction)
                 .disabled(testing || !isAddressPlausible)
             }

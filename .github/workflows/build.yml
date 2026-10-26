@@ -63,6 +63,12 @@ jobs:
       - name: Test chat provider base URLs (paths, https only, no credentials)
         run: bash scripts/test-provider-endpoints.sh
 
+      - name: Test claude-lb plan source (quota parsing, average/most-used/single)
+        run: bash scripts/test-claudelb-quota.sh
+
+      - name: Test Coucou MCP (query engine, stdio server over a fake Coucou)
+        run: bash scripts/test-coucou-query.sh && bash scripts/test-coucou-mcp.sh
+
       - name: Test Mac translations (Traditional Chinese coverage, format arguments, catalog keys)
         run: python3 scripts/test-localization.py
 

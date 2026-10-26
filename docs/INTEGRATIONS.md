@@ -113,6 +113,18 @@ Réglages → Agents → Plan usage → **Install relay**. Coucou montre le diff
 
 Réglages → Agents → Plan usage → **Uninstall relay**. Remet l'objet `statusLine` d'origine à l'identique, ou retire la clé si elle n'existait pas. Si la `statusLine` actuelle n'est plus celle de Coucou (l'utilisateur l'a changée), elle n'est pas touchée.
 
+### Source claude-lb (option)
+
+Réglages → Agents → Plan usage → **Read plan usage from claude-lb** (`planFromClaudeLB`, désactivé par défaut). La jauge lit alors `GET <URL>/api/analytics/quota` d'un répartiteur claude-lb (URL par défaut `http://127.0.0.1:21987`, clé d'API dans le Trousseau sous `claudelb-api-key`, envoyée en `x-api-key` ; la clé doit avoir « Read usage analytics »). Le relais statusLine n'est pas nécessaire et ses mises à jour sont ignorées tant que cette source est active.
+
+- **Quand** : à l'apparition du pill et au clic, au plus une fois toutes les 2 minutes (claude-lb lit sa base SQLite sur le fil du proxy) ; **Connect** dans les réglages force une lecture.
+- **Comptes** : la liste reçue s'affiche avec 5h / 7d par compte ; les cases cochées (`claudeLBSelected`) sont les comptes comptés, aucune case = tous. Une fenêtre jamais sondée (`null`) est ignorée, pas comptée à 0 %. `resetPassed` → 0 %, une utilisation > 100 % est ramenée à 100.
+- **Ce que montre la jauge** (`claudeLBAggregation`) : **Average** (défaut) = moyenne des utilisations, reset = le plus proche ; **Most used** = le compte le plus chargé, avec son reset ; **One account** = le premier compte coché dans l'ordre de claude-lb.
+- **Carte** : le sous-titre indique la source (« claude-lb · avg of 3 »).
+- **Erreurs** : 401 clé refusée, 403 « Read usage analytics » manquant, injoignable, format inconnu — affichées sous **Connect**.
+
+Logique dans `ClaudeLBQuota.swift`, testée par `scripts/test-claudelb-quota.sh`.
+
 ---
 
 ## 1ter. Diff en direct (live diff)

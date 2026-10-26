@@ -10,6 +10,7 @@ enum PillFixture {
         .init(id: "agent_cursor",         name: "Cursor",        color: "#C0C4CC", category: .workspace, subtitle: "Integration", source: .agent),
         .init(id: "agent_antigravity",    name: "Antigravity",   color: "#E879F9", category: .workspace, subtitle: "Integration", source: .agent),
         .init(id: "agent_codex",          name: "Codex",         color: "#2DD4BF", category: .workspace, subtitle: "Integration", source: .agent),
+        .init(id: "agent_omp",            name: "OMP",           color: "#6366F1", category: .workspace, subtitle: "Integration", source: .agent),
         // ── Agents ───────────────────────────────────────────────────────────
         .init(id: "agent_gemini",         name: "Gemini CLI",    color: "#8AB4F8", category: .agent,     subtitle: "Agent",       source: .agent),
         .init(id: "agent_copilot",        name: "Copilot CLI",   color: "#818CF8", category: .agent,     subtitle: "Agent",       source: .agent),

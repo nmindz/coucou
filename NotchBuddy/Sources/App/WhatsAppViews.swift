@@ -451,11 +451,11 @@ struct WhatsAppSettingsSection: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 6) {
                 Circle().fill(Color(hex: whatsAppAccent)).frame(width: 8, height: 8)
-                Text("whatsapp.title").font(.system(size: 12, weight: .semibold))
+                Text("whatsapp.title").coucouFont(size: 15, weight: .semibold)
             }
 
             Text("whatsapp.warning")
-                .font(.system(size: 10))
+                .coucouFont(size: 13)
                 .foregroundColor(Color(hex: "#F5B83D"))
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -465,7 +465,7 @@ struct WhatsAppSettingsSection: View {
             if enabled {
                 if !appState.activeIntegrations.contains(WhatsAppController.pillId) {
                     Text("whatsapp.no-slot")
-                        .font(.system(size: 10))
+                        .coucouFont(size: 13)
                         .foregroundColor(Color(hex: "#F4505E"))
                 }
 
@@ -485,7 +485,7 @@ struct WhatsAppSettingsSection: View {
                     }
                 if respectFocus && wa.focusReadable == false {
                     Text("whatsapp.focus-unavailable")
-                        .font(.system(size: 10))
+                        .coucouFont(size: 13)
                         .foregroundColor(Color(hex: "#8E939C"))
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -493,14 +493,14 @@ struct WhatsAppSettingsSection: View {
                 Toggle("whatsapp.mark-read-on-open", isOn: $markReadOnOpen)
                     .onChange(of: markReadOnOpen) { _, on in WhatsAppSettings.markReadOnOpen = on }
                 Text("whatsapp.mark-read.hint")
-                    .font(.system(size: 10))
+                    .coucouFont(size: 13)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .fixedSize(horizontal: false, vertical: true)
 
                 ignoredChats
 
                 Text("whatsapp.privacy")
-                    .font(.system(size: 10))
+                    .coucouFont(size: 13)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -522,7 +522,7 @@ struct WhatsAppSettingsSection: View {
                             .coucouField()
                         if gateway == .gowa { autoStartRow }
                         HStack(spacing: 6) {
-                            Text("whatsapp.port").font(.system(size: 11))
+                            Text("whatsapp.port").coucouFont(size: 14)
                             TextField(String(WhatsAppSettings.defaultPort), text: $port)
                                 .coucouField()
                                 .frame(width: 80)
@@ -531,7 +531,7 @@ struct WhatsAppSettingsSection: View {
 
                         HStack(spacing: 8) {
                             Button("whatsapp.save") { save() }
-                                .buttonStyle(.borderedProminent)
+                                .coucouButton(primary: true)
                             Button("whatsapp.test") {
                                 save()
                                 testing = true
@@ -540,19 +540,19 @@ struct WhatsAppSettingsSection: View {
                                     testing = false
                                 }
                             }
-                            .buttonStyle(.bordered)
+                            .coucouButton()
                             .disabled(testing)
                             if testing { ProgressView().controlSize(.small) }
                         }
                         if let testResult {
                             Text(verbatim: testResult)
-                                .font(.system(size: 10))
+                                .coucouFont(size: 13)
                                 .foregroundColor(Color(hex: "#8E939C"))
                         }
                     }
                     .padding(.top, 4)
                 } label: {
-                    Text("whatsapp.advanced").font(.system(size: 11, weight: .medium))
+                    Text("whatsapp.advanced").coucouFont(size: 14, weight: .medium)
                 }
             }
         }
@@ -584,7 +584,7 @@ struct WhatsAppSettingsSection: View {
         case .checking, .downloading, .verifying, .installing:
             HStack(spacing: 8) {
                 ProgressView().controlSize(.small)
-                Text(verbatim: installStepLabel).font(.system(size: 11))
+                Text(verbatim: installStepLabel).coucouFont(size: 14)
             }
         default:
             if WhatsAppGOWAInstaller.isInstalled {
@@ -592,28 +592,28 @@ struct WhatsAppSettingsSection: View {
                     Image(systemName: "checkmark.circle.fill").foregroundColor(Color(hex: whatsAppAccent))
                     Text(verbatim: WhatsAppGOWAInstaller.installedVersion.map { String(format: String(localized: "whatsapp.install.ready %@"), $0) }
                          ?? String(localized: "whatsapp.install.ready-custom"))
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                     Spacer()
                     Button("whatsapp.install.update") { installer.install() }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                         .controlSize(.small)
                 }
             } else {
                 Button { installer.install() } label: {
                     Label("whatsapp.install", systemImage: "arrow.down.circle.fill")
-                        .font(.system(size: 13, weight: .semibold))
+                        .coucouFont(size: 15.5, weight: .semibold)
                         .padding(.horizontal, 6).padding(.vertical, 3)
                 }
-                .buttonStyle(.borderedProminent)
+                .coucouButton(primary: true)
                 .tint(Color(hex: whatsAppAccent))
                 Text("whatsapp.install.hint")
-                    .font(.system(size: 10))
+                    .coucouFont(size: 13)
                     .foregroundColor(Color(hex: "#8E939C"))
                     .fixedSize(horizontal: false, vertical: true)
             }
             if case .failed(let why) = installer.step {
                 Text(verbatim: why)
-                    .font(.system(size: 10))
+                    .coucouFont(size: 13)
                     .foregroundColor(Color(hex: "#F4505E"))
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -636,16 +636,16 @@ struct WhatsAppSettingsSection: View {
             Circle().fill(WhatsAppStatus.dot(wa.link)).frame(width: 6, height: 6)
             if wa.link == .connected, let me = wa.me {
                 Text(String(format: String(localized: "whatsapp.connected-as %@"), WAJID.displayNumber(me)))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
             } else {
                 Text(verbatim: WhatsAppStatus.label(wa.link))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
             }
             Spacer()
         }
         if wa.link == .connected {
             Text(webhookLine)
-                .font(.system(size: 10))
+                .coucouFont(size: 13)
                 .foregroundColor(Color(hex: "#8E939C"))
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -659,7 +659,7 @@ struct WhatsAppSettingsSection: View {
                         .background(Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                     Text("whatsapp.qr.hint")
-                        .font(.system(size: 10))
+                        .coucouFont(size: 13)
                         .foregroundColor(Color(hex: "#8E939C"))
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -685,7 +685,7 @@ struct WhatsAppSettingsSection: View {
                 Button("whatsapp.choose") { chooseBinary() }
             }
             Text("whatsapp.autostart.hint")
-                .font(.system(size: 10))
+                .coucouFont(size: 13)
                 .foregroundColor(Color(hex: "#8E939C"))
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -717,15 +717,15 @@ struct WhatsAppSettingsSection: View {
     }
 
     @ViewBuilder private var ignoredChats: some View {
-        Text("whatsapp.ignored").font(.system(size: 11, weight: .medium))
+        Text("whatsapp.ignored").coucouFont(size: 14, weight: .medium)
         ForEach(wa.filters.ignored.sorted(), id: \.self) { chat in
             HStack(spacing: 6) {
                 Text(verbatim: wa.inbox.conversations[chat]?.name ?? WAJID.displayNumber(chat))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                 Spacer()
                 Button("whatsapp.remove") { wa.unignore(chat) }
                     .buttonStyle(.borderless)
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
             }
         }
         HStack(spacing: 6) {

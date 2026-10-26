@@ -73,6 +73,7 @@ final class HookServer: @unchecked Sendable {
         case "agent_copilot": return "Handled in Copilot CLI."
         case "agent_muse":    return "Handled in Muse Code."
         case "agent_hermes":  return "Handled in Hermes."
+        case "agent_omp":     return String(localized: "omp.handled-in")
         default:              return "Handled in \(claudeHostName)."
         }
     }
@@ -86,6 +87,7 @@ final class HookServer: @unchecked Sendable {
         case "agent_copilot": return "Still waiting in Copilot CLI."
         case "agent_muse":    return "Still waiting in Muse Code."
         case "agent_hermes":  return "Still waiting in Hermes."
+        case "agent_omp":     return String(localized: "omp.still-waiting")
         default:              return "Still waiting in \(claudeHostName)."
         }
     }
@@ -282,6 +284,7 @@ final class HookServer: @unchecked Sendable {
         try? FileManager.default.setAttributes([.posixPermissions: 0o700 as NSNumber], ofItemAtPath: dir.path)
         #if !APPSTORE
         installHookScript()
+        syncOmpGateFile()
         #endif
         Thread.detachNewThread { self.serverThread() }
     }
@@ -380,6 +383,22 @@ final class HookServer: @unchecked Sendable {
             return
         }
 
+        #if !APPSTORE
+        // A tool call from coucou-mcp (an agent reading the Notetaker): answer and close.
+        if coucouKind == "query" {
+            let tool = payload["tool"] as? String ?? ""
+            let args = payload["arguments"] as? [String: Any] ?? [:]
+            Task { @MainActor in
+                let reply = CoucouMCP.answer(tool: tool, args: args)
+                Task.detached { [weak self] in
+                    self?.sendLine(fd: fd, text: reply)
+                    close(fd)
+                }
+            }
+            return
+        }
+        #endif
+
         // AskUserQuestion via --ask PreToolUse hook — hold fd open like PermissionRequest
         if coucouKind == "ask_user_question" {
             let toolInput = payload["tool_input"] as? [String: Any] ?? [:]
@@ -437,15 +456,17 @@ final class HookServer: @unchecked Sendable {
             bundleId.lowercased().contains("vscode"))
 
         // Routing:
-        // • "codex" → agent_codex (GitHub build only: workspace pill, approvals in the notch)
+        // • "codex", "omp" → agent_codex / agent_omp (GitHub build only: workspace pills, can be Main)
         // • other valid coucou_agent → external pill (fire-and-forget, no approval card)
         // • Cursor bundle ID → agent_cursor
         // • VS Code → integration_claude
         // • a known terminal (Warp, Terminal, iTerm…) → integration_claude, host recorded on the task
         #if !APPSTORE
         let isCodexEvent = rawAgent == "codex"
+        let isOmpEvent   = rawAgent == "omp"
         #else
         let isCodexEvent = false
+        let isOmpEvent   = false
         #endif
         let agentId: String
         let isExternalAgent: Bool
@@ -453,6 +474,11 @@ final class HookServer: @unchecked Sendable {
         if isCodexEvent {
             agentId = "agent_codex"
             isExternalAgent = false
+        } else if isOmpEvent {
+            agentId = "agent_omp"
+            isExternalAgent = false
+            // OMP runs in a terminal: remember which one, for the jump back.
+            hostApp = ClaudeHost.terminal(termProgram: termProgram, bundleId: bundleId)?.bundleId
         } else if let agent = validAgent {
             agentId = "agent_\(agent)"
             isExternalAgent = true
@@ -618,6 +644,12 @@ final class HookServer: @unchecked Sendable {
                 state.tasks[idx].finalLine = finalText
             }
             if !terminalInFront { SoundEngine.shared.play("finish") }
+            #if !APPSTORE
+            // OMP's reply is ready while you are elsewhere: Mochi jumps, like Claude Desktop chats.
+            if agentId == "agent_omp", !terminalInFront, Self.ompReplyJump {
+                NotificationCenter.default.post(name: .triggerEmote, object: BotEmote.happy)
+            }
+            #endif
             if !terminalInFront && showsAlert(for: agentId, focused: focused) {
                 expandIfNeeded(to: .finished)
             } else {
@@ -789,6 +821,10 @@ final class HookServer: @unchecked Sendable {
     @MainActor
     private func processStatusLine(payload: [String: Any]) {
         guard let usage = ClaudePlanGauge.parse(payload: payload) else { return }
+        #if !APPSTORE
+        // claude-lb is the chosen source: the status line of one session must not overwrite it.
+        if AppState.shared.planFromClaudeLB { return }
+        #endif
         // Claude Code calls the status line several times a second: publish (and save to
         // UserDefaults) only when the numbers change, or every 30 s for "updated … ago".
         if let cur = AppState.shared.claudePlanUsage,
@@ -829,13 +865,17 @@ final class HookServer: @unchecked Sendable {
         let isHermesRequest  = rawAgent == "hermes"
             && UserDefaults.standard.bool(forKey: "hermesApprovalsEnabled")
             && (payload["coucou_has_transport"] as? Bool == true)
+        let isOmpRequest     = rawAgent == "omp"
+            && UserDefaults.standard.bool(forKey: "ompApprovalsEnabled")
+            && (payload["coucou_has_transport"] as? Bool == true)
         #else
         let isCodexRequest   = false
         let isCopilotRequest = false
         let isMuseRequest    = false
         let isHermesRequest  = false
+        let isOmpRequest     = false
         #endif
-        if !isCodexRequest && !isCopilotRequest && !isMuseRequest && !isHermesRequest && Self.validateAgent(rawAgent) != nil {
+        if !isCodexRequest && !isCopilotRequest && !isMuseRequest && !isHermesRequest && !isOmpRequest && Self.validateAgent(rawAgent) != nil {
             Task.detached { [weak self] in
                 self?.sendLine(fd: fd, text: #"{"permissionDecision":"ask"}"#)
                 close(fd)
@@ -853,6 +893,8 @@ final class HookServer: @unchecked Sendable {
             pillId = "agent_muse"
         } else if isHermesRequest {
             pillId = "agent_hermes"
+        } else if isOmpRequest {
+            pillId = "agent_omp"
         } else if isCursorEditor {
             pillId = "agent_cursor"
         } else {
@@ -862,7 +904,7 @@ final class HookServer: @unchecked Sendable {
         let terminalHost = isCursorEditor || isVSCodeEditor ? nil
             : ClaudeHost.terminal(termProgram: termProgram, bundleId: bundleId)
         let isTerminal = terminalHost != nil && ClaudeHost.terminalCardsEnabled
-        guard isCodexRequest || isCopilotRequest || isMuseRequest || isHermesRequest || isCursorEditor || isVSCodeEditor || isTerminal else {
+        guard isCodexRequest || isCopilotRequest || isMuseRequest || isHermesRequest || isOmpRequest || isCursorEditor || isVSCodeEditor || isTerminal else {
             Task.detached { [weak self] in
                 self?.sendLine(fd: fd, text: #"{"permissionDecision":"ask"}"#)
                 close(fd)
@@ -1379,6 +1421,7 @@ final class HookServer: @unchecked Sendable {
         let pyURL = wrapperURL.deletingLastPathComponent().appendingPathComponent("nb-hook.py")
         try? nbHookPythonGitHub.write(to: pyURL, atomically: true, encoding: .utf8)
         _ = try? FileManager.default.setAttributes([.posixPermissions: 0o755 as NSNumber], ofItemAtPath: pyURL.path)
+        CoucouMCP.installScript()
         #endif
     }
 
@@ -3214,6 +3257,318 @@ description: Coucou notch integration — generated by Coucou.app
         _pendingHermesConfigFingerprint = nil
     }
 
+    // MARK: - OMP (oh-my-pi) extension installer
+
+    private var _pendingOmpContent: String?
+    private var _pendingOmpFingerprint: String?
+
+    static var ompExtensionURL: URL {
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(".omp/agent/extensions/coucou.ts")
+    }
+
+    static var ompGateFileURL: URL {
+        supportDir.appendingPathComponent("omp-gate.json")
+    }
+
+    /// OMP tools that can ask in the notch, and the ones that do by default.
+    static let ompGateableTools = ["bash", "eval", "edit", "ast_edit", "write", "browser", "task"]
+    static let ompDefaultGatedTools = ["bash", "eval", "edit", "ast_edit", "write"]
+
+    static func ompGatedTools() -> [String] {
+        UserDefaults.standard.stringArray(forKey: "ompApprovalTools") ?? ompDefaultGatedTools
+    }
+
+    /// Settings → Agents → OMP: Mochi jumps when an OMP reply is ready. Default: on.
+    static var ompReplyJump: Bool {
+        UserDefaults.standard.object(forKey: "ompReplyJump") as? Bool ?? true
+    }
+
+    static func ompExtensionInstalled() -> Bool {
+        guard let content = try? String(contentsOf: ompExtensionURL, encoding: .utf8) else { return false }
+        return content.contains("generated by Coucou") && content.contains("'omp'")
+    }
+
+    /// The extension re-reads this on every tool call, so Settings changes apply live.
+    func syncOmpGateFile() {
+        let obj: [String: Any] = [
+            "approvals": UserDefaults.standard.bool(forKey: "ompApprovalsEnabled"),
+            "tools": Self.ompGatedTools(),
+        ]
+        guard let data = try? JSONSerialization.data(withJSONObject: obj, options: [.sortedKeys]) else { return }
+        let url = Self.ompGateFileURL
+        try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try? data.write(to: url, options: .atomic)
+    }
+
+    private func buildOmpExtensionContent() -> String {
+        let hookPath = Self.hookScriptPath
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "'", with: "\\'")
+        let gatePath = Self.ompGateFileURL.path
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "'", with: "\\'")
+        return """
+// Coucou extension for OMP (oh-my-pi) — generated by Coucou.app
+// Shows OMP sessions in the notch. With "Approve OMP tools in the notch" on, the listed
+// tools ask there first; Coucou closed or silent → OMP's terminal confirm.
+import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { lookup } from '@oh-my-pi/pi-coding-agent/config/registry';
+
+const HOOK = '\(hookPath)';
+const GATE = '\(gatePath)';
+const NOTCH_WAIT_MS = 115_000;
+
+type Gate = { approvals: boolean; tools: string[] };
+
+function readGate(): Gate {
+  try {
+    const j = JSON.parse(readFileSync(GATE, 'utf8'));
+    const tools = Array.isArray(j.tools) ? j.tools.filter((t: unknown) => typeof t === 'string') : [];
+    return { approvals: j.approvals === true, tools };
+  } catch {
+    return { approvals: false, tools: [] };
+  }
+}
+
+function relay(fields: Record<string, unknown>, onLine?: (line: string) => void, waitMs = 0): Promise<void> {
+  return new Promise((resolve) => {
+    try {
+      const p = spawn('/bin/sh', [HOOK, '--agent', 'omp'], {
+        stdio: ['pipe', onLine ? 'pipe' : 'ignore', 'ignore'],
+        detached: !onLine,
+      });
+      let out = '';
+      let done = false;
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        if (timer) clearTimeout(timer);
+        try { onLine?.(out.trim().split('\\n').pop() ?? ''); } catch {}
+        resolve();
+      };
+      p.on('error', finish);
+      p.stdin?.on('error', () => {});
+      if (onLine) {
+        p.stdout?.on('data', (d: Buffer) => { out += d.toString('utf8'); });
+        p.on('close', finish);
+        timer = setTimeout(() => { try { p.kill(); } catch {} finish(); }, waitMs);
+      } else {
+        p.unref();
+        resolve();
+      }
+      p.stdin?.end(JSON.stringify({ coucou_agent: 'omp', coucou_has_transport: true, ...fields }) + '\\n');
+    } catch {
+      resolve();
+    }
+  });
+}
+
+const forward = (event: string, fields: Record<string, unknown>) => { void relay({ hook_event_name: event, ...fields }); };
+
+/** 'allow' | 'deny' | '' (no answer: Coucou closed, timed out, or "reply in terminal"). */
+export function parseDecision(line: string): string {
+  try {
+    const d = JSON.parse(line)?.permissionDecision;
+    return d === 'allow' || d === 'always' ? 'allow' : d === 'deny' ? 'deny' : '';
+  } catch {
+    return '';
+  }
+}
+
+/** The text of the last assistant message of a run, for the pill (first 600 characters). */
+function lastReply(messages: unknown): string {
+  try {
+    if (!Array.isArray(messages)) return '';
+    for (let i = messages.length - 1; i >= 0; i -= 1) {
+      const m = messages[i] as any;
+      if (m?.role !== 'assistant') continue;
+      const text = typeof m.content === 'string' ? m.content
+        : Array.isArray(m.content) ? m.content.filter((b: any) => b?.type === 'text').map((b: any) => b.text).join(' ') : '';
+      return text.trim().slice(0, 600);
+    }
+  } catch {}
+  return '';
+}
+
+function summary(input: unknown): string {
+  try {
+    const i = (input ?? {}) as Record<string, unknown>;
+    const text = String(i.command ?? i.code ?? i.path ?? i.file_path ?? JSON.stringify(i));
+    return text.length > 600 ? text.slice(0, 600) + '…' : text;
+  } catch {
+    return '';
+  }
+}
+
+export default function coucou(pi: any): void {
+  // A nested omp started from an omp shell is not the session the user is watching.
+  if (process.env.OMPCODE === '1') return;
+
+  let sessionId = '';
+  const isMain = (ctx: any) => ctx?.agent?.kind !== 'sub';
+  const base = (ctx: any) => ({ session_id: sessionId, cwd: ctx?.cwd ?? '' });
+
+  // While the gate is on Coucou decides, so OMP's own prompt would ask a second time,
+  // and the notch wait must fit the tool_call handler budget (30 s by default).
+  const handles = (() => {
+    try { return { mode: lookup('tools.approvalMode'), budget: lookup('extensionHandlers.toolCallTimeoutMs') }; }
+    catch { return { mode: undefined, budget: undefined }; }
+  })();
+  let gated = false;
+  function applyGate(on: boolean): void {
+    if (on === gated) return;
+    try {
+      if (on) {
+        handles.mode?.override(pi.pi.settings, 'yolo');
+        handles.budget?.override(pi.pi.settings, NOTCH_WAIT_MS + 15_000);
+      } else {
+        handles.mode?.clearOverride(pi.pi.settings);
+        handles.budget?.clearOverride(pi.pi.settings);
+      }
+      gated = on;
+    } catch {}
+  }
+
+  pi.on('session_start', (_e: any, ctx: any) => {
+    try {
+      sessionId = ctx?.sessionManager?.getSessionId?.() ?? '';
+      if (!isMain(ctx)) return;
+      applyGate(readGate().approvals);
+      forward('SessionStart', base(ctx));
+    } catch {}
+  });
+
+  pi.on('agent_start', (_e: any, ctx: any) => {
+    try { if (isMain(ctx)) forward('UserPromptSubmit', base(ctx)); } catch {}
+  });
+
+  pi.on('tool_execution_start', (e: any, ctx: any) => {
+    try {
+      if (!isMain(ctx)) return;
+      forward('PreToolUse', { ...base(ctx), tool_name: e?.toolName ?? '', tool_input: e?.args ?? {} });
+      if (e?.toolName === 'ask') {
+        const q = e?.args?.questions?.find?.((x: any) => typeof x?.question === 'string')?.question;
+        forward('Notification', { ...base(ctx), message: q || 'OMP has a question for you?' });
+      }
+    } catch {}
+  });
+
+  pi.on('tool_execution_end', (e: any, ctx: any) => {
+    try {
+      if (!isMain(ctx)) return;
+      forward(e?.isError ? 'PostToolUseFailure' : 'PostToolUse', { ...base(ctx), tool_name: e?.toolName ?? '' });
+    } catch {}
+  });
+
+  pi.on('tool_approval_requested', (e: any, ctx: any) => {
+    try {
+      if (isMain(ctx)) forward('Notification', { ...base(ctx), message: `OMP is waiting for your approval: ${e?.toolName ?? 'tool'}` });
+    } catch {}
+  });
+
+  pi.on('agent_end', (e: any, ctx: any) => {
+    try {
+      if (!isMain(ctx) || e?.willContinue === true) return;
+      forward('Stop', { ...base(ctx), last_assistant_message: lastReply(e?.messages) });
+    } catch {}
+  });
+
+  pi.on('session_shutdown', (_e: any, ctx: any) => {
+    try {
+      applyGate(false);
+      if (isMain(ctx)) forward('SessionEnd', base(ctx));
+    } catch {}
+  });
+
+  pi.on('tool_call', async (e: any, ctx: any) => {
+    try {
+      if (!isMain(ctx)) return;
+      const gate = readGate();
+      applyGate(gate.approvals);
+      if (!gate.approvals || !gate.tools.includes(e?.toolName)) return;
+      let decision = '';
+      await relay(
+        { hook_event_name: 'PermissionRequest', ...base(ctx), tool_name: e.toolName, tool_input: e?.input ?? {} },
+        (line) => { decision = parseDecision(line); },
+        NOTCH_WAIT_MS,
+      );
+      if (decision === 'allow') return;
+      if (decision === 'deny') return { block: true, reason: 'Denied in Coucou' };
+      if (ctx?.hasUI) {
+        const ok = await ctx.ui.confirm(`Allow ${e.toolName}?`, summary(e?.input));
+        return ok ? undefined : { block: true, reason: 'Denied' };
+      }
+      return { block: true, reason: 'No answer from Coucou' };
+    } catch {
+      return undefined;
+    }
+  });
+}
+"""
+    }
+
+    func previewOmpExtension(install: Bool) throws -> String {
+        let url = Self.ompExtensionURL
+        let exists = FileManager.default.fileExists(atPath: url.path)
+        if !install {
+            guard exists else {
+                throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
+                    NSLocalizedDescriptionKey: "No OMP extension to remove."
+                ])
+            }
+            let current = (try? Data(contentsOf: url)) ?? Data()
+            _pendingOmpFingerprint = sha256Hex(current)
+            _pendingOmpContent = nil
+            return "(will delete \(url.path))"
+        }
+        let current = exists ? (try? Data(contentsOf: url)) ?? Data() : Data()
+        _pendingOmpFingerprint = sha256Hex(current)
+        let content = buildOmpExtensionContent()
+        _pendingOmpContent = content
+        return content
+    }
+
+    func writeOmpExtension() throws {
+        guard let fp = _pendingOmpFingerprint else { return }
+        let url = Self.ompExtensionURL
+        let current = (try? Data(contentsOf: url)) ?? Data()
+        guard sha256Hex(current) == fp else {
+            throw NSError(domain: "Coucou", code: 1, userInfo: [
+                NSLocalizedDescriptionKey: "~/.omp/agent/extensions/coucou.ts changed since preview. Refresh and try again."
+            ])
+        }
+        guard let content = _pendingOmpContent else { return }
+        let fm = FileManager.default
+        if fm.fileExists(atPath: url.path) {
+            let fmt = DateFormatter()
+            fmt.locale = Locale(identifier: "en_US_POSIX")
+            fmt.dateFormat = "yyyyMMdd-HHmmss"
+            let backupURL = url.deletingLastPathComponent()
+                .appendingPathComponent("coucou.ts.bak-\(fmt.string(from: Date()))")
+            try fm.copyItem(at: url, to: backupURL)
+        }
+        try fm.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try content.write(to: url, atomically: true, encoding: .utf8)
+        syncOmpGateFile()
+        _pendingOmpContent = nil
+        _pendingOmpFingerprint = nil
+    }
+
+    func removeOmpExtension() throws {
+        let url = Self.ompExtensionURL
+        guard FileManager.default.fileExists(atPath: url.path) else { return }
+        let content = (try? String(contentsOf: url, encoding: .utf8)) ?? ""
+        guard content.contains("generated by Coucou") else {
+            throw NSError(domain: "Coucou", code: 3, userInfo: [
+                NSLocalizedDescriptionKey: "~/.omp/agent/extensions/coucou.ts was not generated by Coucou — not deleting it."
+            ])
+        }
+        try FileManager.default.removeItem(at: url)
+    }
+
     // MARK: SHA-256 fingerprint
 
     private func sha256Hex(_ data: Data) -> String {
@@ -3539,6 +3894,13 @@ def main():
                     if hermes_choice in ('once', 'always', 'deny'):
                         sys.stdout.write(json.dumps({'choice': hermes_choice}) + '\\n')
                         sys.stdout.flush()
+                    sys.exit(0)
+                if agent == 'omp':
+                    if decision in ('allow', 'always'):
+                        sys.stdout.write('{"permissionDecision":"allow"}\\n')
+                    elif decision == 'deny':
+                        sys.stdout.write('{"permissionDecision":"deny"}\\n')
+                    sys.stdout.flush()
                     sys.exit(0)
                 if decision in ('allow', 'always'):
                     # Copilot/Muse use {"permissionDecision":"allow"} directly
@@ -3891,6 +4253,13 @@ def main():
                     if hermes_choice in ('once', 'always', 'deny'):
                         sys.stdout.write(json.dumps({'choice': hermes_choice}) + '\\n')
                         sys.stdout.flush()
+                    sys.exit(0)
+                if agent == 'omp':
+                    if decision in ('allow', 'always'):
+                        sys.stdout.write('{"permissionDecision":"allow"}\\n')
+                    elif decision == 'deny':
+                        sys.stdout.write('{"permissionDecision":"deny"}\\n')
+                    sys.stdout.flush()
                     sys.exit(0)
                 if decision in ('allow', 'always'):
                     # Copilot/Muse use {"permissionDecision":"allow"} directly

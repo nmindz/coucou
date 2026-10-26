@@ -556,7 +556,7 @@ struct IslandHeader: View {
                 #if !APPSTORE
                 // Claude and Codex both on: only Claude here (two pills and the icons do not
                 // clear the notch); Codex is a row in the Claude plan card.
-                if state.view == .overview && state.showPlanInNotch && state.planRelayInstalled {
+                if state.view == .overview && state.claudePlanAvailable {
                     ClaudePlanHeaderPill(state: state)
                 } else if state.view == .overview && state.showCodexPlanInNotch {
                     ClaudePlanHeaderPill(state: state, codex: true)
@@ -668,7 +668,7 @@ struct ClaudePlanHeaderPill: View {
                 state.planDetailIsCodex = codex
                 state.showingPlanDetail = !open
             }
-            if codex { state.refreshCodexPlanUsage() }
+            if codex { state.refreshCodexPlanUsage() } else { state.refreshClaudeLBUsage() }
         }) {
             HStack(spacing: 4) {
                 Circle()
@@ -699,7 +699,7 @@ struct ClaudePlanHeaderPill: View {
         .onHover { h in
             withAnimation(.spring(response: 0.2, dampingFraction: 0.7)) { isHovered = h }
         }
-        .onAppear { if codex { state.refreshCodexPlanUsage() } }
+        .onAppear { if codex { state.refreshCodexPlanUsage() } else { state.refreshClaudeLBUsage() } }
     }
 }
 #endif

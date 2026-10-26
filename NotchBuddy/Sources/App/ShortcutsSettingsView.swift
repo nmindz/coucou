@@ -37,7 +37,7 @@ struct ShortcutsSettingsView: View {
                 HStack {
                     Spacer()
                     Button(String(localized: "shortcut.reset-defaults")) { resetAll() }
-                        .buttonStyle(.bordered)
+                        .coucouButton()
                         .controlSize(.small)
                 }
                 .padding(.top, 6)
@@ -72,7 +72,7 @@ struct ShortcutsSettingsView: View {
             .frame(width: 18)
 
             Text(action.displayName)
-                .font(.system(size: 12))
+                .coucouFont(size: 15)
                 .frame(minWidth: 160, alignment: .leading)
 
             Spacer(minLength: 4)
@@ -93,7 +93,7 @@ struct ShortcutsSettingsView: View {
 
     private func conflictTag(_ text: String, color: Color) -> some View {
         Text(text)
-            .font(.system(size: 10, weight: .medium))
+            .coucouFont(size: 13, weight: .medium)
             .foregroundColor(color)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
@@ -109,10 +109,10 @@ struct ShortcutsSettingsView: View {
                 ForEach(Array(ShortcutLogic.islandShortcuts.enumerated()), id: \.offset) { _, pair in
                     HStack(spacing: 10) {
                         Text(pair.key)
-                            .font(.system(size: 11, design: .monospaced))
+                            .coucouFont(size: 14, design: .monospaced)
                             .frame(width: 90, alignment: .leading)
                         Text(pair.description)
-                            .font(.system(size: 12))
+                            .coucouFont(size: 15)
                             .foregroundColor(.secondary)
                         Spacer()
                     }

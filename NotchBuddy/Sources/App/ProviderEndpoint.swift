@@ -79,3 +79,26 @@ enum ProviderEndpoint {
         return parts.url.map(Result.success) ?? .failure(.invalid)
     }
 }
+
+/// Anthropic's own tools (`web_search_20250305`…) in a Messages request, for compatible backends
+/// that refuse them.
+enum AnthropicTools {
+    /// The body without the typed tools, or nil when it had none. The caller's own tools (type
+    /// `custom`, or no type) are kept; `tools` goes when nothing is left.
+    static func withoutTypedTools(_ body: [String: Any]) -> [String: Any]? {
+        guard let tools = body["tools"] as? [[String: Any]] else { return nil }
+        let kept = tools.filter { tool in
+            guard let type = tool["type"] as? String else { return true }
+            return type == "custom"
+        }
+        guard kept.count < tools.count else { return nil }
+        var out = body
+        if kept.isEmpty { out.removeValue(forKey: "tools") } else { out["tools"] = kept }
+        return out
+    }
+
+    /// A validation message naming a `tools[N]` entry ("tools.0.web_search_20250305.name: …").
+    static func namesToolEntry(_ message: String) -> Bool {
+        message.range(of: #"(^|\W)tools\.\d+\."#, options: .regularExpression) != nil
+    }
+}

@@ -53,19 +53,19 @@ struct HubInsightsPage: View {
             }
             HStack(alignment: .top, spacing: 14) {
                 HubCard(padding: 20) {
-                    Text("hub.stat.per-day").font(.system(size: 14, weight: .bold))
+                    Text("hub.stat.per-day").coucouFont(size: 16, weight: .bold)
                     HubBars(days: store.dailyWords(last: period.chartDays))
                         .frame(height: 200)
                 }
                 .frame(maxWidth: .infinity)
                 HubCard(padding: 20) {
-                    Text("hub.stat.apps").font(.system(size: 14, weight: .bold))
+                    Text("hub.stat.apps").coucouFont(size: 16, weight: .bold)
                     HubAppBars(apps: store.stats.apps)
                 }
                 .frame(width: 300)
             }
             Text("hub.insights-privacy")
-                .font(.system(size: 12))
+                .coucouFont(size: 14)
                 .foregroundColor(HubTheme.muted)
         }
     }
@@ -86,16 +86,16 @@ private struct HubStatCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(label)
-                .font(.system(size: 12))
+                .coucouFont(size: 14)
                 .foregroundColor(HubTheme.secondary)
             Text(value)
-                .font(.system(size: 28, weight: .bold))
+                .coucouFont(size: 28, weight: .bold)
                 .tracking(-0.6)
                 .monospacedDigit()
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(note ?? " ")
-                .font(.system(size: 12))
+                .coucouFont(size: 14)
                 .foregroundColor(HubTheme.secondary)
                 .lineLimit(1)
         }
@@ -122,14 +122,14 @@ private struct HubBars: View {
                         Spacer(minLength: 0)
                         RoundedRectangle(cornerRadius: 4, style: .continuous)
                             .fill(isToday ? HubTheme.accent : HubTheme.accent.opacity(0.35))
-                            .frame(height: max(day.words > 0 ? 4 : 2, (geo.size.height - 24) * CGFloat(day.words) / CGFloat(top)))
+                            .frame(height: max(day.words > 0 ? 4 : 2, (geo.size.height - 26) * CGFloat(day.words) / CGFloat(top)))
                             .help("\(day.words)")
                         Text(index % labelEvery == 0 || isToday ? Self.label(day.date, short: days.count > 10) : " ")
-                            .font(.system(size: 10.5, weight: isToday ? .bold : .regular))
+                            .coucouFont(size: 12.5, weight: isToday ? .bold : .regular)
                             .foregroundColor(isToday ? HubTheme.text : HubTheme.muted)
                             .lineLimit(1)
                             .fixedSize()
-                            .frame(height: 14)
+                            .frame(height: 16)
                     }
                     .frame(maxWidth: .infinity)
                 }
@@ -151,17 +151,17 @@ private struct HubAppBars: View {
         let top = apps.sorted { $0.value > $1.value }.prefix(6)
         if top.isEmpty {
             Text("hub.stat.apps-empty")
-                .font(.system(size: 13))
+                .coucouFont(size: 15)
                 .foregroundColor(HubTheme.secondary)
         }
         ForEach(Array(top), id: \.key) { app in
             let share = Double(app.value) / Double(total)
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
-                    Text(app.key).font(.system(size: 13)).lineLimit(1)
+                    Text(app.key).coucouFont(size: 15).lineLimit(1)
                     Spacer()
                     Text(share.formatted(.percent.precision(.fractionLength(0))))
-                        .font(.system(size: 13))
+                        .coucouFont(size: 15)
                         .foregroundColor(HubTheme.secondary)
                         .monospacedDigit()
                 }

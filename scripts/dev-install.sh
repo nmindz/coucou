@@ -30,20 +30,53 @@ if [ -d "${TARGET}" ]; then
   fi
 fi
 
-echo "Building (DebugCloud)..."
 cd "${REPO_ROOT}/NotchBuddy"
 xcodegen >/dev/null
-xcodebuild -scheme NotchBuddyCloud -configuration DebugCloud -allowProvisioningUpdates \
-  -derivedDataPath "${DERIVED}" -quiet build
+
+# Plain Debug has no iCloud entitlements, so any Apple Development certificate can sign it.
+TEAM="256AUJ9555"
+if security find-identity -p codesigning -v | grep -q "(${TEAM})"; then
+  echo "Building (DebugCloud)..."
+  xcodebuild -scheme NotchBuddyCloud -configuration DebugCloud -allowProvisioningUpdates \
+    -derivedDataPath "${DERIVED}" -quiet build
+else
+  IDENTITY="${COUCOU_SIGN_IDENTITY:-$(security find-identity -p codesigning -v \
+    | sed -nE 's/.*"(Apple Development: [^"]+)".*/\1/p' | head -1)}"
+  if [ -z "${IDENTITY}" ]; then
+    echo "No ${TEAM} or Apple Development certificate in the keychain; set COUCOU_SIGN_IDENTITY." >&2
+    exit 1
+  fi
+  OWN_TEAM="$(security find-certificate -c "${IDENTITY}" -p | openssl x509 -noout -subject \
+    | sed -nE 's/.*OU ?= ?([A-Z0-9]{10}).*/\1/p')"
+  echo "Building (Debug, signed by ${IDENTITY}; no iPhone link)..."
+  xcodebuild -scheme NotchBuddy -configuration Debug -derivedDataPath "${DERIVED}" -quiet \
+    CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_STYLE=Manual \
+    CODE_SIGN_IDENTITY="${IDENTITY}" DEVELOPMENT_TEAM="${OWN_TEAM}" build
+  BUILT="${DERIVED}/Build/Products/Debug/Coucou.app"
+  # Missing audio-input = macOS denies the mic with no prompt (voice toggle stays greyed out).
+  codesign --force --options runtime --timestamp=none --sign "${IDENTITY}" \
+    --entitlements Resources/Coucou.entitlements "${BUILT}"
+fi
 
 echo "Quitting Coucou..."
 osascript -e "tell application id \"${BUNDLE_ID}\" to quit" >/dev/null 2>&1 || true
 for _ in 1 2 3 4 5; do pgrep -x Coucou >/dev/null || break; sleep 1; done
 pkill -x Coucou 2>/dev/null || true
 
+# Permissions are tied to the signer: a new one leaves stale grants, so reset them.
+OLD_REQ="$(codesign -d -r- "${TARGET}" 2>/dev/null | sed -n 's/^designated => //p')"
+NEW_REQ="$(codesign -d -r- "${BUILT}" 2>/dev/null | sed -n 's/^designated => //p')"
+
 echo "Installing in ${TARGET}..."
 rm -rf "${TARGET}"
 ditto "${BUILT}" "${TARGET}"
+
+if [ -n "${OLD_REQ}" ] && [ "${OLD_REQ}" != "${NEW_REQ}" ]; then
+  echo "Signature changed: resetting Coucou's permissions; macOS asks for them again."
+  for service in Accessibility Microphone SpeechRecognition ScreenCapture AudioCapture AppleEvents AddressBook ListenEvent PostEvent; do
+    tccutil reset "${service}" "${BUNDLE_ID}" >/dev/null 2>&1 || true
+  done
+fi
 
 # The build stays in DerivedData for the next (incremental) build, but macOS must not
 # count it as another Coucou. Copies from Xcode's own builds (▶, xcodebuild by hand) go.

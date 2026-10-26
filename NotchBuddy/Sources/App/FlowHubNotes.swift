@@ -58,7 +58,7 @@ private struct HubNotesList: View {
             .padding(.top, 16)
             if let error = taker.startError {
                 Text(error)
-                    .font(.system(size: 12))
+                    .coucouFont(size: 13)
                     .foregroundColor(HubTheme.accent)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -78,10 +78,10 @@ private struct HubNotesList: View {
             .scrollIndicators(.never)
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "lock")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 12)
                     .padding(.top, 1)
                 Text("notes.legal")
-                    .font(.system(size: 11))
+                    .coucouFont(size: 12)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .foregroundColor(HubTheme.secondary)
@@ -158,13 +158,13 @@ private struct HubNoteRow: View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(note.title)
-                    .font(.system(size: 14, weight: selected ? .semibold : .regular))
+                    .coucouFont(size: 15, weight: selected ? .semibold : .regular)
                     .foregroundColor(selected ? HubTheme.text : Color(hex: "#D5D7DB"))
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                 HStack(spacing: 6) {
                     Text(subtitle)
-                        .font(.system(size: 12))
+                        .coucouFont(size: 13)
                         .foregroundColor(note.status == .recording ? HubTheme.red : HubTheme.secondary)
                     Spacer(minLength: 4)
                     HStack(spacing: 3) {
@@ -208,15 +208,15 @@ private struct HubNotesSetup: View {
                 .frame(height: 50)
             HubCard(padding: 20) {
                 Text("notes.setup-title")
-                    .font(.system(size: 15, weight: .bold))
+                    .coucouFont(size: 16, weight: .bold)
                 Text("notes.setup")
-                    .font(.system(size: 13))
+                    .coucouFont(size: 14)
                     .foregroundColor(Color(hex: "#C7CAD0"))
                     .fixedSize(horizontal: false, vertical: true)
                 switch parakeet.state {
                 case .unsupported:
                     Text("hub.engine.unsupported")
-                        .font(.system(size: 13))
+                        .coucouFont(size: 14)
                         .foregroundColor(HubTheme.accent)
                 case .downloading(let fraction):
                     ProgressView(value: fraction)
@@ -268,7 +268,7 @@ private struct HubLiveNote: View {
                     LazyVStack(alignment: .leading, spacing: 12) {
                         if note.lines.isEmpty {
                             Text("notes.live-empty")
-                                .font(.system(size: 13))
+                                .coucouFont(size: 14)
                                 .foregroundColor(HubTheme.secondary)
                         }
                         ForEach(note.lines) { line in
@@ -298,7 +298,7 @@ private struct HubLevel: View {
     var body: some View {
         HStack(spacing: 10) {
             Text(label)
-                .font(.system(size: 12, weight: .semibold))
+                .coucouFont(size: 13, weight: .semibold)
                 .foregroundColor(HubTheme.secondary)
                 .frame(width: 80, alignment: .leading)
             GeometryReader { geo in
@@ -324,19 +324,19 @@ private struct HubLineView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Text(String(name.prefix(1)).uppercased())
-                .font(.system(size: 11, weight: .bold))
+                .coucouFont(size: 12, weight: .bold)
                 .foregroundColor(.black.opacity(0.8))
                 .frame(width: 24, height: 24)
                 .background(Circle().fill(color))
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 8) {
-                    Text(name).font(.system(size: 13, weight: .semibold)).foregroundColor(color)
+                    Text(name).coucouFont(size: 14, weight: .semibold).foregroundColor(color)
                     Text(NoteBuilder.clock(line.start))
-                        .font(.system(size: 12).monospacedDigit())
+                        .font(.system(size: 14).monospacedDigit())
                         .foregroundColor(HubTheme.muted)
                 }
                 Text(line.text)
-                    .font(.system(size: 14))
+                    .coucouFont(size: 15)
                     .lineSpacing(3)
                     .foregroundColor(HubTheme.body)
                     .textSelection(.enabled)
@@ -368,7 +368,7 @@ private struct HubNoteDetail: View {
                     HStack(spacing: 10) {
                         ProgressView().controlSize(.small)
                         Text("notes.processing")
-                            .font(.system(size: 13))
+                            .coucouFont(size: 14)
                             .foregroundColor(HubTheme.secondary)
                     }
                 } else if note.status == .failed {
@@ -420,12 +420,14 @@ private struct HubNoteDetail: View {
     private var header: some View {
         HStack(alignment: .top, spacing: 16) {
             VStack(alignment: .leading, spacing: 6) {
-                TextField("", text: $title)
+                // Long titles wrap instead of scrolling out of sight beside the buttons.
+                TextField("", text: $title, axis: .vertical)
                     .textFieldStyle(.plain)
-                    .font(.system(size: 24, weight: .bold))
+                    .lineLimit(1...4)
+                    .coucouFont(size: 22, weight: .bold)
                     .onSubmit { taker.rename(note.id, title: title) }
                 Text(dateLine)
-                    .font(.system(size: 13))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
             }
             Spacer(minLength: 0)
@@ -475,10 +477,10 @@ private struct HubNoteDetail: View {
     private var failed: some View {
         HubCard {
             Text("notes.failed")
-                .font(.system(size: 14, weight: .semibold))
+                .coucouFont(size: 15, weight: .semibold)
             if let error = note.error {
                 Text(error)
-                    .font(.system(size: 12))
+                    .coucouFont(size: 13)
                     .foregroundColor(HubTheme.secondary)
             }
             if taker.hasAudio(note.id) {
@@ -498,15 +500,15 @@ private struct HubNoteDetail: View {
                 } label: {
                     HStack(spacing: 7) {
                         Text(String(speaker.name.prefix(1)).uppercased())
-                            .font(.system(size: 11, weight: .bold))
+                            .coucouFont(size: 12, weight: .bold)
                             .foregroundColor(.black.opacity(0.8))
                             .frame(width: 20, height: 20)
                             .background(Circle().fill(HubTheme.speaker(speaker.color)))
                         Text(speaker.name + (shares[speaker.id].map { " · " + $0.formatted(.percent.precision(.fractionLength(0))) } ?? ""))
-                            .font(.system(size: 13))
+                            .coucouFont(size: 14)
                             .foregroundColor(HubTheme.speaker(speaker.color))
                         Image(systemName: "pencil")
-                            .font(.system(size: 10))
+                            .coucouFont(size: 11)
                             .foregroundColor(HubTheme.speaker(speaker.color).opacity(0.7))
                     }
                     .padding(.leading, 6)
@@ -525,13 +527,13 @@ private struct HubNoteDetail: View {
             HStack(spacing: 10) {
                 ProgressView().controlSize(.small)
                 Text("notes.summarizing")
-                    .font(.system(size: 13))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
             }
         } else if note.summary == nil && note.keyPoints.isEmpty && note.todos.isEmpty {
             HubCard {
                 Text(note.lines.isEmpty ? String(localized: "notes.nothing-heard") : String(localized: "notes.no-summary"))
-                    .font(.system(size: 13))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 if !note.lines.isEmpty {
@@ -546,7 +548,7 @@ private struct HubNoteDetail: View {
                 VStack(alignment: .leading, spacing: 14) {
                     if let text = note.summary, !text.isEmpty {
                         Text(text)
-                            .font(.system(size: 14))
+                            .coucouFont(size: 15)
                             .lineSpacing(4)
                             .foregroundColor(HubTheme.body)
                             .textSelection(.enabled)
@@ -559,7 +561,7 @@ private struct HubNoteDetail: View {
                                 HStack(alignment: .top, spacing: 10) {
                                     Text(verbatim: "•").foregroundColor(HubTheme.muted)
                                     Text(point)
-                                        .font(.system(size: 14))
+                                        .coucouFont(size: 15)
                                         .foregroundColor(Color(hex: "#D5D7DB"))
                                         .textSelection(.enabled)
                                         .fixedSize(horizontal: false, vertical: true)
@@ -581,12 +583,12 @@ private struct HubNoteDetail: View {
         LazyVStack(alignment: .leading, spacing: 14) {
             if note.lines.isEmpty {
                 Text("notes.nothing-heard")
-                    .font(.system(size: 13))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
             }
             if !note.lines.isEmpty {
                 Text("notes.transcript-hint")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 13)
                     .foregroundColor(HubTheme.muted)
             }
             ForEach(note.lines) { line in
@@ -619,7 +621,7 @@ private struct HubEditableLine: View {
             .overlay(alignment: .topTrailing) {
                 Menu { actions } label: {
                     Image(systemName: "ellipsis")
-                        .font(.system(size: 12))
+                        .coucouFont(size: 13)
                         .foregroundColor(HubTheme.secondary)
                 }
                 .menuStyle(.borderlessButton)
@@ -652,10 +654,10 @@ private struct HubTodos: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("notes.todos").font(.system(size: 14, weight: .bold))
+                Text("notes.todos").coucouFont(size: 15, weight: .bold)
                 Spacer()
                 Text(verbatim: "\(note.todos.filter(\.done).count) / \(note.todos.count)")
-                    .font(.system(size: 12).monospacedDigit())
+                    .font(.system(size: 14).monospacedDigit())
                     .foregroundColor(HubTheme.secondary)
             }
             ForEach(note.todos) { todo in
@@ -668,7 +670,7 @@ private struct HubTodos: View {
                                 .strokeBorder(todo.done ? Color.clear : Color(hex: "#5A5F68"), lineWidth: 1.5)
                             if todo.done {
                                 Image(systemName: "checkmark")
-                                    .font(.system(size: 9, weight: .heavy))
+                                    .coucouFont(size: 10, weight: .heavy)
                                     .foregroundColor(HubTheme.onAccent)
                             }
                         }
@@ -676,14 +678,14 @@ private struct HubTodos: View {
                         .padding(.top, 1)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(todo.text)
-                                .font(.system(size: 13))
+                                .coucouFont(size: 14)
                                 .strikethrough(todo.done)
                                 .foregroundColor(todo.done ? HubTheme.muted : Color(hex: "#E1E3E6"))
                                 .fixedSize(horizontal: false, vertical: true)
                             let extra = [todo.owner, todo.due].compactMap { $0 }.joined(separator: " · ")
                             if !extra.isEmpty {
                                 Text(extra)
-                                    .font(.system(size: 12))
+                                    .coucouFont(size: 13)
                                     .foregroundColor(HubTheme.secondary)
                             }
                         }

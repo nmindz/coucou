@@ -79,7 +79,7 @@ struct HubSettingsPage: View {
                         Image(systemName: "key")
                             .foregroundColor(HubTheme.accent)
                         Text("hub.cleanup-key")
-                            .font(.system(size: 12.5))
+                            .coucouFont(size: 14.5)
                             .foregroundColor(Color(hex: "#C7CAD0"))
                             .fixedSize(horizontal: false, vertical: true)
                         Spacer()
@@ -90,7 +90,7 @@ struct HubSettingsPage: View {
                     }
                 }
                 Text("flow.ai-privacy")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -99,11 +99,11 @@ struct HubSettingsPage: View {
             HubCard {
                 if flow.trusted {
                     Label(String(localized: "flow.access-ok"), systemImage: "checkmark.circle.fill")
-                        .font(.system(size: 13))
+                        .coucouFont(size: 15)
                         .foregroundColor(HubTheme.green)
                 } else {
                     Text("flow.accessibility")
-                        .font(.system(size: 13))
+                        .coucouFont(size: 15)
                         .foregroundColor(Color(hex: "#C7CAD0"))
                         .fixedSize(horizontal: false, vertical: true)
                     Button(String(localized: "flow.accessibility-open")) { flow.openAccessibilitySettings() }
@@ -120,12 +120,12 @@ struct HubSettingsPage: View {
             HubCard {
                 HubSummaryEnginePicker()
                 Text("notes.engine-detail")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 HubDivider()
                 Text("notes.legal")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -166,7 +166,7 @@ struct HubSettingsPage: View {
                         .buttonStyle(HubButtonStyle())
                 }
                 Text("hub.settings.privacy-text")
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -185,7 +185,7 @@ struct HubKeyCap: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: 12.5, weight: .semibold))
+            .coucouFont(size: 14.5, weight: .semibold)
             .padding(.horizontal, 10)
             .frame(height: 26)
             .background(RoundedRectangle(cornerRadius: 7).fill(Color.white.opacity(0.08)))
@@ -228,7 +228,7 @@ struct HubRecognitionSettings: View {
             }
         } else if !parakeet.isReady {
             Text("hub.engine.fallback")
-                .font(.system(size: 12))
+                .coucouFont(size: 14)
                 .foregroundColor(HubTheme.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -238,7 +238,7 @@ struct HubRecognitionSettings: View {
         switch parakeet.state {
         case .unsupported:
             Text("hub.engine.unsupported")
-                .font(.system(size: 12))
+                .coucouFont(size: 14)
                 .foregroundColor(HubTheme.secondary)
         case .missing:
             Button(String(localized: "hub.engine.download")) { parakeet.download() }
@@ -249,7 +249,7 @@ struct HubRecognitionSettings: View {
                     .progressViewStyle(.linear)
                     .frame(width: 110)
                 Text(fraction.formatted(.percent.precision(.fractionLength(0))))
-                    .font(.system(size: 12))
+                    .coucouFont(size: 14)
                     .foregroundColor(HubTheme.secondary)
                     .monospacedDigit()
             }
@@ -287,9 +287,9 @@ private struct HubEngineRow<Trailing: View>: View {
                     }
                     .frame(width: 17, height: 17)
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(title).font(.system(size: 13.5, weight: .semibold))
+                        Text(title).coucouFont(size: 15.5, weight: .semibold)
                         Text(detail)
-                            .font(.system(size: 12))
+                            .coucouFont(size: 14)
                             .foregroundColor(HubTheme.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }

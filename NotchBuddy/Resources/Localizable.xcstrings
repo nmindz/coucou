@@ -529,6 +529,3878 @@
         }
       }
     },
+    "claudelb.accounts.hint" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحسابات التي يحسبها المؤشر. إن لم تحدد أيًا = كل الحسابات."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গেজ যে অ্যাকাউন্টগুলো গোনে। কোনোটিতে টিক না দিলে = সব অ্যাকাউন্ট।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konten, die die Anzeige zählt. Keines angehakt = alle Konten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accounts the gauge counts. None ticked = every account."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuentas que cuenta el indicador. Ninguna marcada = todas las cuentas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comptes pris en compte par la jauge. Aucun coché = tous les comptes."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "गेज जिन खातों को गिनता है। कोई नहीं चुना = सभी खाते।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akun yang dihitung pengukur. Tidak ada yang dicentang = semua akun."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contas que o medidor considera. Nenhuma marcada = todas as contas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аккаунты, которые учитывает индикатор. Ничего не отмечено — все аккаунты."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บัญชีที่มาตรวัดนับรวม ไม่ได้เลือกเลย = ทุกบัญชี"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Göstergenin saydığı hesaplar. Hiçbiri işaretli değilse tüm hesaplar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仪表统计的账户。都不勾选 = 所有账户。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "儀表計入的帳號。都不勾選 = 所有帳號。"
+          }
+        }
+      }
+    },
+    "claudelb.accounts.hint-single" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدد الحساب الذي يعكسه المؤشر. إن لم تحدد أيًا = الأول."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গেজ যে অ্যাকাউন্টটি দেখাবে সেটিতে টিক দিন। কোনোটিতে না দিলে = প্রথমটি।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hake das Konto an, das die Anzeige spiegelt. Keines angehakt = das erste."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tick the account the gauge mirrors. None ticked = the first one."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marca la cuenta que refleja el indicador. Ninguna marcada = la primera."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coche le compte que la jauge reflète. Aucun coché = le premier."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वह खाता चुनें जिसे गेज दिखाए। कोई नहीं चुना = पहला।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centang akun yang dicerminkan pengukur. Tidak ada = akun pertama."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marque a conta que o medidor reflete. Nenhuma marcada = a primeira."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметьте аккаунт, который показывает индикатор. Ничего не отмечено — первый."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกบัญชีที่มาตรวัดจะแสดง ไม่ได้เลือก = บัญชีแรก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Göstergenin yansıttığı hesabı işaretleyin. Hiçbiri yoksa ilki."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "勾选仪表要显示的账户。都不勾选 = 第一个。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "勾選儀表要顯示的帳號。都不勾選 = 第一個。"
+          }
+        }
+      }
+    },
+    "claudelb.connected %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ تم الاتصال بـ claude-lb · %lld حسابات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb সংযুক্ত · %lld অ্যাকাউন্ট"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb verbunden · %lld Konten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb connected · %lld accounts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb conectado · %lld cuentas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb connecté · %lld comptes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb जुड़ गया · %lld खाते"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb terhubung · %lld akun"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb conectado · %lld contas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb подключён · аккаунтов: %lld"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ เชื่อมต่อ claude-lb แล้ว · %lld บัญชี"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ claude-lb bağlandı · %lld hesap"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ 已连接 claude-lb · %lld 个账户"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ 已連線 claude-lb · %lld 個帳號"
+          }
+        }
+      }
+    },
+    "claudelb.description" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بدلًا من سطر حالة Claude Code، يقرأ المؤشر /api/analytics/quota من موازن الأحمال claude-lb لديك. يحتاج إلى مفتاح API مفعَّل فيه «Read usage analytics». يسأل Coucou عند ظهور الشارة، مرة كل دقيقتين على الأكثر."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code-এর স্ট্যাটাস লাইনের বদলে গেজটি আপনার claude-lb লোড ব্যালান্সার থেকে /api/analytics/quota পড়ে। এর জন্য «Read usage analytics» চালু করা একটি API কী লাগবে। পিলটি দেখালে Coucou জিজ্ঞাসা করে, সর্বোচ্চ প্রতি ২ মিনিটে একবার।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statt der Statuszeile von Claude Code liest die Anzeige /api/analytics/quota von deinem claude-lb-Loadbalancer. Dafür brauchst du einen API-Schlüssel mit aktiviertem „Read usage analytics“. Coucou fragt, wenn die Pille erscheint, höchstens alle 2 Minuten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instead of Claude Code's status line, the gauge reads /api/analytics/quota from your claude-lb load balancer. It needs an API key with “Read usage analytics” turned on. Coucou asks when the pill shows, at most every 2 minutes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En lugar de la línea de estado de Claude Code, el indicador lee /api/analytics/quota de tu balanceador claude-lb. Necesita una clave API con «Read usage analytics» activado. Coucou consulta cuando aparece la píldora, como mucho cada 2 minutos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Au lieu de la ligne d’état de Claude Code, la jauge lit /api/analytics/quota sur ton répartiteur claude-lb. Il faut une clé API avec « Read usage analytics » activé. Coucou interroge quand la pastille s’affiche, au plus toutes les 2 minutes."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code की स्टेटस लाइन के बजाय गेज आपके claude-lb लोड बैलेंसर से /api/analytics/quota पढ़ता है। इसके लिए «Read usage analytics» चालू वाली API कुंजी चाहिए। पिल दिखने पर Coucou पूछता है, अधिकतम हर 2 मिनट में।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alih-alih baris status Claude Code, pengukur membaca /api/analytics/quota dari load balancer claude-lb Anda. Diperlukan kunci API dengan “Read usage analytics” aktif. Coucou bertanya saat pil tampil, paling sering setiap 2 menit."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em vez da linha de status do Claude Code, o medidor lê /api/analytics/quota do seu balanceador claude-lb. Precisa de uma chave de API com “Read usage analytics” ativado. O Coucou consulta quando a pílula aparece, no máximo a cada 2 minutos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вместо строки состояния Claude Code индикатор читает /api/analytics/quota с вашего балансировщика claude-lb. Нужен API-ключ с включённым «Read usage analytics». Coucou запрашивает данные, когда показывается метка, не чаще раза в 2 минуты."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แทนที่จะใช้บรรทัดสถานะของ Claude Code มาตรวัดจะอ่าน /api/analytics/quota จาก load balancer claude-lb ของคุณ ต้องใช้คีย์ API ที่เปิด “Read usage analytics” Coucou จะถามเมื่อแสดงพิลล์ ไม่เกินทุก 2 นาที"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gösterge, Claude Code durum satırı yerine claude-lb yük dengeleyicinizden /api/analytics/quota okur. “Read usage analytics” açık bir API anahtarı gerekir. Coucou, hap göründüğünde en fazla 2 dakikada bir sorar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仪表不再读取 Claude Code 的状态栏，而是从你的 claude-lb 负载均衡器读取 /api/analytics/quota。需要一个开启了“Read usage analytics”的 API 密钥。胶囊显示时 Coucou 才会查询，最多每 2 分钟一次。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "儀表不再讀取 Claude Code 的狀態列，而是從你的 claude-lb 負載平衡器讀取 /api/analytics/quota。需要一把開啟了「Read usage analytics」的 API 金鑰。膠囊顯示時 Coucou 才會查詢，最多每 2 分鐘一次。"
+          }
+        }
+      }
+    },
+    "claudelb.error.analytics" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ لا يمكن لهذا المفتاح قراءة التحليلات: فعّل له «Read usage analytics» في claude-lb ← API keys."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ এই কী অ্যানালিটিক্স পড়তে পারে না: claude-lb → API keys-এ এর জন্য «Read usage analytics» চালু করুন।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Dieser Schlüssel darf keine Analytics lesen: erlaube „Read usage analytics“ in claude-lb → API keys."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ This key can't read analytics: allow “Read usage analytics” for it in claude-lb → API keys."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Esta clave no puede leer analítica: permite «Read usage analytics» en claude-lb → API keys."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Cette clé ne peut pas lire l’analyse : autorise « Read usage analytics » dans claude-lb → API keys."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ यह कुंजी एनालिटिक्स नहीं पढ़ सकती: claude-lb → API keys में इसके लिए «Read usage analytics» चालू करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Kunci ini tidak bisa membaca analitik: izinkan “Read usage analytics” di claude-lb → API keys."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Esta chave não pode ler analytics: permita “Read usage analytics” para ela em claude-lb → API keys."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Этот ключ не может читать аналитику: включите для него «Read usage analytics» в claude-lb → API keys."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ คีย์นี้อ่าน analytics ไม่ได้: เปิด “Read usage analytics” ให้คีย์นี้ใน claude-lb → API keys"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Bu anahtar analitik okuyamıyor: claude-lb → API keys'te “Read usage analytics” iznini verin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 此密钥无法读取分析数据：请在 claude-lb → API keys 中为它开启“Read usage analytics”。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 此金鑰無法讀取分析資料：請在 claude-lb → API keys 中為它開啟「Read usage analytics」。"
+          }
+        }
+      }
+    },
+    "claudelb.error.key" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ لم يقبل claude-lb مفتاح API هذا."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb এই API কী গ্রহণ করেনি।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb hat diesen API-Schlüssel nicht akzeptiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb did not accept this API key."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb no aceptó esta clave API."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb n’a pas accepté cette clé API."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb ने यह API कुंजी स्वीकार नहीं की।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb tidak menerima kunci API ini."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ O claude-lb não aceitou esta chave de API."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb не принял этот API-ключ."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb ไม่ยอมรับคีย์ API นี้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb bu API anahtarını kabul etmedi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb 不接受此 API 密钥。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb 不接受此 API 金鑰。"
+          }
+        }
+      }
+    },
+    "claudelb.error.malformed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ ردّ claude-lb بصيغة لا يعرفها Coucou."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb এমন ফরম্যাটে উত্তর দিয়েছে যা Coucou চেনে না।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb hat in einem Format geantwortet, das Coucou nicht kennt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb answered in a format Coucou doesn't know."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb respondió en un formato que Coucou no conoce."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb a répondu dans un format que Coucou ne connaît pas."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb ने ऐसे फ़ॉर्मैट में जवाब दिया जिसे Coucou नहीं जानता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb menjawab dalam format yang tidak dikenal Coucou."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ O claude-lb respondeu num formato que o Coucou não conhece."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb ответил в формате, который Coucou не знает."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb ตอบกลับในรูปแบบที่ Coucou ไม่รู้จัก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb, Coucou'nun bilmediği bir biçimde yanıt verdi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb 返回的格式 Coucou 无法识别。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb 回傳的格式 Coucou 無法辨識。"
+          }
+        }
+      }
+    },
+    "claudelb.error.no-key" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل مفتاح API للتحليلات من claude-lb ← API keys، ثم اتصل."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb → API keys থেকে অ্যানালিটিক্স API কী দিন, তারপর সংযোগ করুন।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib den Analytics-API-Schlüssel aus claude-lb → API keys ein und verbinde dann."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the analytics API key from claude-lb → API keys, then Connect."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribe la clave API de analítica de claude-lb → API keys y luego conecta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saisis la clé API d’analyse de claude-lb → API keys, puis Connecter."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb → API keys से एनालिटिक्स API कुंजी डालें, फिर कनेक्ट करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan kunci API analitik dari claude-lb → API keys, lalu hubungkan."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe a chave de API de analytics de claude-lb → API keys e depois conecte."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите API-ключ аналитики из claude-lb → API keys, затем подключитесь."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใส่คีย์ API สำหรับ analytics จาก claude-lb → API keys แล้วเชื่อมต่อ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb → API keys'teki analitik API anahtarını girin, sonra bağlanın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入 claude-lb → API keys 中的分析 API 密钥，然后连接。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請輸入 claude-lb → API keys 中的分析 API 金鑰，然後連線。"
+          }
+        }
+      }
+    },
+    "claudelb.error.unreachable" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ تعذّر الوصول إلى claude-lb على هذا العنوان."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ এই ঠিকানায় claude-lb-এ পৌঁছানো যাচ্ছে না।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb ist unter dieser Adresse nicht erreichbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Can't reach claude-lb at this address."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ No se puede contactar con claude-lb en esta dirección."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb est injoignable à cette adresse."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ इस पते पर claude-lb तक नहीं पहुँच पा रहे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Tidak dapat menjangkau claude-lb di alamat ini."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Não foi possível acessar o claude-lb neste endereço."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb недоступен по этому адресу."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ ติดต่อ claude-lb ที่ที่อยู่นี้ไม่ได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Bu adreste claude-lb'ye ulaşılamıyor."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 无法通过此地址连接 claude-lb。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 無法透過此位址連線到 claude-lb。"
+          }
+        }
+      }
+    },
+    "claudelb.error.url" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ أدخل عنوان claude-lb، مثل http://127.0.0.1:21987."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb-এর ঠিকানা দিন, যেমন http://127.0.0.1:21987।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Gib die Adresse von claude-lb ein, z. B. http://127.0.0.1:21987."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Enter claude-lb's address, e.g. http://127.0.0.1:21987."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Escribe la dirección de claude-lb, p. ej. http://127.0.0.1:21987."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Saisis l’adresse de claude-lb, par ex. http://127.0.0.1:21987."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb का पता डालें, जैसे http://127.0.0.1:21987।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Masukkan alamat claude-lb, mis. http://127.0.0.1:21987."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Informe o endereço do claude-lb, ex.: http://127.0.0.1:21987."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Укажите адрес claude-lb, например http://127.0.0.1:21987."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ ใส่ที่อยู่ของ claude-lb เช่น http://127.0.0.1:21987"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ claude-lb adresini girin, ör. http://127.0.0.1:21987."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 请输入 claude-lb 的地址，例如 http://127.0.0.1:21987。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 請輸入 claude-lb 的位址，例如 http://127.0.0.1:21987。"
+          }
+        }
+      }
+    },
+    "claudelb.key" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مفتاح API للتحليلات (clb_…)"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অ্যানালিটিক্স API কী (clb_…)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analytics-API-Schlüssel (clb_…)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analytics API key (clb_…)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave API de analítica (clb_…)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé API d’analyse (clb_…)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एनालिटिक्स API कुंजी (clb_…)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunci API analitik (clb_…)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chave de API de analytics (clb_…)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-ключ аналитики (clb_…)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คีย์ API สำหรับ analytics (clb_…)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analitik API anahtarı (clb_…)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析 API 密钥（clb_…）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析 API 金鑰（clb_…）"
+          }
+        }
+      }
+    },
+    "claudelb.meaning" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعرض المؤشر"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গেজ দেখায়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzeige zeigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gauge shows"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El indicador muestra"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La jauge montre"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "गेज दिखाता है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengukur menampilkan"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O medidor mostra"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Индикатор показывает"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มาตรวัดแสดง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gösterge"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仪表显示"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "儀表顯示"
+          }
+        }
+      }
+    },
+    "claudelb.mode.average" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتوسط"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গড়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchschnitt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promedio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moyenne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "औसत"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rata-rata"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Média"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Среднее"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ค่าเฉลี่ย"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ortalama"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均"
+          }
+        }
+      }
+    },
+    "claudelb.mode.most-used" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأكثر استخدامًا"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সবচেয়ে বেশি ব্যবহৃত"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am stärksten genutzt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most used"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más usada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La plus utilisée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सबसे ज़्यादा उपयोग"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paling terpakai"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais usada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Самый загруженный"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้มากที่สุด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En çok kullanılan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用量最高"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用量最高"
+          }
+        }
+      }
+    },
+    "claudelb.mode.single" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب واحد"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "একটি অ্যাকাউন্ট"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One account"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una cuenta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un compte"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक खाता"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satu akun"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma conta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Один аккаунт"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บัญชีเดียว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tek hesap"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单个账户"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "單一帳號"
+          }
+        }
+      }
+    },
+    "claudelb.note.average %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · متوسط %lld"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld-এর গড়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · Ø von %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · avg of %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · media de %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · moy. de %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld का औसत"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · rerata %lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · média de %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · среднее из %lld"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · เฉลี่ย %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld ort."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld 个平均"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld 個平均"
+          }
+        }
+      }
+    },
+    "claudelb.note.error" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · خطأ"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ত্রুটি"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · Fehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · error"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · error"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · erreur"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · त्रुटि"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · galat"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · erro"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ошибка"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ข้อผิดพลาด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · hata"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 出错"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 錯誤"
+          }
+        }
+      }
+    },
+    "claudelb.note.key-refused" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · المفتاح مرفوض"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · কী প্রত্যাখ্যাত"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · Schlüssel abgelehnt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · key refused"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · clave rechazada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · clé refusée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · कुंजी अस्वीकृत"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · kunci ditolak"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · chave recusada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ключ отклонён"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · คีย์ถูกปฏิเสธ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · anahtar reddedildi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 密钥被拒绝"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 金鑰被拒絕"
+          }
+        }
+      }
+    },
+    "claudelb.note.most-used %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · الأكثر استخدامًا من %lld"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld-এর মধ্যে সবচেয়ে ব্যস্ত"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · höchstes von %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · busiest of %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · la más usada de %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · le plus chargé de %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld में सबसे व्यस्त"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · tersibuk dari %lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · mais usada de %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · самый загруженный из %lld"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ใช้มากสุดจาก %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld içinde en yoğun"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld 个中最高"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · %lld 個中最高"
+          }
+        }
+      }
+    },
+    "claudelb.note.no-analytics" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · لا يمكن للمفتاح قراءة التحليلات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · কী অ্যানালিটিক্স পড়তে পারে না"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · Schlüssel ohne Analytics"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · key can't read analytics"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · la clave no lee analítica"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · clé sans accès à l’analyse"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · कुंजी एनालिटिक्स नहीं पढ़ सकती"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · kunci tak bisa membaca analitik"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · chave sem acesso a analytics"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ключ без доступа к аналитике"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · คีย์อ่าน analytics ไม่ได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · anahtar analitik okuyamıyor"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 密钥无法读取分析"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 金鑰無法讀取分析"
+          }
+        }
+      }
+    },
+    "claudelb.note.no-key" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · لا يوجد مفتاح API بعد"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · এখনও API কী নেই"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · noch kein API-Schlüssel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · no API key yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · aún sin clave API"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · pas encore de clé API"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · अभी API कुंजी नहीं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · belum ada kunci API"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ainda sem chave de API"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · нет API-ключа"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ยังไม่มีคีย์ API"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · henüz API anahtarı yok"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 尚无 API 密钥"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 尚無 API 金鑰"
+          }
+        }
+      }
+    },
+    "claudelb.note.unreachable" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · تعذّر الوصول"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · পৌঁছানো যাচ্ছে না"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · nicht erreichbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · unreachable"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · inaccesible"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · injoignable"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · पहुँच से बाहर"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · tak terjangkau"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · inacessível"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · недоступен"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ติดต่อไม่ได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · ulaşılamıyor"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 无法连接"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb · 無法連線"
+          }
+        }
+      }
+    },
+    "claudelb.toggle" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قراءة استخدام الخطة من claude-lb"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb থেকে প্ল্যানের ব্যবহার পড়ুন"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plannutzung aus claude-lb lesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read plan usage from claude-lb"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leer el uso del plan desde claude-lb"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lire l’usage du forfait depuis claude-lb"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "claude-lb से प्लान उपयोग पढ़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baca penggunaan paket dari claude-lb"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ler o uso do plano do claude-lb"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Брать использование тарифа из claude-lb"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อ่านการใช้งานแพ็กเกจจาก claude-lb"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan kullanımını claude-lb'den oku"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从 claude-lb 读取套餐用量"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從 claude-lb 讀取方案用量"
+          }
+        }
+      }
+    },
+    "mcp.copied" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ تم النسخ إلى الحافظة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ ক্লিপবোর্ডে কপি হয়েছে।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ In die Zwischenablage kopiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Copied to the clipboard."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Copiado al portapapeles."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Copié dans le presse-papiers."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ क्लिपबोर्ड पर कॉपी हो गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Disalin ke papan klip."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Copiado para a área de transferência."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Скопировано в буфер обмена."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ คัดลอกไปยังคลิปบอร์ดแล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Panoya kopyalandı."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ 已复制到剪贴板。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ 已拷貝到剪貼簿。"
+          }
+        }
+      }
+    },
+    "mcp.copy-claude" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ لـ Claude Code"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code-এর জন্য কপি"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für Claude Code kopieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy for Claude Code"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar para Claude Code"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier pour Claude Code"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code के लिए कॉपी करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salin untuk Claude Code"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar para o Claude Code"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать для Claude Code"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอกสำหรับ Claude Code"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code için kopyala"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制到 Claude Code"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複製給 Claude Code"
+          }
+        }
+      }
+    },
+    "mcp.copy-codex" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ لـ Codex"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codex-এর জন্য কপি"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für Codex kopieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy for Codex"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar para Codex"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier pour Codex"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codex के लिए कॉपी करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salin untuk Codex"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar para o Codex"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать для Codex"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอกสำหรับ Codex"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codex için kopyala"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制到 Codex"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複製給 Codex"
+          }
+        }
+      }
+    },
+    "mcp.copy-json" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ JSON"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JSON কপি"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JSON kopieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy JSON"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar JSON"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier le JSON"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JSON कॉपी करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salin JSON"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar JSON"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать JSON"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอก JSON"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JSON'u kopyala"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制 JSON"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複製 JSON"
+          }
+        }
+      }
+    },
+    "mcp.description" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خادم MCP لـ Claude Code وCodex وOMP ووكلاء آخرين: يمكنهم سرد مكالمات Notetaker وقراءة ملخصاتها ومهامها ونصوصها، للقراءة فقط، من Coucou العامل. ما يقرأه الوكيل يذهب إلى مزوّد نموذجه. معطّل افتراضيًا."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code, Codex, OMP ও অন্যান্য এজেন্টের জন্য একটি MCP সার্ভার: তারা চলমান Coucou থেকে Notetaker-এর কলগুলোর তালিকা এবং সেগুলোর সারাংশ, করণীয় ও ট্রান্সক্রিপ্ট শুধু পড়তে পারে। এজেন্ট যা পড়ে তা তার মডেল প্রদানকারীর কাছে যায়। ডিফল্টভাবে বন্ধ।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein MCP-Server für Claude Code, Codex, OMP und andere Agents: Sie können die Anrufe des Notetakers auflisten und deren Zusammenfassungen, To-dos und Transkripte lesen – nur lesend, aus dem laufenden Coucou. Was ein Agent liest, geht an seinen Modellanbieter. Standardmäßig aus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An MCP server for Claude Code, Codex, OMP and other agents: they can list the Notetaker's calls and read their summaries, to-dos and transcripts, read-only, from the running Coucou. What an agent reads goes to its model provider. Off by default."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un servidor MCP para Claude Code, Codex, OMP y otros agentes: pueden listar las llamadas del Notetaker y leer sus resúmenes, tareas y transcripciones, solo lectura, desde el Coucou en marcha. Lo que lee un agente va a su proveedor de modelos. Desactivado por defecto."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un serveur MCP pour Claude Code, Codex, OMP et d’autres agents : ils peuvent lister les appels du Notetaker et lire leurs résumés, to-dos et transcriptions, en lecture seule, depuis le Coucou en cours. Ce qu’un agent lit part chez son fournisseur de modèle. Désactivé par défaut."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code, Codex, OMP और अन्य एजेंट के लिए एक MCP सर्वर: वे चल रहे Coucou से Notetaker की कॉल की सूची देख सकते हैं और उनके सारांश, टू-डू और ट्रांसक्रिप्ट केवल पढ़ सकते हैं। एजेंट जो पढ़ता है वह उसके मॉडल प्रदाता के पास जाता है। डिफ़ॉल्ट रूप से बंद।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server MCP untuk Claude Code, Codex, OMP, dan agen lain: mereka dapat mendaftar panggilan Notetaker dan membaca ringkasan, tugas, serta transkripnya, hanya baca, dari Coucou yang berjalan. Apa yang dibaca agen dikirim ke penyedia modelnya. Mati secara bawaan."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um servidor MCP para Claude Code, Codex, OMP e outros agentes: eles podem listar as chamadas do Notetaker e ler resumos, tarefas e transcrições, somente leitura, do Coucou em execução. O que um agente lê vai para o provedor do modelo dele. Desligado por padrão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MCP-сервер для Claude Code, Codex, OMP и других агентов: они могут получить список звонков Notetaker и читать их резюме, задачи и расшифровки — только чтение, из запущенного Coucou. То, что читает агент, уходит к поставщику его модели. По умолчанию выключено."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เซิร์ฟเวอร์ MCP สำหรับ Claude Code, Codex, OMP และเอเจนต์อื่น: อ่านรายการสายของ Notetaker รวมถึงสรุป สิ่งที่ต้องทำ และบทถอดความได้ แบบอ่านอย่างเดียว จาก Coucou ที่กำลังทำงาน สิ่งที่เอเจนต์อ่านจะถูกส่งไปยังผู้ให้บริการโมเดลของมัน ปิดไว้โดยค่าเริ่มต้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code, Codex, OMP ve diğer ajanlar için bir MCP sunucusu: çalışan Coucou'dan Notetaker'ın görüşmelerini listeleyip özetlerini, yapılacaklarını ve dökümlerini salt okunur şekilde okuyabilirler. Bir ajanın okuduğu, model sağlayıcısına gider. Varsayılan olarak kapalı."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供 Claude Code、Codex、OMP 等代理使用的 MCP 服务器：它们可以从正在运行的 Coucou 中列出 Notetaker 的通话，并只读地读取摘要、待办和转写。代理读取的内容会发送给其模型提供方。默认关闭。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供 Claude Code、Codex、OMP 等代理使用的 MCP 伺服器：它們可以從正在執行的 Coucou 列出 Notetaker 的通話，並唯讀地讀取摘要、待辦和逐字稿。代理讀取的內容會傳送給其模型供應商。預設關閉。"
+          }
+        }
+      }
+    },
+    "mcp.json-hint" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code وCodex: الصق الأمر في الطرفية. OMP: أضف JSON إلى ‎~/.omp/agent/mcp.json. Cursor وغيرها: إعدادات MCP فيها تقبل JSON نفسه."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code ও Codex: কমান্ডটি টার্মিনালে পেস্ট করুন। OMP: JSON-টি ~/.omp/agent/mcp.json-এ যোগ করুন। Cursor ও অন্যরা: তাদের MCP সেটিংসে একই JSON চলে।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code und Codex: den Befehl in ein Terminal einfügen. OMP: das JSON in ~/.omp/agent/mcp.json eintragen. Cursor und andere: ihre MCP-Einstellungen nehmen dasselbe JSON."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code and Codex: paste the command in a terminal. OMP: add the JSON to ~/.omp/agent/mcp.json. Cursor and others: their MCP settings take the same JSON."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code y Codex: pega el comando en una terminal. OMP: añade el JSON a ~/.omp/agent/mcp.json. Cursor y otros: sus ajustes de MCP aceptan el mismo JSON."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code et Codex : colle la commande dans un terminal. OMP : ajoute le JSON à ~/.omp/agent/mcp.json. Cursor et les autres : leurs réglages MCP prennent le même JSON."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code और Codex: कमांड टर्मिनल में पेस्ट करें। OMP: JSON को ~/.omp/agent/mcp.json में जोड़ें। Cursor और अन्य: उनकी MCP सेटिंग्स वही JSON लेती हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code dan Codex: tempel perintah di terminal. OMP: tambahkan JSON ke ~/.omp/agent/mcp.json. Cursor dan lainnya: pengaturan MCP-nya menerima JSON yang sama."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code e Codex: cole o comando num terminal. OMP: adicione o JSON a ~/.omp/agent/mcp.json. Cursor e outros: as configurações de MCP deles aceitam o mesmo JSON."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code и Codex: вставьте команду в терминал. OMP: добавьте JSON в ~/.omp/agent/mcp.json. Cursor и другие: их настройки MCP принимают тот же JSON."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code และ Codex: วางคำสั่งในเทอร์มินัล OMP: เพิ่ม JSON ลงใน ~/.omp/agent/mcp.json Cursor และอื่นๆ: การตั้งค่า MCP ของมันรับ JSON เดียวกัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code ve Codex: komutu bir terminale yapıştırın. OMP: JSON'u ~/.omp/agent/mcp.json dosyasına ekleyin. Cursor ve diğerleri: MCP ayarları aynı JSON'u alır."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 和 Codex：把命令粘贴到终端。OMP：把 JSON 加入 ~/.omp/agent/mcp.json。Cursor 等：它们的 MCP 设置接受同样的 JSON。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 和 Codex：把指令貼到終端機。OMP：把 JSON 加入 ~/.omp/agent/mcp.json。Cursor 等：它們的 MCP 設定接受同樣的 JSON。"
+          }
+        }
+      }
+    },
+    "mcp.title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou MCP"
+          }
+        }
+      }
+    },
+    "mcp.toggle" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السماح للوكلاء بقراءة تسجيلاتك"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এজেন্টদের আপনার রেকর্ডিং পড়তে দিন"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agents deine Aufnahmen lesen lassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let agents read your recordings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dejar que los agentes lean tus grabaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laisser les agents lire tes enregistrements"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एजेंट को आपकी रिकॉर्डिंग पढ़ने दें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izinkan agen membaca rekaman Anda"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deixar os agentes lerem suas gravações"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешить агентам читать ваши записи"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้เอเจนต์อ่านการบันทึกของคุณ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajanların kayıtlarınızı okumasına izin ver"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允许代理读取你的录音"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許代理讀取你的錄音"
+          }
+        }
+      }
+    },
+    "omp.handled-in" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم التعامل معه في OMP."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-এ পরিচালিত হয়েছে।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In OMP erledigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handled in OMP."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestionado en OMP."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traité dans OMP."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP में संभाला गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ditangani di OMP."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tratado no OMP."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обработано в OMP."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "จัดการใน OMP แล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP'de işlendi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已在 OMP 中处理。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已在 OMP 中處理。"
+          }
+        }
+      }
+    },
+    "omp.still-waiting" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ما زال الانتظار في OMP."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এখনও OMP-এ অপেক্ষা করছে।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wartet noch in OMP."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still waiting in OMP."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sigue esperando en OMP."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours en attente dans OMP."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अभी भी OMP में प्रतीक्षा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masih menunggu di OMP."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda aguardando no OMP."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всё ещё ждёт в OMP."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยังรออยู่ใน OMP"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hâlâ OMP'de bekliyor."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仍在 OMP 中等待。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仍在 OMP 中等待。"
+          }
+        }
+      }
+    },
+    "plugin.omp.approvals" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الموافقة على أدوات OMP من النوتش"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নচ থেকে OMP টুল অনুমোদন করুন"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-Tools in der Notch freigeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approve OMP tools in the notch"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprobar herramientas de OMP en el notch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approuver les outils d’OMP dans l’encoche"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नॉच में OMP टूल स्वीकृत करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setujui alat OMP di notch"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprovar ferramentas do OMP no notch"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подтверждать инструменты OMP в вырезе"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อนุมัติเครื่องมือของ OMP ในรอยบาก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP araçlarını çentikte onayla"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在刘海中批准 OMP 工具"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在瀏海中核准 OMP 工具"
+          }
+        }
+      }
+    },
+    "plugin.omp.approvals.disabled" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يحتفظ OMP بنوافذ الموافقة الخاصة به؛ يعرض Coucou الخطوات مباشرة، وبطاقة عندما ينتظرك OMP."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP নিজের অনুমোদন প্রম্পট রাখে; Coucou চলমান ধাপ দেখায়, আর OMP আপনার অপেক্ষায় থাকলে একটি কার্ড।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP behält seine eigenen Freigabe-Abfragen; Coucou zeigt die Schritte live und eine Karte, wenn OMP auf dich wartet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP keeps its own approval prompts; Coucou shows live steps, and a card when OMP waits for you."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP mantiene sus propias solicitudes de aprobación; Coucou muestra los pasos en vivo y una tarjeta cuando OMP te espera."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP garde ses propres demandes d’approbation ; Coucou montre les étapes en direct, et une carte quand OMP t’attend."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP अपने अनुमोदन प्रॉम्प्ट रखता है; Coucou चल रहे चरण दिखाता है, और जब OMP आपका इंतज़ार करे तो एक कार्ड।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP tetap memakai prompt persetujuannya sendiri; Coucou menampilkan langkah langsung, dan kartu saat OMP menunggu Anda."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O OMP mantém os próprios pedidos de aprovação; o Coucou mostra as etapas ao vivo e um cartão quando o OMP espera por você."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP сохраняет свои запросы подтверждения; Coucou показывает шаги в реальном времени и карточку, когда OMP ждёт вас."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP ยังใช้การขออนุมัติของตัวเอง Coucou แสดงขั้นตอนสด และการ์ดเมื่อ OMP รอคุณอยู่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP kendi onay istemlerini korur; Coucou adımları canlı gösterir ve OMP sizi beklerken bir kart gösterir."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 保留自己的批准提示；Coucou 实时显示步骤，并在 OMP 等你时显示卡片。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 保留自己的核准提示；Coucou 即時顯示步驟，並在 OMP 等你時顯示卡片。"
+          }
+        }
+      }
+    },
+    "plugin.omp.approvals.enabled" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأدوات المحددة أدناه تطلب «سماح / رفض» في النوتش قبل تشغيلها. يقرر Coucou في هذه الجلسة بدلًا من وضع الموافقة في OMP؛ وتبقى قواعد الرفض لديك سارية. إن كان Coucou مغلقًا أو لم يُجب: يسأل OMP في الطرفية."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নিচে টিক দেওয়া টুলগুলো চালানোর আগে নচে অনুমতি / প্রত্যাখ্যান জিজ্ঞাসা করে। এই সেশনে OMP-এর অনুমোদন মোডের বদলে Coucou সিদ্ধান্ত নেয়; আপনার প্রত্যাখ্যানের নিয়ম বহাল থাকে। Coucou বন্ধ বা উত্তর না দিলে: OMP টার্মিনালে জিজ্ঞাসা করে।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die unten angehakten Tools fragen vor dem Start in der Notch nach Erlauben / Ablehnen. Coucou entscheidet in dieser Sitzung statt OMPs Freigabemodus; deine Ablehnungsregeln gelten weiter. Ist Coucou geschlossen oder antwortet nicht, fragt OMP im Terminal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The tools ticked below ask Allow / Deny in the notch before they run. Coucou decides for this session instead of OMP's approval mode; your deny rules still apply. Coucou closed or no answer: OMP asks in the terminal."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las herramientas marcadas abajo piden Permitir / Denegar en el notch antes de ejecutarse. Coucou decide en esta sesión en lugar del modo de aprobación de OMP; tus reglas de denegación siguen vigentes. Si Coucou está cerrado o no responde, OMP pregunta en la terminal."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les outils cochés ci-dessous demandent Autoriser / Refuser dans l’encoche avant de s’exécuter. Coucou décide pour cette session à la place du mode d’approbation d’OMP ; tes règles de refus s’appliquent toujours. Coucou fermé ou sans réponse : OMP demande dans le terminal."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नीचे चुने गए टूल चलने से पहले नॉच में अनुमति / अस्वीकार पूछते हैं। इस सत्र में OMP के अनुमोदन मोड के बजाय Coucou तय करता है; आपके अस्वीकार नियम लागू रहते हैं। Coucou बंद हो या जवाब न दे: OMP टर्मिनल में पूछता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alat yang dicentang di bawah meminta Izinkan / Tolak di notch sebelum berjalan. Coucou yang memutuskan untuk sesi ini, menggantikan mode persetujuan OMP; aturan tolak Anda tetap berlaku. Coucou tertutup atau tidak menjawab: OMP bertanya di terminal."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As ferramentas marcadas abaixo pedem Permitir / Negar no notch antes de rodar. O Coucou decide nesta sessão no lugar do modo de aprovação do OMP; suas regras de negação continuam valendo. Coucou fechado ou sem resposta: o OMP pergunta no terminal."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмеченные ниже инструменты перед запуском спрашивают «Разрешить / Запретить» в вырезе. В этом сеансе решает Coucou вместо режима подтверждений OMP; ваши правила запрета продолжают действовать. Если Coucou закрыт или не ответил, OMP спросит в терминале."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เครื่องมือที่เลือกด้านล่างจะถาม อนุญาต / ปฏิเสธ ในรอยบากก่อนทำงาน Coucou เป็นผู้ตัดสินในเซสชันนี้แทนโหมดอนุมัติของ OMP กฎปฏิเสธของคุณยังมีผล หาก Coucou ปิดอยู่หรือไม่ตอบ OMP จะถามในเทอร์มินัล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aşağıda işaretli araçlar çalışmadan önce çentikte İzin ver / Reddet sorar. Bu oturumda OMP'nin onay modu yerine Coucou karar verir; reddetme kurallarınız geçerli kalır. Coucou kapalıysa veya yanıt yoksa OMP terminalde sorar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下方勾选的工具在运行前会在刘海中询问“允许 / 拒绝”。本会话由 Coucou 代替 OMP 的批准模式做决定；你的拒绝规则仍然有效。Coucou 关闭或未回应时，OMP 会在终端中询问。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下方勾選的工具在執行前會在瀏海中詢問「允許 / 拒絕」。本工作階段由 Coucou 取代 OMP 的核准模式做決定；你的拒絕規則仍然有效。Coucou 關閉或未回應時，OMP 會在終端機中詢問。"
+          }
+        }
+      }
+    },
+    "plugin.omp.installed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مثبّت — ابدأ جلسة OMP جديدة لتحميله"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ইনস্টল হয়েছে — লোড করতে নতুন OMP সেশন শুরু করুন"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installiert — neue OMP-Sitzung starten, um sie zu laden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed — start a new OMP session to load it"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalado — inicia una sesión OMP nueva para cargarlo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installée — lance une nouvelle session OMP pour la charger"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टॉल हो गया — लोड करने के लिए नया OMP सेशन शुरू करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terpasang — mulai sesi OMP baru untuk memuatnya"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalado — inicie uma nova sessão OMP para carregar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установлено — начните новую сессию OMP, чтобы загрузить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งแล้ว — เริ่มเซสชัน OMP ใหม่เพื่อโหลด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuruldu — yüklemek için yeni bir OMP oturumu başlatın"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已安装 — 开始新的 OMP 会话以加载"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已安裝 — 開始新的 OMP 工作階段以載入"
+          }
+        }
+      }
+    },
+    "plugin.omp.path" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~/.omp/agent/extensions/coucou.ts"
+          }
+        }
+      }
+    },
+    "plugin.omp.reply-jump" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يقفز Mochi عندما يصبح رد OMP جاهزًا"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-এর উত্তর তৈরি হলে Mochi লাফ দেয়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi springt, wenn eine OMP-Antwort fertig ist"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi jumps when an OMP reply is ready"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi salta cuando una respuesta de OMP está lista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi saute quand une réponse d’OMP est prête"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP का जवाब तैयार होने पर Mochi उछलता है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi melompat saat balasan OMP siap"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi pula quando uma resposta do OMP fica pronta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi подпрыгивает, когда ответ OMP готов"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mochi กระโดดเมื่อคำตอบของ OMP พร้อม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP yanıtı hazır olduğunda Mochi zıplar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 回复就绪时 Mochi 会跳一下"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 回覆就緒時 Mochi 會跳一下"
+          }
+        }
+      }
+    },
+    "plugin.omp.reply-jump.footer" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عندما ينتهي OMP ولا تكون طرفيته في المقدمة، يقفز Mochi وتعرض شارة OMP بداية الرد. لا يحدث شيء وأنت تنظر إلى OMP."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-এর টার্মিনাল সামনে না থাকা অবস্থায় কাজ শেষ হলে Mochi লাফ দেয় এবং OMP পিল উত্তরের শুরুটা দেখায়। আপনি OMP দেখার সময় কিছু হয় না।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ist OMP fertig, während sein Terminal nicht vorne ist, springt Mochi und die OMP-Pille zeigt den Anfang der Antwort. Solange du OMP ansiehst, passiert nichts."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When OMP finishes while its terminal isn't in front, Mochi jumps and the OMP pill shows the start of the reply. Nothing happens while you are looking at OMP."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuando OMP termina y su terminal no está al frente, Mochi salta y la píldora de OMP muestra el inicio de la respuesta. No pasa nada mientras miras OMP."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quand OMP termine alors que son terminal n’est pas au premier plan, Mochi saute et la pastille OMP montre le début de la réponse. Rien ne se passe pendant que tu regardes OMP."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जब OMP का टर्मिनल सामने न हो और वह काम पूरा करे, तो Mochi उछलता है और OMP पिल जवाब की शुरुआत दिखाता है। OMP देखते समय कुछ नहीं होता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat OMP selesai sementara terminalnya tidak di depan, Mochi melompat dan pil OMP menampilkan awal balasan. Tidak terjadi apa-apa saat Anda melihat OMP."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando o OMP termina com o terminal dele fora de foco, Mochi pula e a pílula do OMP mostra o início da resposta. Nada acontece enquanto você olha o OMP."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда OMP заканчивает, а его терминал не на переднем плане, Mochi подпрыгивает, и метка OMP показывает начало ответа. Пока вы смотрите на OMP, ничего не происходит."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อ OMP ทำงานเสร็จขณะที่เทอร์มินัลไม่ได้อยู่ด้านหน้า Mochi จะกระโดดและพิลล์ OMP แสดงตอนต้นของคำตอบ จะไม่มีอะไรเกิดขึ้นขณะที่คุณดู OMP อยู่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP, terminali önde değilken bitirdiğinde Mochi zıplar ve OMP hapı yanıtın başını gösterir. OMP'ye bakarken hiçbir şey olmaz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 完成时若其终端不在前台，Mochi 会跳一下，OMP 胶囊显示回复开头。你正在看 OMP 时不会有动作。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 完成時若其終端機不在前景，Mochi 會跳一下，OMP 膠囊顯示回覆開頭。你正在看 OMP 時不會有動作。"
+          }
+        }
+      }
+    },
+    "plugin.omp.title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملحق OMP"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP এক্সটেনশন"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-Erweiterung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP extension"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensión OMP"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extension OMP"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP एक्सटेंशन"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekstensi OMP"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensão OMP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расширение OMP"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่วนขยาย OMP"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP uzantısı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 扩展"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP 擴充功能"
+          }
+        }
+      }
+    },
+    "plugin.omp.tools.hint" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسأل في النوتش عن:"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নচে জিজ্ঞাসা করুন:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In der Notch fragen bei:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask in the notch for:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preguntar en el notch para:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demander dans l’encoche pour :"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नॉच में पूछें:"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanyakan di notch untuk:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perguntar no notch para:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спрашивать в вырезе для:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถามในรอยบากสำหรับ:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çentikte sor:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在刘海中询问："
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在瀏海中詢問："
+          }
+        }
+      }
+    },
+    "status.omp-extension-installed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تثبيت ملحق OMP"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP এক্সটেনশন ইনস্টল হয়েছে"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-Erweiterung installiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP extension installed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensión OMP instalada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extension OMP installée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP एक्सटेंशन इंस्टॉल हो गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekstensi OMP terpasang"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensão OMP instalada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расширение OMP установлено"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งส่วนขยาย OMP แล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP uzantısı kuruldu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已安装 OMP 扩展"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已安裝 OMP 擴充功能"
+          }
+        }
+      }
+    },
+    "status.omp-extension-removed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت إزالة ملحق OMP"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP এক্সটেনশন সরানো হয়েছে"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP-Erweiterung entfernt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP extension removed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensión OMP eliminada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extension OMP supprimée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP एक्सटेंशन हटा दिया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekstensi OMP dihapus"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensão OMP removida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расширение OMP удалено"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบส่วนขยาย OMP แล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OMP uzantısı kaldırıldı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已移除 OMP 扩展"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已移除 OMP 擴充功能"
+          }
+        }
+      }
+    },
     "status.provider-saved %@" : {
       "localizations" : {
         "ar" : {
@@ -613,6 +4485,798 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "✓ 已儲存 %@ 設定。"
+          }
+        }
+      }
+    },
+    "text-size.default" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتراضي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ডিফল্ট"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predeterminado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par défaut"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "डिफ़ॉल्ट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bawaan"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padrão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обычный"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ค่าเริ่มต้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsayılan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預設"
+          }
+        }
+      }
+    },
+    "text-size.description" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يكبّر نص صفحات نافذة Coucou: ‏Flow والنوتش والإعدادات."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou উইন্ডোর পাতাগুলোর লেখা বড় করে: Flow, নচ ও সেটিংস।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vergrößert den Text der Seiten im Coucou-Fenster: Flow, Notch und Einstellungen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makes the text of the Coucou window's pages larger: Flow, Notch and settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agranda el texto de las páginas de la ventana de Coucou: Flow, notch y ajustes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agrandit le texte des pages de la fenêtre Coucou : Flow, encoche et réglages."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou विंडो के पेजों का टेक्स्ट बड़ा करता है: Flow, नॉच और सेटिंग्स।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memperbesar teks halaman di jendela Coucou: Flow, notch, dan pengaturan."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aumenta o texto das páginas da janela do Coucou: Flow, notch e ajustes."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увеличивает текст на страницах окна Coucou: Flow, вырез и настройки."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขยายข้อความในหน้าต่างๆ ของหน้าต่าง Coucou: Flow, รอยบาก และการตั้งค่า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coucou penceresindeki sayfaların metnini büyütür: Flow, çentik ve ayarlar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放大 Coucou 窗口各页面的文字：Flow、刘海和设置。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放大 Coucou 視窗各頁面的文字：Flow、瀏海和設定。"
+          }
+        }
+      }
+    },
+    "text-size.large" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كبير"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "বড়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groß"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Large"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grande"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grand"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बड़ा"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besar"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grande"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Крупный"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใหญ่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Büyük"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大"
+          }
+        }
+      }
+    },
+    "text-size.larger" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أكبر"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আরও বড়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Größer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Larger"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más grande"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus grand"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "और बड़ा"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lebih besar"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maior"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Крупнее"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใหญ่ขึ้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha büyük"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更大"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更大"
+          }
+        }
+      }
+    },
+    "text-size.largest" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأكبر"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সবচেয়ে বড়"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am größten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Largest"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El más grande"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Très grand"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सबसे बड़ा"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terbesar"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Máximo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Самый крупный"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใหญ่ที่สุด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En büyük"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大"
+          }
+        }
+      }
+    },
+    "text-size.title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حجم النص"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "লেখার আকার"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Textgröße"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text size"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamaño del texto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taille du texte"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "टेक्स्ट का आकार"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukuran teks"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamanho do texto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Размер текста"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขนาดข้อความ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metin boyutu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文字大小"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文字大小"
+          }
+        }
+      }
+    },
+    "voice.mac-voices-help-26" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لاختيار صوت النظام أو تنزيل صوت أكثر طبيعية (Premium هو الأفضل): إعدادات النظام ← تسهيلات الاستخدام ← القراءة والنطق ← صوت النظام؛ يضيف زر ⓘ المجاور أصواتًا. فعّل «استخدام صوت النظام» للتحدث به؛ وإلا يستخدم Coucou أفضل صوت مثبَّت من النوع أعلاه. بالإنجليزية: Ava لامرأة، Jamie لرجل (بريطاني)."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সিস্টেম কণ্ঠ বাছতে বা আরও স্বাভাবিক কণ্ঠ ডাউনলোড করতে (Premium সবচেয়ে ভালো শোনায়): System Settings → Accessibility → Read & Speak → System voice; পাশের ⓘ বোতাম কণ্ঠ যোগ করে। সেই কণ্ঠে বলতে “সিস্টেম কণ্ঠ ব্যবহার করো” চালু করো; নইলে Coucou ওপরে বাছা ধরনের সবচেয়ে ভালো ইনস্টল করা কণ্ঠ নেয়। ইংরেজিতে: নারী হলে Ava, পুরুষ হলে Jamie (ব্রিটিশ)।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um die Systemstimme zu wählen oder eine natürlichere zu laden (Premium klingt am besten): Systemeinstellungen → Bedienungshilfen → Lesen & Sprechen → Systemstimme; die ⓘ-Taste daneben fügt Stimmen hinzu. Aktiviere „Systemstimme verwenden“, um mit ihr zu sprechen; sonst nimmt Coucou die beste installierte Stimme des Typs oben. Auf Englisch: Ava für eine weibliche, Jamie für eine männliche Stimme (britisch)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To pick the system voice or download a more natural one (Premium sounds best): System Settings → Accessibility → Read & Speak → System voice; the ⓘ button next to it adds voices. Turn on “Use the system voice” to speak with it; otherwise Coucou takes the best installed voice of the type above. In English: Ava for a woman, Jamie for a man (British)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para elegir la voz del sistema o descargar una más natural (Premium suena mejor): Ajustes del Sistema → Accesibilidad → Lectura y voz → Voz del sistema; el botón ⓘ de al lado añade voces. Activa «Usar la voz del sistema» para hablar con ella; si no, Coucou usa la mejor voz instalada del tipo de arriba. En inglés: Ava para mujer, Jamie para hombre (británico)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour choisir la voix du système ou télécharger une voix plus naturelle (Premium sonne le mieux) : Réglages Système → Accessibilité → Lire et énoncer → Voix système ; le bouton ⓘ à côté ajoute des voix. Active « Utiliser la voix du système » pour parler avec elle ; sinon Coucou prend la meilleure voix installée du type ci-dessus. En anglais : Ava pour une femme, Jamie pour un homme (britannique)."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सिस्टम आवाज़ चुनने या ज़्यादा स्वाभाविक आवाज़ डाउनलोड करने के लिए (Premium सबसे अच्छी लगती है): System Settings → Accessibility → Read & Speak → System voice; उसके बगल का ⓘ बटन आवाज़ें जोड़ता है। उसी आवाज़ में बोलने के लिए “सिस्टम आवाज़ इस्तेमाल करें” चालू करें; वरना Coucou ऊपर चुने प्रकार की सबसे अच्छी इंस्टॉल आवाज़ लेता है। अंग्रेज़ी में: महिला के लिए Ava, पुरुष के लिए Jamie (ब्रिटिश)।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Untuk memilih suara sistem atau mengunduh yang lebih alami (Premium terdengar paling baik): Pengaturan Sistem → Aksesibilitas → Baca & Ucapkan → Suara sistem; tombol ⓘ di sebelahnya menambah suara. Nyalakan “Gunakan suara sistem” untuk berbicara dengannya; jika tidak, Coucou memakai suara terpasang terbaik dari jenis di atas. Bahasa Inggris: Ava untuk wanita, Jamie untuk pria (Inggris)."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para escolher a voz do sistema ou baixar uma mais natural (Premium soa melhor): Ajustes do Sistema → Acessibilidade → Leitura e Fala → Voz do Sistema; o botão ⓘ ao lado adiciona vozes. Ative “Usar a voz do sistema” para falar com ela; senão o Coucou usa a melhor voz instalada do tipo acima. Em inglês: Ava para mulher, Jamie para homem (britânico)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы выбрать голос системы или скачать более естественный (лучше всего звучит Premium): Системные настройки → Универсальный доступ → Чтение вслух → Голос системы; кнопка ⓘ рядом добавляет голоса. Включи «Использовать голос системы», чтобы говорить им; иначе Coucou берёт лучший установленный голос выбранного выше типа. По-английски: Ava — женский, Jamie — мужской (британский)."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หากต้องการเลือกเสียงของระบบหรือดาวน์โหลดเสียงที่เป็นธรรมชาติมากขึ้น (พรีเมียมฟังดีที่สุด): การตั้งค่าระบบ → การช่วยการเข้าถึง → อ่านและพูด → เสียงอ่านของระบบ ปุ่ม ⓘ ข้างๆ ใช้เพิ่มเสียง เปิด “ใช้เสียงของระบบ” เพื่อพูดด้วยเสียงนั้น ไม่เช่นนั้น Coucou จะใช้เสียงที่ดีที่สุดที่ติดตั้งไว้ตามประเภทด้านบน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistem sesini seçmek veya daha doğal bir ses indirmek için (en iyisi Premium): Sistem Ayarları → Erişilebilirlik → Oku ve Seslendir → Sistem sesi; yanındaki ⓘ düğmesi ses ekler. Bu sesle konuşmak için “Sistem sesini kullan”ı aç; aksi halde Coucou yukarıdaki türün yüklü en iyi sesini kullanır. İngilizcede: kadın sesi için Ava, erkek sesi için Jamie (Britanya)."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要选择系统声音或下载更自然的声音（Premium 效果最好）：系统设置 → 辅助功能 → 阅读与朗读 → 系统声音；旁边的 ⓘ 按钮可添加声音。打开“使用系统声音”即可用它朗读；否则 Coucou 会使用上方所选类型中已安装的最佳声音。英语：女声选 Ava，男声选 Jamie（英式）。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若要選擇系統聲音或下載更自然的聲音（Premium 效果最好）：系統設定 → 輔助使用 → 閱讀與朗讀 → 系統聲音；旁邊的 ⓘ 按鈕可加入聲音。開啟「使用系統聲音」即可用它朗讀；否則 Coucou 會使用上方所選類型中已安裝的最佳聲音。英文女聲可選 Ava，男聲可選 Jamie（英式）。"
+          }
+        }
+      }
+    },
+    "voice.speed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السرعة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গতি"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tempo"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vitesse"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "गति"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kecepatan"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidade"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скорость"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความเร็ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hız"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语速"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語速"
+          }
+        }
+      }
+    },
+    "voice.use-system-voice" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدام صوت النظام"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সিস্টেম কণ্ঠ ব্যবহার করো"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Systemstimme verwenden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the system voice"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar la voz del sistema"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utiliser la voix du système"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सिस्टम आवाज़ इस्तेमाल करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gunakan suara sistem"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar a voz do sistema"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использовать голос системы"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เสียงของระบบ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistem sesini kullan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用系统声音"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用系統聲音"
           }
         }
       }
@@ -70037,90 +74701,89 @@
       }
     },
     "voice.mac-voices-help" : {
-      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لصوت أكثر طبيعية، نزّل صوتًا Premium: إعدادات النظام ← تسهيلات الاستخدام ← المحتوى المنطوق ← صوت النظام ← إدارة الأصوات. بالإنجليزية: Ava لامرأة، Jamie لرجل (بريطاني)."
+            "value" : "لاختيار صوت النظام أو تنزيل صوت أكثر طبيعية (Premium هو الأفضل): إعدادات النظام ← تسهيلات الاستخدام ← المحتوى المنطوق ← صوت النظام؛ يضيف زر ⓘ المجاور أصواتًا. فعّل «استخدام صوت النظام» للتحدث به؛ وإلا يستخدم Coucou أفضل صوت مثبَّت من النوع أعلاه. بالإنجليزية: Ava لامرأة، Jamie لرجل (بريطاني)."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "আরও স্বাভাবিক কণ্ঠের জন্য একটি Premium কণ্ঠ ডাউনলোড করো: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices। ইংরেজিতে: নারী হলে Ava, পুরুষ হলে Jamie (ব্রিটিশ)।"
+            "value" : "সিস্টেম কণ্ঠ বাছতে বা আরও স্বাভাবিক কণ্ঠ ডাউনলোড করতে (Premium সবচেয়ে ভালো শোনায়): System Settings → Accessibility → Spoken Content → System voice; পাশের ⓘ বোতাম কণ্ঠ যোগ করে। সেই কণ্ঠে বলতে “সিস্টেম কণ্ঠ ব্যবহার করো” চালু করো; নইলে Coucou ওপরে বাছা ধরনের সবচেয়ে ভালো ইনস্টল করা কণ্ঠ নেয়। ইংরেজিতে: নারী হলে Ava, পুরুষ হলে Jamie (ব্রিটিশ)।"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Für eine natürlichere Stimme lade eine Premium-Stimme herunter: Systemeinstellungen → Bedienungshilfen → Gesprochene Inhalte → Systemstimme → Stimmen verwalten. Auf Englisch: Ava für eine weibliche, Jamie für eine männliche Stimme (britisch)."
+            "value" : "Um die Systemstimme zu wählen oder eine natürlichere zu laden (Premium klingt am besten): Systemeinstellungen → Bedienungshilfen → Gesprochene Inhalte → Systemstimme; die ⓘ-Taste daneben fügt Stimmen hinzu. Aktiviere „Systemstimme verwenden“, um mit ihr zu sprechen; sonst nimmt Coucou die beste installierte Stimme des Typs oben. Auf Englisch: Ava für eine weibliche, Jamie für eine männliche Stimme (britisch)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For a more natural voice, download a Premium voice: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices. In English: Ava for a woman, Jamie for a man (British)."
+            "value" : "To pick the system voice or download a more natural one (Premium sounds best): System Settings → Accessibility → Spoken Content → System voice; the ⓘ button next to it adds voices. Turn on “Use the system voice” to speak with it; otherwise Coucou takes the best installed voice of the type above. In English: Ava for a woman, Jamie for a man (British)."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para una voz más natural, descarga una voz Premium: Ajustes del Sistema → Accesibilidad → Contenido leído → Voz del sistema → Gestionar voces. En inglés: Ava para mujer, Jamie para hombre (británico)."
+            "value" : "Para elegir la voz del sistema o descargar una más natural (Premium suena mejor): Ajustes del Sistema → Accesibilidad → Contenido leído → Voz del sistema; el botón ⓘ de al lado añade voces. Activa «Usar la voz del sistema» para hablar con ella; si no, Coucou usa la mejor voz instalada del tipo de arriba. En inglés: Ava para mujer, Jamie para hombre (británico)."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour une voix plus naturelle, télécharge une voix Premium : Réglages Système → Accessibilité → Contenu énoncé → Voix du système → Gérer les voix. En anglais : Ava pour une femme, Jamie pour un homme (britannique)."
+            "value" : "Pour choisir la voix du système ou télécharger une voix plus naturelle (Premium sonne le mieux) : Réglages Système → Accessibilité → Contenu énoncé → Voix système ; le bouton ⓘ à côté ajoute des voix. Active « Utiliser la voix du système » pour parler avec elle ; sinon Coucou prend la meilleure voix installée du type ci-dessus. En anglais : Ava pour une femme, Jamie pour un homme (britannique)."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ज़्यादा स्वाभाविक आवाज़ के लिए Premium आवाज़ डाउनलोड करें: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices। अंग्रेज़ी में: महिला के लिए Ava, पुरुष के लिए Jamie (ब्रिटिश)।"
+            "value" : "सिस्टम आवाज़ चुनने या ज़्यादा स्वाभाविक आवाज़ डाउनलोड करने के लिए (Premium सबसे अच्छी लगती है): System Settings → Accessibility → Spoken Content → System voice; उसके बगल का ⓘ बटन आवाज़ें जोड़ता है। उसी आवाज़ में बोलने के लिए “सिस्टम आवाज़ इस्तेमाल करें” चालू करें; वरना Coucou ऊपर चुने प्रकार की सबसे अच्छी इंस्टॉल आवाज़ लेता है। अंग्रेज़ी में: महिला के लिए Ava, पुरुष के लिए Jamie (ब्रिटिश)।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Untuk suara yang lebih alami, unduh suara Premium: Pengaturan Sistem → Aksesibilitas → Konten Lisan → Suara Sistem → Kelola Suara. Bahasa Inggris: Ava untuk wanita, Jamie untuk pria (Inggris)."
+            "value" : "Untuk memilih suara sistem atau mengunduh yang lebih alami (Premium terdengar paling baik): Pengaturan Sistem → Aksesibilitas → Konten Lisan → Suara sistem; tombol ⓘ di sebelahnya menambah suara. Nyalakan “Gunakan suara sistem” untuk berbicara dengannya; jika tidak, Coucou memakai suara terpasang terbaik dari jenis di atas. Bahasa Inggris: Ava untuk wanita, Jamie untuk pria (Inggris)."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para uma voz mais natural, baixe uma voz Premium: Ajustes do Sistema → Acessibilidade → Conteúdo Falado → Voz do Sistema → Gerenciar Vozes. Em inglês: Ava para mulher, Jamie para homem (britânico)."
+            "value" : "Para escolher a voz do sistema ou baixar uma mais natural (Premium soa melhor): Ajustes do Sistema → Acessibilidade → Conteúdo Falado → Voz do Sistema; o botão ⓘ ao lado adiciona vozes. Ative “Usar a voz do sistema” para falar com ela; senão o Coucou usa a melhor voz instalada do tipo acima. Em inglês: Ava para mulher, Jamie para homem (britânico)."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Для более естественного голоса скачай голос Premium: Системные настройки → Универсальный доступ → Устная речь → Системный голос → Управлять голосами. По-английски: Ava — женский, Jamie — мужской (британский)."
+            "value" : "Чтобы выбрать голос системы или скачать более естественный (лучше всего звучит Premium): Системные настройки → Универсальный доступ → Устная речь → Голос системы; кнопка ⓘ рядом добавляет голоса. Включи «Использовать голос системы», чтобы говорить им; иначе Coucou берёт лучший установленный голос выбранного выше типа. По-английски: Ava — женский, Jamie — мужской (британский)."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หากต้องการเสียงที่เป็นธรรมชาติมากขึ้น ให้ดาวน์โหลดเสียงพรีเมียมที่ การตั้งค่าระบบ → การช่วยการเข้าถึง → เนื้อหาที่พูด → เสียงระบบ → จัดการเสียง"
+            "value" : "หากต้องการเลือกเสียงของระบบหรือดาวน์โหลดเสียงที่เป็นธรรมชาติมากขึ้น (พรีเมียมฟังดีที่สุด): การตั้งค่าระบบ → การช่วยการเข้าถึง → เนื้อหาที่พูด → เสียงอ่านของระบบ ปุ่ม ⓘ ข้างๆ ใช้เพิ่มเสียง เปิด “ใช้เสียงของระบบ” เพื่อพูดด้วยเสียงนั้น ไม่เช่นนั้น Coucou จะใช้เสียงที่ดีที่สุดที่ติดตั้งไว้ตามประเภทด้านบน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Daha doğal bir ses için Premium ses indir: Sistem Ayarları → Erişilebilirlik → Seslendirilen İçerik → Sistem Sesi → Sesleri Yönet. İngilizcede: kadın sesi için Ava, erkek sesi için Jamie (Britanya)."
+            "value" : "Sistem sesini seçmek veya daha doğal bir ses indirmek için (en iyisi Premium): Sistem Ayarları → Erişilebilirlik → Seslendirilen İçerik → Sistem sesi; yanındaki ⓘ düğmesi ses ekler. Bu sesle konuşmak için “Sistem sesini kullan”ı aç; aksi halde Coucou yukarıdaki türün yüklü en iyi sesini kullanır. İngilizcede: kadın sesi için Ava, erkek sesi için Jamie (Britanya)."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "想要更自然的声音，请下载 Premium 语音：系统设置 → 辅助功能 → 朗读内容 → 系统语音 → 管理语音。英语：女声选 Ava，男声选 Jamie（英式）。"
+            "value" : "要选择系统声音或下载更自然的声音（Premium 效果最好）：系统设置 → 辅助功能 → 朗读内容 → 系统声音；旁边的 ⓘ 按钮可添加声音。打开“使用系统声音”即可用它朗读；否则 Coucou 会使用上方所选类型中已安装的最佳声音。英语：女声选 Ava，男声选 Jamie（英式）。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "若想要更自然的語音，請下載優質語音：「系統設定 → 輔助使用 → 朗讀內容 → 系統聲音 → 管理聲音」。英文女聲可選 Ava，男聲可選 Jamie（英式）。"
+            "value" : "若要選擇系統聲音或下載更自然的聲音（Premium 效果最好）：系統設定 → 輔助使用 → 朗讀內容 → 系統聲音；旁邊的 ⓘ 按鈕可加入聲音。開啟「使用系統聲音」即可用它朗讀；否則 Coucou 會使用上方所選類型中已安裝的最佳聲音。英文女聲可選 Ava，男聲可選 Jamie（英式）。"
           }
         }
       }

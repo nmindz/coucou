@@ -547,6 +547,79 @@ final class AppState: ObservableObject {
     func refreshPlanRelayState() {
         planRelayInstalled = HookServer.statusLineInstalled()
     }
+
+    // Claude plan gauge from claude-lb instead of the status line — opt-in
+    @Published var planFromClaudeLB: Bool = false {
+        didSet { UserDefaults.standard.set(planFromClaudeLB, forKey: "planFromClaudeLB") }
+    }
+    @Published var claudeLBURL: String = ClaudeLB.defaultURL {
+        didSet { UserDefaults.standard.set(claudeLBURL, forKey: "claudeLBURL") }
+    }
+    /// Accounts the gauge counts; empty = every account.
+    @Published var claudeLBSelected: Set<String> = [] {
+        didSet { UserDefaults.standard.set(Array(claudeLBSelected), forKey: "claudeLBSelected"); recomputeClaudeLBUsage() }
+    }
+    @Published var claudeLBAggregation: ClaudeLB.Aggregation = .average {
+        didSet { UserDefaults.standard.set(claudeLBAggregation.rawValue, forKey: "claudeLBAggregation"); recomputeClaudeLBUsage() }
+    }
+    @Published var claudeLBAccounts: [ClaudeLB.Account] = []
+    @Published var claudeLBError: ClaudeLB.Failure? = nil
+
+    /// The Claude pill shows: the relay feeds it, or claude-lb does.
+    var claudePlanAvailable: Bool {
+        showPlanInNotch && (planFromClaudeLB || planRelayInstalled)
+    }
+
+    private static var lastClaudeLBAttempt: Date = .distantPast
+    private static var claudeLBFetchInFlight = false
+
+    /// claude-lb reads its SQLite on the proxy's thread: poll on minutes, never seconds.
+    func refreshClaudeLBUsage() {
+        guard planFromClaudeLB, Date().timeIntervalSince(Self.lastClaudeLBAttempt) > 120 else { return }
+        Task { await loadClaudeLB() }
+    }
+
+    /// One fetch now (Settings' Connect, turning the source on). Publishes accounts or the error.
+    func loadClaudeLB() async {
+        guard planFromClaudeLB, !Self.claudeLBFetchInFlight else { return }
+        let key = KeychainStore.shared.get(ClaudeLB.keychainKey) ?? ""
+        guard !key.isEmpty else { claudeLBError = .noKey; return }
+        Self.claudeLBFetchInFlight = true
+        Self.lastClaudeLBAttempt = Date()
+        defer { Self.claudeLBFetchInFlight = false }
+        switch await ClaudeLB.fetchQuota(baseURL: claudeLBURL, apiKey: key) {
+        case .success(let accounts):
+            claudeLBAccounts = accounts
+            claudeLBError = nil
+            recomputeClaudeLBUsage()
+        case .failure(let failure):
+            claudeLBError = failure
+        }
+    }
+
+    private func recomputeClaudeLBUsage() {
+        guard planFromClaudeLB, !claudeLBAccounts.isEmpty else { return }
+        claudePlanUsage = ClaudeLB.planUsage(claudeLBAccounts, selected: claudeLBSelected, mode: claudeLBAggregation)
+    }
+
+    /// Card subtitle: which accounts the gauge stands for, or why it has nothing to show.
+    var claudeLBSourceNote: String {
+        if let error = claudeLBError {
+            switch error {
+            case .noKey:        return String(localized: "claudelb.note.no-key")
+            case .unauthorized: return String(localized: "claudelb.note.key-refused")
+            case .forbidden:    return String(localized: "claudelb.note.no-analytics")
+            case .unreachable, .badURL: return String(localized: "claudelb.note.unreachable")
+            case .malformed, .http: return String(localized: "claudelb.note.error")
+            }
+        }
+        let pool = ClaudeLB.counted(claudeLBAccounts, selected: claudeLBSelected, mode: claudeLBAggregation)
+        switch claudeLBAggregation {
+        case .average:  return String(format: String(localized: "claudelb.note.average %lld"), Int64(pool.count))
+        case .mostUsed: return String(format: String(localized: "claudelb.note.most-used %lld"), Int64(pool.count))
+        case .single:   return pool.first.map { "claude-lb · \($0.label)" } ?? "claude-lb"
+        }
+    }
     #endif
 
     // MARK: - Init (loads persisted settings)
@@ -598,6 +671,12 @@ final class AppState: ObservableObject {
         if let v = ud.object(forKey: "showPlanInNotch") as? Bool { showPlanInNotch = v }
         if let v = ud.object(forKey: "showCodexPlanInNotch") as? Bool { showCodexPlanInNotch = v }
         planRelayInstalled = HookServer.statusLineInstalled()
+        if let v = ud.object(forKey: "planFromClaudeLB") as? Bool { planFromClaudeLB = v }
+        if let v = ud.string(forKey: "claudeLBURL"), !v.isEmpty { claudeLBURL = v }
+        if let v = ud.stringArray(forKey: "claudeLBSelected") { claudeLBSelected = Set(v) }
+        if let v = ud.string(forKey: "claudeLBAggregation"), let m = ClaudeLB.Aggregation(rawValue: v) { claudeLBAggregation = m }
+        // claude-lb on and the pill never chosen either way: show it (an explicit "off" stays off).
+        if planFromClaudeLB && ud.object(forKey: "showPlanInNotch") == nil { showPlanInNotch = true }
         #endif
 
         // Sync SoundEngine volume on launch

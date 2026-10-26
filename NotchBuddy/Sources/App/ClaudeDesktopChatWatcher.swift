@@ -146,12 +146,12 @@ struct ClaudeDesktopChatSettingsSection: View {
                         }
                     }
                 Text(String(localized: "claude-desktop.chat.footer"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 if on && !trusted {
                     Text(String(localized: "claude-desktop.chat.needs-accessibility"))
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                         .foregroundColor(.orange)
                         .fixedSize(horizontal: false, vertical: true)
                 }

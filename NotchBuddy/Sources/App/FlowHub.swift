@@ -83,8 +83,8 @@ enum HubTheme {
     static let line = Color.white.opacity(0.07)
     static let text = Color(hex: "#F5F6F8")
     static let body = Color(hex: "#E1E3E6")
-    static let secondary = Color(hex: "#8E939C")
-    static let muted = Color(hex: "#6B7079")
+    static let secondary = CoucouTextColor.secondary
+    static let muted = CoucouTextColor.muted   // 5:1 on every surface (WCAG AA)
     static let accent = Color(hex: "#FB923C")
     static let onAccent = Color(hex: "#170C04")
     static let green = Color(hex: "#34D399")
@@ -197,6 +197,7 @@ final class FlowHubController {
 struct FlowHubView: View {
     @ObservedObject var router: HubRouter
     @ObservedObject var windowState: HubWindowState
+    @AppStorage(TextSize.key) private var textScale: Double = 1
 
     var body: some View {
         HStack(spacing: 0) {
@@ -220,6 +221,7 @@ struct FlowHubView: View {
         .tint(HubTheme.accent)
         .environment(\.hubVisible, windowState.visible)
         .environment(\.hubPage, router.page)
+        .environment(\.coucouTextScale, CGFloat(textScale))
     }
 
     @ViewBuilder private var page: some View {
@@ -428,7 +430,7 @@ struct HubLabel: View {
 
     var body: some View {
         Text(text.uppercased(with: .current))
-            .font(.system(size: 11.5, weight: .bold))
+            .coucouText(.sectionLabel)
             .tracking(1.3)
             .foregroundColor(HubTheme.muted)
     }
@@ -443,10 +445,10 @@ struct HubRow<Control: View>: View {
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(.system(size: 13.5, weight: .medium))
+                Text(title).coucouText(.rowTitle)
                 if let detail {
                     Text(detail)
-                        .font(.system(size: 12))
+                        .coucouText(.detail)
                         .foregroundColor(HubTheme.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -467,17 +469,85 @@ struct HubButtonStyle: ButtonStyle {
     var primary = false
 
     func makeBody(configuration: Configuration) -> some View {
+        HubButtonBody(configuration: configuration, primary: primary)
+    }
+}
+
+private struct HubButtonBody: View {
+    let configuration: ButtonStyleConfiguration
+    let primary: Bool
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
         configuration.label
-            .font(.system(size: 13, weight: primary ? .bold : .semibold))
+            .coucouFont(size: 15, weight: primary ? .bold : .semibold)
             .foregroundColor(primary ? HubTheme.onAccent : HubTheme.text)
             .padding(.horizontal, 14)
-            .frame(height: 34)
+            .padding(.vertical, 6)
+            .frame(minHeight: 34)
             .background(RoundedRectangle(cornerRadius: 9, style: .continuous)
                 .fill(primary ? HubTheme.accent : Color(hex: "#1D1E22")))
             .overlay(RoundedRectangle(cornerRadius: 9, style: .continuous)
                 .strokeBorder(primary ? Color.clear : Color.white.opacity(0.1)))
-            .opacity(configuration.isPressed ? 0.75 : 1)
+            .opacity(isEnabled ? (configuration.isPressed ? 0.75 : 1) : 0.45)
             .contentShape(Rectangle())
+    }
+}
+
+/// A Settings section drawn like the Flow pages: the small-capitals label, then a card.
+struct HubGroupBoxStyle: GroupBoxStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            configuration.label
+                .textCase(.uppercase)
+                .coucouText(.sectionLabel)
+                .tracking(1.3)
+                .foregroundColor(HubTheme.muted)
+                .accessibilityAddTraits(.isHeader)
+            VStack(alignment: .leading, spacing: 12) { configuration.content }
+                .padding(14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(HubTheme.card))
+                .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(HubTheme.line))
+        }
+    }
+}
+
+/// A setting's switch, as on the Flow Settings page: its name on the left, the switch on the right.
+struct HubToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HubToggleRow(configuration: configuration)
+    }
+}
+
+private struct HubToggleRow: View {
+    let configuration: ToggleStyleConfiguration
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 16) {
+            configuration.label
+                .coucouText(.rowTitle)
+                .fixedSize(horizontal: false, vertical: true)
+                .opacity(isEnabled ? 1 : 0.5)
+                .accessibilityHidden(true)   // the switch carries the name for VoiceOver
+            Spacer(minLength: 8)
+            Toggle(isOn: configuration.$isOn) { configuration.label }
+                .toggleStyle(.switch)
+                .labelsHidden()
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { if isEnabled { configuration.isOn.toggle() } }
+    }
+}
+
+extension View {
+    /// The Notch pages of the Coucou window, styled like its Flow pages.
+    func hubSettingsStyle() -> some View {
+        groupBoxStyle(HubGroupBoxStyle())
+            .toggleStyle(HubToggleStyle())
+            .buttonStyle(HubButtonStyle())
+            .tint(HubTheme.accent)
     }
 }
 
@@ -491,7 +561,7 @@ struct HubIconButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: symbol)
-                .font(.system(size: 12, weight: .medium))
+                .coucouFont(size: 14, weight: .medium)
                 .foregroundColor(hover ? HubTheme.text : Color(hex: "#A4A9B1"))
                 .frame(width: 28, height: 28)
                 .background(RoundedRectangle(cornerRadius: 7).fill(Color.white.opacity(hover ? 0.1 : 0.05)))

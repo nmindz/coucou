@@ -15,7 +15,7 @@ struct FlowSettingsBox: View {
                 }
 
                 Text(String(format: String(localized: "flow.how %@"), flow.key.label))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -33,7 +33,7 @@ struct FlowSettingsBox: View {
 
                 if flow.key == .fn {
                     Text(String(localized: "flow.fn-help"))
-                        .font(.system(size: 11))
+                        .coucouFont(size: 14)
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -41,7 +41,7 @@ struct FlowSettingsBox: View {
                 if flow.isEnabled {
                     if flow.trusted {
                         Label(String(localized: "flow.access-ok"), systemImage: "checkmark.circle.fill")
-                            .font(.system(size: 11))
+                            .coucouFont(size: 14)
                             .foregroundColor(.green)
                     } else {
                         HStack(alignment: .top, spacing: 6) {
@@ -49,7 +49,7 @@ struct FlowSettingsBox: View {
                                 .foregroundColor(.orange)
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(String(localized: "flow.accessibility"))
-                                    .font(.system(size: 11))
+                                    .coucouFont(size: 14)
                                     .fixedSize(horizontal: false, vertical: true)
                                 Button(String(localized: "flow.accessibility-open")) {
                                     flow.openAccessibilitySettings()
@@ -60,7 +60,7 @@ struct FlowSettingsBox: View {
                 }
 
                 Text(String(localized: "flow.privacy"))
-                    .font(.system(size: 11))
+                    .coucouFont(size: 14)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

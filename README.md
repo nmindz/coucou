@@ -62,7 +62,7 @@ Flow dictation and the Notetaker are on the Mac for now; Windows and Linux are n
 
 ## Features
 
-- 🤖 **Claude Code, Cursor, Codex, Gemini CLI, Antigravity, Copilot CLI, Muse Code, OpenCode, Amp, Hermes, Claude Desktop and other agents, live** — see every session in your notch: what it reads, edits and runs, step by step. Tag a hook payload with `coucou_agent` to give any agent its own pill (see [`docs/AGENTS.md`](docs/AGENTS.md)). Finished? Mochi does a happy little jump.
+- 🤖 **Claude Code, Cursor, Codex, Gemini CLI, Antigravity, Copilot CLI, Muse Code, OpenCode, Amp, OMP, Hermes, Claude Desktop and other agents, live** — see every session in your notch: what it reads, edits and runs, step by step. Tag a hook payload with `coucou_agent` to give any agent its own pill (see [`docs/AGENTS.md`](docs/AGENTS.md)). Finished? Mochi does a happy little jump.
 - See what Claude is editing, live in the notch: each file modification shows the file name and +N −M counts in the ticker, tap to read the full diff
 - ✅ **Approve and answer from the notch** — Claude Code permission requests show up with **Allow / Deny / Always**; `AskUserQuestion` prompts show the choices right in the notch (single or multi-select, up to 4 questions). One click, or "Reply in terminal" to fall back to the CLI. Codex also gets Allow / Deny.
 - 🧑‍💻 **Jump to the right terminal** — open the exact terminal window of a session *(macOS)*.
@@ -324,6 +324,8 @@ On the Mac, open Coucou from the Dock or the menu bar: its window has every sett
 |---|---|---|
 | **Claude Code hooks** | live sessions and approvals | **Install hooks** — Coucou backs up `~/.claude/settings.json`, merges its hooks and shows you the diff before writing anything |
 | **Claude plan** *(macOS, GitHub build)* | Plan usage gauge in the notch header | **Install relay** in Settings → Agents → Plan usage, then enable "Show in the notch" |
+| **claude-lb plan source** *(macOS, GitHub build, optional)* | the same gauge read from a claude-lb load balancer: average, most-used or one account, over the accounts you pick | Settings → Agents → Plan usage → **Read plan usage from claude-lb** · its address and an API key with "Read usage analytics" (Keychain) |
+| **Coucou MCP** *(macOS, GitHub build, optional)* | agents read the Notetaker's recordings: summaries, to-dos, transcripts | Settings → Agents → Coucou MCP · off by default, read-only, see [docs/MCP.md](docs/MCP.md) |
 | **Gemini CLI hooks** | Gemini CLI sessions in the island | **Install hooks** in Settings → Gemini CLI — backs up `~/.gemini/settings.json` |
 | **Antigravity (agy) hooks** | agy sessions in the island | **Install hooks** in Settings → Antigravity — backs up `~/.gemini/config/hooks.json` |
 | **Anthropic API key** | chat and questions about files | Settings → Anthropic API · Keychain / Windows Credential Manager / Secret Service |
@@ -411,10 +413,11 @@ ENGINE_TYPE=baileys SSRF_ALLOWED_HOSTS=127.0.0.1 npm run start:prod
 | Muse Code | `--agent muse` flag | No |
 | OpenCode | Plugin — **Settings → OpenCode Plugin → Install** | No |
 | Amp | Plugin — **Settings → Amp Plugin → Install** | No |
+| OMP | Extension — **Settings → Agents → OMP → Install** | Optional (notch) |
 | Hermes | Plugin — **Settings → Agents → Hermes → Install** | No |
 | Any other | `--agent <name>` flag; see [`docs/AGENTS.md`](docs/AGENTS.md) | No |
 
-OpenCode, Amp and Hermes use a plugin model rather than a hook command. Coucou installs the plugin file into `~/.config/opencode/plugins/`, `~/.config/amp/plugins/` and `~/.hermes/plugins/coucou/` respectively. On Windows and Linux the plugins start the `coucou-hook` relay directly — see [`windows/README.md`](windows/README.md#supported-agents).
+OpenCode, Amp, OMP and Hermes use a plugin or extension model rather than a hook command. Coucou installs into `~/.config/opencode/plugins/`, `~/.config/amp/plugins/`, `~/.omp/agent/extensions/` and `~/.hermes/plugins/coucou/` respectively. On Windows and Linux the plugins start the `coucou-hook` relay directly — see [`windows/README.md`](windows/README.md#supported-agents).
 
 ## Things to try
 

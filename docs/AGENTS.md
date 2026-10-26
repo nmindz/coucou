@@ -192,6 +192,28 @@ The plugin maps OpenCode event types to canonical Coucou names and forwards them
 | `tool.execute.after` | `PostToolUse` |
 | `permission.asked` | `PermissionRequest` |
 
+### OMP / oh-my-pi (macOS)
+
+Coucou supports [OMP](https://github.com/can1357/oh-my-pi) (oh-my-pi) via **Settings → Agents → OMP extension → Install**. The installer writes an OMP extension to `~/.omp/agent/extensions/coucou.ts` (preview, dated backup, removal only of a file Coucou generated). It reports the main agent only: subagents and a nested `omp` started from an OMP shell (`OMPCODE=1`) stay quiet.
+
+| OMP event | Canonical event |
+|---|---|
+| `session_start` | `SessionStart` |
+| `agent_start` | `UserPromptSubmit` |
+| `tool_execution_start` | `PreToolUse` (+ `Notification` with the question for the `ask` tool) |
+| `tool_execution_end` | `PostToolUse`, or `PostToolUseFailure` when `isError` |
+| `tool_approval_requested` | `Notification` (OMP is waiting for an approval in its terminal) |
+| `agent_end` (not `willContinue`) | `Stop`, with `last_assistant_message` (first 600 characters of the reply) |
+| `session_shutdown` | `SessionEnd` |
+
+**Reply ready.** With **Mochi jumps when an OMP reply is ready** on (Settings → Agents → OMP, default on), a `Stop` from OMP makes Mochi jump unless OMP's terminal is in front, as Claude Desktop chats do; the pill shows the start of the reply.
+
+**Approvals in the notch (opt-in).** OMP extensions can observe OMP's approval prompt but not answer it, so with **Approve OMP tools in the notch** on, Coucou becomes the gate instead. The extension re-reads `~/Library/Application Support/NotchBuddy/omp-gate.json` (`{approvals, tools}`) on every `tool_call`. For a listed tool (default `bash`, `eval`, `edit`, `ast_edit`, `write`) it sends a `PermissionRequest` through `nb-hook --agent omp` and waits up to 115 s:
+
+- **Allow** → the tool runs; **Deny** → `{ block: true, reason: "Denied in Coucou" }`. There is no **Always**.
+- **No answer** (Coucou closed, timeout, "reply in terminal") → OMP's own `ui.confirm` in the terminal; with no terminal UI the call is blocked.
+- While the gate is on, the extension sets two in-memory settings (never persisted): `tools.approvalMode = yolo`, so OMP does not ask a second time, and `extensionHandlers.toolCallTimeoutMs = 130000`, so the wait fits the `tool_call` budget (30 s by default, fail-closed). Both are cleared when the gate turns off or the session ends. Deny rules from OMP's config and tool-declared denies still apply; unlisted tools run without a prompt.
+
 ### Amp (macOS)
 
 Coucou supports Amp via **Settings → Amp Plugin → Install plugin**.

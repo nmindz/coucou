@@ -75,6 +75,7 @@ final class KeychainStore: @unchecked Sendable {
         "calcom-api-key",
         "notion-api-key",
         "elevenlabs-api-key",
+        "claudelb-api-key",
         // WhatsApp (local gateway): its address, credentials and the webhook's signing secret
         "whatsapp-url", "whatsapp-api-key", "whatsapp-webhook-secret",
         // Portfolio exchange credentials
@@ -614,8 +615,32 @@ final class ClaudeService {
 
     // MARK: - API call
 
+    /// A compatible backend (Settings → Chat → Base URL) that refused Anthropic's own tools (web
+    /// search): later calls to it go without them, until the URL changes or Coucou restarts.
+    private var typedToolsRefusedBy: URL?
+
     private func callAPI(body: [String: Any], key: String, beta: String? = nil) async throws -> Data {
-        var request = URLRequest(url: ProviderSettings.anthropicMessagesURL)
+        let url = ProviderSettings.anthropicMessagesURL
+        if typedToolsRefusedBy == url, let stripped = AnthropicTools.withoutTypedTools(body) {
+            return try await send(body: stripped, key: key, beta: nil, to: url)
+        }
+        do {
+            return try await send(body: body, key: key, beta: beta, to: url)
+        } catch let refusal as TypedToolsRefused {
+            guard ProviderSettings.hasCustomBaseURL(.anthropic), let stripped = AnthropicTools.withoutTypedTools(body) else {
+                throw refusal.error
+            }
+            typedToolsRefusedBy = url
+            appendAppLog("nb.log", "[Claude] \(url.host ?? "backend") refused web search (\(refusal.error.localizedDescription)); answering without it")
+            return try await send(body: stripped, key: key, beta: nil, to: url)
+        }
+    }
+
+    /// The backend's 400 named a `tools.N` entry: its validation rejected one of the tools sent.
+    private struct TypedToolsRefused: Error { let error: NSError }
+
+    private func send(body: [String: Any], key: String, beta: String?, to url: URL) async throws -> Data {
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue(key, forHTTPHeaderField: "x-api-key")
         request.setValue(anthropicVersion, forHTTPHeaderField: "anthropic-version")
@@ -638,8 +663,11 @@ final class ClaudeService {
                         userInfo: [NSLocalizedDescriptionKey:
                             "Model not found: \(id). Pick another one in Settings."])
                 }
-                throw NSError(domain: "Claude", code: 0,
-                    userInfo: [NSLocalizedDescriptionKey: errMsg])
+                let error = NSError(domain: "Claude", code: 0, userInfo: [NSLocalizedDescriptionKey: errMsg])
+                if (response as? HTTPURLResponse)?.statusCode == 400, AnthropicTools.namesToolEntry(errMsg) {
+                    throw TypedToolsRefused(error: error)
+                }
+                throw error
             }
             let msg = String(data: data, encoding: .utf8) ?? "unknown error"
             throw NSError(domain: "Claude", code: 0, userInfo: [NSLocalizedDescriptionKey: msg])

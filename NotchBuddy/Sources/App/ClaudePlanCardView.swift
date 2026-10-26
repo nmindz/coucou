@@ -4,6 +4,8 @@ import SwiftUI
 
 struct ClaudePlanCardView: View {
     let usage: PlanUsage?   // nil = installed, no data yet
+    /// Where the numbers come from, when not Claude Code's own status line.
+    var sourceNote: String? = nil
     #if !APPSTORE
     /// Claude and Codex both shown: Codex is a third row (the header has room for one pill).
     var codexRow: Bool = false
@@ -79,7 +81,12 @@ struct ClaudePlanCardView: View {
     #endif
 
     private var subtitleText: String {
-        guard let usage else { return String(localized: "plan.waiting") }
+        guard let usage else { return sourceNote ?? String(localized: "plan.waiting") }
+        if let sourceNote { return "\(sourceNote) · \(ageText(usage))" }
+        return ageText(usage)
+    }
+
+    private func ageText(_ usage: PlanUsage) -> String {
         let diff = now.timeIntervalSince(usage.updatedAt)
         if diff < 60 { return String(localized: "plan.just-now") }
         let mins = Int(diff / 60)
