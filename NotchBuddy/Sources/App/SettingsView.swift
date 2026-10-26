@@ -5,7 +5,6 @@ import AppKit
 struct SettingsView: View {
     @ObservedObject private var state = AppState.shared
     @ObservedObject private var demoEngine = DemoEngine.shared
-    @State private var apiKey: String = KeychainStore.shared.get("anthropic-api-key") ?? ""
 
     // Claude model — dynamic list fetched from the API, static fallback if unavailable
     private static let fallbackModels: [(id: String, label: String)] = [
@@ -17,15 +16,14 @@ struct SettingsView: View {
     private static let customModelTag = "__custom__"
     @State private var fetchedModels: [(id: String, label: String)] = []
     @State private var modelChoice: String = {
-        let m = AppState.shared.claudeModel
-        return SettingsView.fallbackModels.contains { $0.id == m } ? m : SettingsView.customModelTag
+        AppState.shared.customChatModels[.anthropic] != nil ? SettingsView.customModelTag : AppState.shared.claudeModel
     }()
-    @State private var customModel: String = {
-        let m = AppState.shared.claudeModel
-        return SettingsView.fallbackModels.contains { $0.id == m } ? "" : m
-    }()
+    @State private var customModel: String = AppState.shared.customChatModels[.anthropic] ?? ""
     private var displayModels: [(id: String, label: String)] {
-        fetchedModels.isEmpty ? Self.fallbackModels : fetchedModels
+        let list = fetchedModels.isEmpty ? Self.fallbackModels : fetchedModels
+        // The model picked in the chat may be missing from this list: keep it choosable.
+        if list.contains(where: { $0.id == state.claudeModel }) { return list }
+        return list + [(id: state.claudeModel, label: state.claudeModel)]
     }
     @State private var launchAtStartup: Bool = (SMAppService.mainApp.status == .enabled)
     @State private var statusMessage: String = ""
@@ -85,12 +83,7 @@ struct SettingsView: View {
     @State private var hermesSupportsApprovals: Bool = false
     #endif
 
-    // Multi-provider chat keys
-    @State private var googleKey: String   = KeychainStore.shared.get("google-api-key") ?? ""
-    @State private var openAIKey: String   = KeychainStore.shared.get("openai-api-key") ?? ""
-    @State private var deepseekKey: String = KeychainStore.shared.get("deepseek-api-key") ?? ""
-    @State private var qwenKey: String     = KeychainStore.shared.get("qwen-api-key") ?? ""
-    @State private var moonshotKey: String = KeychainStore.shared.get("moonshot-api-key") ?? ""
+    // Local chat servers
     @State private var ollamaURL:    String = AppState.shared.ollamaServerURL
     @State private var lmstudioURL:  String = AppState.shared.lmstudioServerURL
     @State private var connectingOllama:    Bool = false
@@ -242,17 +235,7 @@ struct SettingsView: View {
             Task {
                 let models = await ClaudeService.fetchModels(apiKey: key)
                 guard !models.isEmpty else { return }
-                await MainActor.run {
-                    fetchedModels = models
-                    let m = state.claudeModel
-                    if models.contains(where: { $0.id == m }) {
-                        modelChoice = m
-                        customModel = ""
-                    } else if modelChoice != Self.customModelTag {
-                        modelChoice = Self.customModelTag
-                        customModel = m
-                    }
-                }
+                await MainActor.run { fetchedModels = models }
             }
         }
     }
@@ -347,14 +330,14 @@ struct SettingsView: View {
                 HStack(spacing: 8) {
                     Text("Close after")
                     TextField("60", value: $state.autoCloseInterval, format: .number)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                         .frame(width: 64)
                     Text("s inactive")
                 }
                 HStack(spacing: 8) {
                     Text("Hide after")
                     TextField("3", value: absenceMinutes, format: .number)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                         .frame(width: 48)
                     Text("min without movement")
                 }
@@ -1042,13 +1025,9 @@ struct SettingsView: View {
     @ViewBuilder private var chatSection: some View {
         GroupBox(String(localized: "chat.anthropic-api.title")) {
             VStack(alignment: .leading, spacing: 8) {
-                SecureField(String(localized: "chat.api-key.claude"), text: $apiKey)
-                    .textFieldStyle(.roundedBorder)
-                Button(String(localized: "Save")) {
-                    KeychainStore.shared.set("anthropic-api-key", value: apiKey)
-                    statusMessage = String(localized: "status.key-saved")
-                }
-                .buttonStyle(.borderedProminent)
+                CloudProviderSettings(provider: .anthropic, title: nil,
+                                      keyPlaceholder: String(localized: "chat.api-key.claude"),
+                                      showsModelField: false, statusMessage: $statusMessage)
 
                 Divider().padding(.vertical, 2)
 
@@ -1060,15 +1039,19 @@ struct SettingsView: View {
                 }
                 .onChange(of: modelChoice) { _, choice in
                     if choice != Self.customModelTag {
-                        state.claudeModel = choice
+                        state.pickChatModel(choice, for: .anthropic)
                     } else {
                         applyCustomModel(customModel)
                     }
                 }
+                .onChange(of: state.customChatModels[.anthropic]) { _, custom in
+                    // Picked in the chat meanwhile: the Settings name is gone.
+                    if custom == nil, modelChoice == Self.customModelTag { modelChoice = state.claudeModel }
+                }
 
                 if modelChoice == Self.customModelTag {
                     TextField(String(localized: "chat.model.custom-id"), text: $customModel)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField(icon: "cpu")
                         .onChange(of: customModel) { _, value in applyCustomModel(value) }
                 }
 
@@ -1084,74 +1067,27 @@ struct SettingsView: View {
                 Text(String(localized: "chat.other-providers.description"))
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
+                Text(String(localized: "chat.compatible.hint"))
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
 
-                HStack(spacing: 8) {
-                    Circle().fill(Color(hex: "#4285F4")).frame(width: 8, height: 8)
-                    Text(String(localized: "chat.google-ai")).font(.system(size: 12, weight: .semibold))
-                }
-                SecureField(String(localized: "chat.api-key.google"), text: $googleKey)
-                    .textFieldStyle(.roundedBorder)
-                Button(String(localized: "Save")) {
-                    KeychainStore.shared.set("google-api-key", value: googleKey)
-                    statusMessage = String(localized: "status.google-key-saved")
-                }
-                .buttonStyle(.borderedProminent)
-
+                CloudProviderSettings(provider: .google, title: String(localized: "chat.google-ai"),
+                                      keyPlaceholder: String(localized: "chat.api-key.google"),
+                                      statusMessage: $statusMessage)
                 Divider()
-
-                HStack(spacing: 8) {
-                    Circle().fill(Color(hex: "#10A37F")).frame(width: 8, height: 8)
-                    Text(String(localized: "chat.openai")).font(.system(size: 12, weight: .semibold))
-                }
-                SecureField(String(localized: "chat.api-key.openai"), text: $openAIKey)
-                    .textFieldStyle(.roundedBorder)
-                Button(String(localized: "Save")) {
-                    KeychainStore.shared.set("openai-api-key", value: openAIKey)
-                    statusMessage = String(localized: "status.openai-key-saved")
-                }
-                .buttonStyle(.borderedProminent)
-
+                CloudProviderSettings(provider: .openai, title: String(localized: "chat.openai"),
+                                      keyPlaceholder: String(localized: "chat.api-key.openai"),
+                                      statusMessage: $statusMessage)
                 Divider()
-
-                HStack(spacing: 8) {
-                    Circle().fill(Color(hex: "#5B8FF9")).frame(width: 8, height: 8)
-                    Text("DeepSeek").font(.system(size: 12, weight: .semibold))
-                }
-                SecureField("API key", text: $deepseekKey)
-                    .textFieldStyle(.roundedBorder)
-                Button(String(localized: "Save")) {
-                    KeychainStore.shared.set("deepseek-api-key", value: deepseekKey)
-                    statusMessage = String(localized: "status.deepseek-key-saved")
-                }
-                .buttonStyle(.borderedProminent)
-
+                CloudProviderSettings(provider: .deepseek, title: "DeepSeek",
+                                      keyPlaceholder: String(localized: "API key"), statusMessage: $statusMessage)
                 Divider()
-
-                HStack(spacing: 8) {
-                    Circle().fill(Color(hex: "#FF6A00")).frame(width: 8, height: 8)
-                    Text("Qwen (Alibaba)").font(.system(size: 12, weight: .semibold))
-                }
-                SecureField("API key", text: $qwenKey)
-                    .textFieldStyle(.roundedBorder)
-                Button(String(localized: "Save")) {
-                    KeychainStore.shared.set("qwen-api-key", value: qwenKey)
-                    statusMessage = String(localized: "status.qwen-key-saved")
-                }
-                .buttonStyle(.borderedProminent)
-
+                CloudProviderSettings(provider: .qwen, title: "Qwen (Alibaba)",
+                                      keyPlaceholder: String(localized: "API key"), statusMessage: $statusMessage)
                 Divider()
-
-                HStack(spacing: 8) {
-                    Circle().fill(Color(hex: "#7C5CFC")).frame(width: 8, height: 8)
-                    Text("Moonshot (Kimi)").font(.system(size: 12, weight: .semibold))
-                }
-                SecureField("API key", text: $moonshotKey)
-                    .textFieldStyle(.roundedBorder)
-                Button(String(localized: "Save")) {
-                    KeychainStore.shared.set("moonshot-api-key", value: moonshotKey)
-                    statusMessage = String(localized: "status.moonshot-key-saved")
-                }
-                .buttonStyle(.borderedProminent)
+                CloudProviderSettings(provider: .moonshot, title: "Moonshot (Kimi)",
+                                      keyPlaceholder: String(localized: "API key"), statusMessage: $statusMessage)
             }
             .padding(.vertical, 4)
         }
@@ -1174,7 +1110,7 @@ struct SettingsView: View {
                 }
                 if state.ollamaServerURL.isEmpty {
                     TextField("http://127.0.0.1:11434", text: $ollamaURL)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     Button(connectingOllama ? String(localized: "chat.connecting") : String(localized: "chat.connect")) {
                         Task { await connectLocal(provider: .ollama) }
                     }
@@ -1209,7 +1145,7 @@ struct SettingsView: View {
                 }
                 if state.lmstudioServerURL.isEmpty {
                     TextField("http://127.0.0.1:1234", text: $lmstudioURL)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     Button(connectingLMStudio ? String(localized: "chat.connecting") : String(localized: "chat.connect")) {
                         Task { await connectLocal(provider: .lmstudio) }
                     }
@@ -1247,9 +1183,9 @@ struct SettingsView: View {
                         Text("Resend").font(.system(size: 12, weight: .semibold))
                     }
                     SecureField("API key  (re_…)", text: $resendKey)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     TextField("From address  (you@yourdomain.com)", text: $resendFrom)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                 }
 
                 // n8n
@@ -1259,9 +1195,9 @@ struct SettingsView: View {
                         Text("n8n").font(.system(size: 12, weight: .semibold))
                     }
                     TextField("Instance URL  (https://…)", text: $n8nUrl)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     SecureField("API key", text: $n8nKey)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     IntegrationFilterRow(
                         label: String(localized: "integrations.workflows"),
                         items: n8nWorkflows,
@@ -1278,7 +1214,7 @@ struct SettingsView: View {
                         Text("Vercel").font(.system(size: 12, weight: .semibold))
                     }
                     SecureField("Token", text: $vercelToken)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     IntegrationFilterRow(
                         label: String(localized: "integrations.projects"),
                         items: vercelProjects,
@@ -1295,7 +1231,7 @@ struct SettingsView: View {
                         Text("GitHub").font(.system(size: 12, weight: .semibold))
                     }
                     SecureField("Personal Access Token", text: $githubToken)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                     Text(String(localized: "integrations.github.token-hint"))
                         .font(.system(size: 10))
                         .foregroundColor(Color(hex: "#8E939C"))
@@ -1308,7 +1244,7 @@ struct SettingsView: View {
                         Text("Stripe").font(.system(size: 12, weight: .semibold))
                     }
                     SecureField("Secret key  (sk_live_… or sk_test_…)", text: $stripeKey)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                 }
 
                 // Cal.com
@@ -1318,7 +1254,7 @@ struct SettingsView: View {
                         Text("Cal.com").font(.system(size: 12, weight: .semibold))
                     }
                     SecureField("API key  (cal_live_…)", text: $calcomKey)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                 }
 
                 // Notion
@@ -1328,7 +1264,7 @@ struct SettingsView: View {
                         Text("Notion").font(.system(size: 12, weight: .semibold))
                     }
                     SecureField("Integration token  (secret_…)", text: $notionKey)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                 }
 
                 // Crypto: public prices, no key. Changes apply at once.
@@ -1349,7 +1285,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                     TextField(String(localized: "crypto.coins-placeholder"), text: $cryptoCoins)
-                        .textFieldStyle(.roundedBorder)
+                        .coucouField()
                         .onSubmit { CryptoController.shared.settingsChanged() }
                     HStack(spacing: 8) {
                         Toggle(String(format: String(localized: "crypto.alert %lld"), Int64(cryptoAlertPercent)),
@@ -1517,7 +1453,7 @@ struct SettingsView: View {
                         SecureField(elevenKeySaved ? String(localized: "voice.tts-key-saved")
                                                    : String(localized: "voice.tts-key"),
                                     text: $elevenKeyDraft)
-                            .textFieldStyle(.roundedBorder)
+                            .coucouField()
                             .frame(maxWidth: 220)
                         Button(String(localized: "Save")) {
                             let k = elevenKeyDraft.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1649,9 +1585,9 @@ struct SettingsView: View {
 
     // MARK: - Actions
 
+    /// The model name typed under "Custom…": empty leaves the model picked in the chat.
     private func applyCustomModel(_ value: String) {
-        let id = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !id.isEmpty { state.claudeModel = id }
+        state.setCustomChatModel(value, for: .anthropic)
     }
 
     private func toggleStartup(_ on: Bool) {
@@ -2259,6 +2195,74 @@ struct SettingsView: View {
                 .disabled(atMax)
             }
         }
+    }
+}
+
+/// A cloud provider in Settings → Chat: its key, and the base URL and model name of a compatible
+/// API standing in for the provider's own (both optional).
+private struct CloudProviderSettings: View {
+    let provider: ChatProvider
+    let title: String?
+    let keyPlaceholder: String
+    var showsModelField = true
+    @Binding var statusMessage: String
+
+    @ObservedObject private var state = AppState.shared
+    @State private var key: String
+    @State private var baseURL: String
+    @State private var model: String
+
+    init(provider: ChatProvider, title: String?, keyPlaceholder: String,
+         showsModelField: Bool = true, statusMessage: Binding<String>) {
+        self.provider = provider
+        self.title = title
+        self.keyPlaceholder = keyPlaceholder
+        self.showsModelField = showsModelField
+        _statusMessage = statusMessage
+        _key = State(initialValue: KeychainStore.shared.get(provider.keychainKey) ?? "")
+        _baseURL = State(initialValue: ProviderSettings.baseURL(provider))
+        _model = State(initialValue: ProviderSettings.customModel(provider))
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let title {
+                HStack(spacing: 8) {
+                    Circle().fill(Color(hex: provider.accentHex)).frame(width: 8, height: 8)
+                    Text(title).font(.system(size: 12, weight: .semibold))
+                }
+            }
+            SecureField(keyPlaceholder, text: $key)
+                .coucouField(icon: "key.fill")
+            HStack(spacing: 8) {
+                TextField(provider.defaultBaseURL, text: $baseURL)
+                    .coucouField(icon: "link", monospaced: true)
+                    .help(String(localized: "chat.base-url.help"))
+                if showsModelField {
+                    TextField(String(localized: "chat.model-name"), text: $model)
+                        .coucouField(icon: "cpu")
+                        .frame(maxWidth: 220)
+                        .help(String(localized: "chat.model-name.help"))
+                }
+            }
+            Button(String(localized: "Save"), action: save)
+                .buttonStyle(.borderedProminent)
+        }
+        // A model picked in the chat replaces the name typed here.
+        .onChange(of: state.customChatModels[provider]) { _, custom in model = custom ?? "" }
+    }
+
+    private func save() {
+        let url = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !url.isEmpty, case .failure = ProviderEndpoint.openAICompatibleBase(url) {
+            statusMessage = String(localized: "chat.base-url.invalid")
+            return
+        }
+        KeychainStore.shared.set(provider.keychainKey, value: key)
+        if url != ProviderSettings.baseURL(provider) { state.setBaseURL(url, for: provider) }
+        if showsModelField { state.setCustomChatModel(model, for: provider) }
+        baseURL = url
+        statusMessage = String(format: String(localized: "status.provider-saved %@"), title ?? provider.displayName)
     }
 }
 

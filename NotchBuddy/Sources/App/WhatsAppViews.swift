@@ -515,16 +515,16 @@ struct WhatsAppSettingsSection: View {
                         .pickerStyle(.segmented)
 
                         TextField(gateway.defaultURL, text: $url)
-                            .textFieldStyle(.roundedBorder)
+                            .coucouField()
                         SecureField(gateway == .gowa ? String(localized: "whatsapp.credential.gowa")
                                                      : String(localized: "whatsapp.credential.openwa"),
                                     text: $credential)
-                            .textFieldStyle(.roundedBorder)
+                            .coucouField()
                         if gateway == .gowa { autoStartRow }
                         HStack(spacing: 6) {
                             Text("whatsapp.port").font(.system(size: 11))
                             TextField(String(WhatsAppSettings.defaultPort), text: $port)
-                                .textFieldStyle(.roundedBorder)
+                                .coucouField()
                                 .frame(width: 80)
                             Spacer()
                         }
@@ -680,7 +680,7 @@ struct WhatsAppSettingsSection: View {
         if autoStart {
             HStack(spacing: 6) {
                 TextField(String(localized: "whatsapp.autostart.path"), text: $gowaPath)
-                    .textFieldStyle(.roundedBorder)
+                    .coucouField()
                     .onSubmit { savePath() }
                 Button("whatsapp.choose") { chooseBinary() }
             }
@@ -730,7 +730,7 @@ struct WhatsAppSettingsSection: View {
         }
         HStack(spacing: 6) {
             TextField(String(localized: "whatsapp.ignore-placeholder"), text: $ignoreEntry)
-                .textFieldStyle(.roundedBorder)
+                .coucouField()
                 .onSubmit(addIgnored)
             Button("whatsapp.add", action: addIgnored)
                 .disabled(ignoreEntry.trimmingCharacters(in: .whitespaces).isEmpty)

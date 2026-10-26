@@ -4,10 +4,10 @@ import Foundation
 /// The clean-up of Flow dictation: Claude removes the "euh", the repeats and the corrections said
 /// on the way ("at 3, no, at 4" → "at 4"), fixes the punctuation and writes in the app's style.
 /// Only when it is turned on in the Coucou Flow window and a Claude key is set in Settings; the words
-/// then go to Anthropic with that key, and nowhere else. Any problem (no network, slow answer, odd
-/// reply) and the words are pasted as they were heard.
+/// then go with that key to Anthropic (or the compatible API set in Settings → Chat), and nowhere
+/// else. Any problem (no network, slow answer, odd reply) and the words are pasted as they were heard.
 enum FlowCleanup {
-    static let model = "claude-haiku-4-5"
+    static var model: String { ProviderSettings.anthropicModel(orElse: ProviderSettings.anthropicFastModel) }
     /// Past this, the words are pasted as heard rather than keeping you waiting.
     static let timeout: TimeInterval = 4
 
@@ -18,7 +18,7 @@ enum FlowCleanup {
     static func clean(_ text: String, style: FlowStyle, app: String?, words: [String]) async -> String {
         guard style != .verbatim, let key = KeychainStore.shared.get("anthropic-api-key"), !key.isEmpty,
               FlowText.wordCount(text) >= 3 else { return text }
-        var request = URLRequest(url: URL(string: "https://api.anthropic.com/v1/messages")!)
+        var request = URLRequest(url: ProviderSettings.anthropicMessagesURL)
         request.httpMethod = "POST"
         request.timeoutInterval = timeout
         request.setValue(key, forHTTPHeaderField: "x-api-key")
@@ -56,7 +56,7 @@ enum FlowCleanup {
                           app: String?, words: [String]) async -> String {
         guard prompt || language != nil, let key = KeychainStore.shared.get("anthropic-api-key"), !key.isEmpty,
               FlowText.wordCount(text) >= 1 else { return text }
-        var request = URLRequest(url: URL(string: "https://api.anthropic.com/v1/messages")!)
+        var request = URLRequest(url: ProviderSettings.anthropicMessagesURL)
         request.httpMethod = "POST"
         // A prompt takes a little longer to write than a clean-up.
         request.timeoutInterval = prompt ? 12 : 8

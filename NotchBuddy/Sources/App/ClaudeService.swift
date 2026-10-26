@@ -120,15 +120,15 @@ final class KeychainStore: @unchecked Sendable {
 final class ClaudeService {
     static let shared = ClaudeService()
 
-    private let endpoint = URL(string: "https://api.anthropic.com/v1/messages")!
     private let anthropicVersion = "2023-06-01"
 
     // MARK: - Model list
 
-    /// Fetches available models from the Anthropic API in the order the API returns them
-    /// (newest first). Returns an empty array on any error — callers fall back to a static list.
+    /// Fetches available models from the Anthropic API (or the compatible one set in Settings) in
+    /// the order the API returns them (newest first). Returns an empty array on any error —
+    /// callers fall back to a static list.
     static func fetchModels(apiKey: String) async -> [(id: String, label: String)] {
-        guard let url = URL(string: "https://api.anthropic.com/v1/models?limit=100") else { return [] }
+        let url = ProviderEndpoint.anthropicModels(messages: ProviderSettings.anthropicMessagesURL)
         var req = URLRequest(url: url, timeoutInterval: 10)
         req.setValue(apiKey, forHTTPHeaderField: "x-api-key")
         req.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
@@ -137,9 +137,8 @@ final class ClaudeService {
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let items = json["data"] as? [[String: Any]] else { return [] }
         return items.compactMap { item in
-            guard let id = item["id"] as? String,
-                  let name = item["display_name"] as? String else { return nil }
-            return (id: id, label: name)
+            guard let id = item["id"] as? String else { return nil }
+            return (id: id, label: item["display_name"] as? String ?? id)
         }
     }
 
@@ -202,11 +201,8 @@ final class ClaudeService {
         }
     }
 
-    /// Chosen in Settings; falls back to the default when the field is left empty.
-    private var model: String {
-        let m = AppState.shared.claudeModel.trimmingCharacters(in: .whitespacesAndNewlines)
-        return m.isEmpty ? AppState.defaultClaudeModel : m
-    }
+    /// Chosen in Settings or in the chat; the default when nothing is.
+    private var model: String { AppState.shared.chatModel(for: .anthropic) }
 
     var apiKey: String? { KeychainStore.shared.get("anthropic-api-key") }
 
@@ -303,20 +299,10 @@ final class ClaudeService {
         let provider = state.chatProvider
         guard provider != .anthropic else { return }
 
-        let baseURL: String
-        if provider == .ollama {
-            baseURL = LocalChat.normaliseURL(state.ollamaServerURL)
-        } else if provider == .lmstudio {
-            baseURL = LocalChat.normaliseURL(state.lmstudioServerURL)
-        } else {
-            switch provider {
-            case .google:    baseURL = "https://generativelanguage.googleapis.com/v1beta/openai"
-            case .openai:    baseURL = "https://api.openai.com/v1"
-            case .deepseek:  baseURL = "https://api.deepseek.com/v1"
-            case .qwen:      baseURL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-            case .moonshot:  baseURL = "https://api.moonshot.cn/v1"
-            case .anthropic, .ollama, .lmstudio: baseURL = ""
-            }
+        let baseURL = switch provider {
+        case .ollama:    LocalChat.normaliseURL(state.ollamaServerURL)
+        case .lmstudio:  LocalChat.normaliseURL(state.lmstudioServerURL)
+        default:         ProviderSettings.openAICompatibleBase(provider)
         }
 
         guard !baseURL.isEmpty else {
@@ -566,8 +552,9 @@ final class ClaudeService {
 
     // MARK: - Voice answer (Coucou's voice, web search)
 
-    /// Fast model for spoken answers; the chat model from Settings when it is unavailable.
-    private static let voiceModel = "claude-haiku-4-5"
+    /// Fast model for spoken answers (the Settings model on a compatible backend); the chat
+    /// model when it is unavailable.
+    private static var voiceModel: String { ProviderSettings.anthropicModel(orElse: ProviderSettings.anthropicFastModel) }
 
     /// A short answer Coucou can say aloud, with web search, in the answer language.
     /// `history` holds the previous exchanges of this voice conversation (memory only).
@@ -628,7 +615,7 @@ final class ClaudeService {
     // MARK: - API call
 
     private func callAPI(body: [String: Any], key: String, beta: String? = nil) async throws -> Data {
-        var request = URLRequest(url: endpoint)
+        var request = URLRequest(url: ProviderSettings.anthropicMessagesURL)
         request.httpMethod = "POST"
         request.setValue(key, forHTTPHeaderField: "x-api-key")
         request.setValue(anthropicVersion, forHTTPHeaderField: "anthropic-version")
@@ -646,7 +633,7 @@ final class ClaudeService {
                let errType = err["type"] as? String,
                let errMsg = err["message"] as? String {
                 if errType == "not_found_error" {
-                    let id = AppState.shared.claudeModel
+                    let id = body["model"] as? String ?? model
                     throw NSError(domain: "Claude", code: 0,
                         userInfo: [NSLocalizedDescriptionKey:
                             "Model not found: \(id). Pick another one in Settings."])

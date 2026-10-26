@@ -3,6 +3,8 @@
 ## Unreleased
 
 - **Mac: WhatsApp statuses aren't chats** — a contact's WhatsApp Status and channel posts no longer show up as a conversation in the WhatsApp pill (#901, same fix as #910)
+- **Mac: compatible APIs for the chat** — Anthropic, Google AI, OpenAI, DeepSeek, Qwen and Moonshot each take an optional base URL and model name in Settings → Chat, to use an Anthropic- or OpenAI-compatible endpoint (a gateway, a proxy, another backend). The model typed there wins over the chat's picker and shows on top of it; https only, plain http only to this Mac
+- **Mac: text fields match the app** — Settings, Portfolio and WhatsApp fields use Coucou's own field: a rounded well with an icon where it helps, outlined in the window's accent color while you type
 
 ## Windows and Linux 0.5.3 — October 22, 2026
 

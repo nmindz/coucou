@@ -235,8 +235,7 @@ private struct AddExchangeSheet: View {
                     TextField("", text: text)
                 }
             }
-            .textFieldStyle(.roundedBorder)
-            .font(.system(size: 12, design: .monospaced))
+            .coucouField(monospaced: true)
         }
         .padding(.bottom, 8)
     }
@@ -329,8 +328,7 @@ private struct AddWalletSheet: View {
                     .foregroundColor(Color(hex: "#8E939C"))
                     .frame(width: 80, alignment: .leading)
                 TextField(selectedKind.placeholder, text: $address)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 11, design: .monospaced))
+                    .coucouField(monospaced: true)
             }
             .padding(.bottom, 8)
 
@@ -341,8 +339,7 @@ private struct AddWalletSheet: View {
                     .foregroundColor(Color(hex: "#8E939C"))
                     .frame(width: 80, alignment: .leading)
                 TextField("My wallet", text: $label)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 12))
+                    .coucouField()
             }
             .padding(.bottom, 10)
 

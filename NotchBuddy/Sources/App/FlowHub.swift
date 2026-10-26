@@ -512,12 +512,7 @@ struct HubField: View {
 
     var body: some View {
         TextField(placeholder, text: $text)
-            .textFieldStyle(.plain)
-            .font(.system(size: 13))
-            .padding(.horizontal, 12)
-            .frame(height: 34)
-            .background(RoundedRectangle(cornerRadius: 9, style: .continuous).fill(HubTheme.field))
-            .overlay(RoundedRectangle(cornerRadius: 9, style: .continuous).strokeBorder(Color.white.opacity(0.1)))
+            .coucouField(height: 34)
             .onSubmit(onSubmit)
     }
 }

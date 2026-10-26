@@ -1,6 +1,622 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "chat.base-url.help" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان URL الأساسي لواجهة برمجية متوافقة (بوابة أو وكيل أو خادم آخر). اتركه فارغًا لاستخدام الواجهة البرمجية الخاصة بالمزوّد."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "একটি সামঞ্জস্যপূর্ণ API-এর বেস URL (গেটওয়ে, প্রক্সি বা অন্য ব্যাকএন্ড)। প্রদানকারীর নিজস্ব API ব্যবহার করতে ফাঁকা রাখুন।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basis-URL einer kompatiblen API (Gateway, Proxy oder anderes Backend). Leer lassen, um die API des Anbieters zu verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base URL of a compatible API (a gateway, a proxy or another backend). Leave empty to use the provider’s own API."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL base de una API compatible (una pasarela, un proxy u otro backend). Déjala vacía para usar la API del propio proveedor."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL de base d’une API compatible (passerelle, proxy ou autre backend). Laisse vide pour utiliser l’API du fournisseur."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किसी संगत API का बेस URL (गेटवे, प्रॉक्सी या कोई अन्य बैकएंड)। प्रदाता का अपना API इस्तेमाल करने के लिए खाली छोड़ें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL dasar API yang kompatibel (gateway, proxy, atau backend lain). Kosongkan untuk memakai API milik penyedia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL base de uma API compatível (um gateway, um proxy ou outro backend). Deixe vazio para usar a API do próprio provedor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Базовый URL совместимого API (шлюз, прокси или другой бэкенд). Оставьте пустым, чтобы использовать API самого провайдера."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL หลักของ API ที่เข้ากันได้ (เกตเวย์ พร็อกซี หรือแบ็กเอนด์อื่น) เว้นว่างไว้เพื่อใช้ API ของผู้ให้บริการเอง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyumlu bir API'nin temel URL'si (ağ geçidi, proxy veya başka bir arka uç). Sağlayıcının kendi API'sini kullanmak için boş bırakın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兼容 API 的基础 URL（网关、代理或其他后端）。留空则使用服务商自己的 API。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "相容 API 的基礎 URL（閘道、代理或其他後端）。留空則使用服務商自己的 API。"
+          }
+        }
+      }
+    },
+    "chat.base-url.invalid" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ يجب أن يبدأ عنوان URL الأساسي بـ https:// (بروتوكول http فقط مع هذا الـ Mac) وألا يحتوي على اسم مستخدم أو كلمة مرور."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ বেস URL অবশ্যই https:// দিয়ে শুরু হতে হবে (সাধারণ http শুধু এই Mac-এর জন্য) এবং এতে কোনো ব্যবহারকারীর নাম বা পাসওয়ার্ড থাকবে না।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Die Basis-URL muss mit https:// beginnen (einfaches http nur zu diesem Mac) und darf weder Benutzernamen noch Passwort enthalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ The base URL must start with https:// (plain http only to this Mac) and carry no user name or password."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ La URL base debe empezar por https:// (http sin cifrar solo hacia este Mac) y no llevar usuario ni contraseña."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ L’URL de base doit commencer par https:// (http simple seulement vers ce Mac) et ne contenir ni nom d’utilisateur ni mot de passe."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ बेस URL https:// से शुरू होना चाहिए (सादा http केवल इसी Mac के लिए) और इसमें कोई उपयोगकर्ता नाम या पासवर्ड नहीं होना चाहिए।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ URL dasar harus diawali https:// (http biasa hanya ke Mac ini) dan tidak boleh berisi nama pengguna atau kata sandi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ A URL base deve começar com https:// (http simples só para este Mac) e não pode conter nome de usuário nem senha."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Базовый URL должен начинаться с https:// (обычный http — только к этому Mac) и не содержать имени пользователя или пароля."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ URL หลักต้องขึ้นต้นด้วย https:// (ใช้ http ธรรมดาได้เฉพาะกับ Mac เครื่องนี้) และต้องไม่มีชื่อผู้ใช้หรือรหัสผ่าน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Temel URL https:// ile başlamalı (düz http yalnızca bu Mac'e) ve kullanıcı adı ya da parola içermemelidir."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 基础 URL 必须以 https:// 开头（仅连接本机时可用 http），且不能包含用户名或密码。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 基礎 URL 必須以 https:// 開頭（僅連線本機時可用 http），且不得包含使用者名稱或密碼。"
+          }
+        }
+      }
+    },
+    "chat.compatible.hint" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان URL الأساسي والنموذج اختياريان: وجّه أي مزوّد إلى واجهة برمجية متوافقة وحدّد اسم النموذج الذي تقدمه. اتركهما فارغين لاستخدام الواجهة البرمجية الخاصة بالمزوّد."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "বেস URL ও মডেল ঐচ্ছিক: যেকোনো প্রদানকারীকে একটি সামঞ্জস্যপূর্ণ API-তে নির্দেশ করুন এবং সেটি যে মডেল দেয় তার নাম লিখুন। প্রদানকারীর নিজস্ব API ব্যবহার করতে ফাঁকা রাখুন।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basis-URL und Modell sind optional: Richte einen Anbieter auf eine beliebige kompatible API aus und gib das Modell an, das sie bereitstellt. Leer lassen, um die API des Anbieters zu verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base URL and model are optional: point a provider at any compatible API and name the model it serves. Leave them empty to use the provider’s own API."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La URL base y el modelo son opcionales: apunta un proveedor a cualquier API compatible e indica el modelo que ofrece. Déjalos vacíos para usar la API del propio proveedor."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL de base et modèle sont facultatifs : fais pointer un fournisseur vers n’importe quelle API compatible et indique le modèle qu’elle sert. Laisse-les vides pour utiliser l’API du fournisseur."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बेस URL और मॉडल वैकल्पिक हैं: किसी भी प्रदाता को किसी संगत API की ओर इंगित करें और वह जो मॉडल देता है उसका नाम लिखें। प्रदाता का अपना API इस्तेमाल करने के लिए इन्हें खाली छोड़ें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL dasar dan model bersifat opsional: arahkan penyedia ke API kompatibel mana pun dan tulis nama model yang disajikannya. Kosongkan untuk memakai API milik penyedia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL base e modelo são opcionais: aponte um provedor para qualquer API compatível e informe o modelo que ela oferece. Deixe-os vazios para usar a API do próprio provedor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Базовый URL и модель необязательны: направьте провайдера на любой совместимый API и укажите модель, которую он предоставляет. Оставьте поля пустыми, чтобы использовать API самого провайдера."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL หลักและโมเดลไม่บังคับ: ชี้ผู้ให้บริการไปยัง API ที่เข้ากันได้ใดก็ได้และระบุชื่อโมเดลที่ API นั้นให้บริการ เว้นว่างไว้เพื่อใช้ API ของผู้ให้บริการเอง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temel URL ve model isteğe bağlıdır: bir sağlayıcıyı herhangi bir uyumlu API'ye yönlendirin ve sunduğu modelin adını yazın. Sağlayıcının kendi API'sini kullanmak için boş bırakın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础 URL 和模型均为可选：可将服务商指向任意兼容的 API，并填写其提供的模型名称。留空则使用服务商自己的 API。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基礎 URL 和模型皆為選填：可將服務商指向任何相容的 API，並填寫其提供的模型名稱。留空則使用服務商自己的 API。"
+          }
+        }
+      }
+    },
+    "chat.model-name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النموذج (اختياري)"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "মডেল (ঐচ্ছিক)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell (optional)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model (optional)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo (opcional)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle (facultatif)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मॉडल (वैकल्पिक)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model (opsional)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo (opcional)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модель (необязательно)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โมเดล (ไม่บังคับ)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model (isteğe bağlı)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型（可选）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型（選填）"
+          }
+        }
+      }
+    },
+    "chat.model-name.help" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم النموذج المُرسَل إلى الواجهة البرمجية. اتركه فارغًا لاختيار النموذج من المحادثة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-তে পাঠানো মডেলের নাম। চ্যাটে মডেল বেছে নিতে ফাঁকা রাখুন।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Modellname, der an die API gesendet wird. Leer lassen, um das Modell im Chat auszuwählen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model name sent to the API. Leave empty to pick the model in the chat."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nombre del modelo que se envía a la API. Déjalo vacío para elegir el modelo en el chat."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nom du modèle envoyé à l’API. Laisse vide pour choisir le modèle dans le chat."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API को भेजा जाने वाला मॉडल नाम। चैट में मॉडल चुनने के लिए खाली छोड़ें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama model yang dikirim ke API. Kosongkan untuk memilih model di chat."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nome do modelo enviado à API. Deixe vazio para escolher o modelo no chat."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название модели, отправляемое в API. Оставьте пустым, чтобы выбрать модель в чате."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ชื่อโมเดลที่ส่งไปยัง API เว้นว่างไว้เพื่อเลือกโมเดลในแชท"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API'ye gönderilen model adı. Modeli sohbette seçmek için boş bırakın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送给 API 的模型名称。留空则在聊天中选择模型。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傳送給 API 的模型名稱。留空則在聊天中選擇模型。"
+          }
+        }
+      }
+    },
+    "chat.model.from-settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "من الإعدادات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সেটিংস থেকে"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aus Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de Ajustes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "des Réglages"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सेटिंग्स से"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dari Pengaturan"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dos Ajustes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "из настроек"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "จากการตั้งค่า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayarlar'dan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来自设置"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "來自設定"
+          }
+        }
+      }
+    },
+    "status.provider-saved %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ تم حفظ إعدادات %@."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ %@ সেটিংস সংরক্ষিত হয়েছে।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Einstellungen für %@ gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ %@ settings saved."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Ajustes de %@ guardados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Réglages de %@ enregistrés."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ %@ सेटिंग्स सहेजी गईं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Pengaturan %@ disimpan."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Configurações de %@ salvas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Настройки %@ сохранены."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ บันทึกการตั้งค่า %@ แล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ %@ ayarları kaydedildi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ 已保存 %@ 设置。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ 已儲存 %@ 設定。"
+          }
+        }
+      }
+    },
     "whatsnew.all-changes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -49809,270 +50425,6 @@
         }
       }
     },
-    "status.deepseek-key-saved" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تم حفظ مفتاح DeepSeek."
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DeepSeek কী সংরক্ষিত হয়েছে।"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DeepSeek-Schlüssel gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DeepSeek key saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de DeepSeek guardada."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clé DeepSeek enregistrée."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DeepSeek कुंजी सहेजी गई।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kunci DeepSeek tersimpan."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chave do DeepSeek salva."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ключ DeepSeek сохранён."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "บันทึกคีย์ DeepSeek แล้ว"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DeepSeek anahtarı kaydedildi."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DeepSeek 密钥已保存。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已儲存 DeepSeek 金鑰。"
-          }
-        }
-      }
-    },
-    "status.qwen-key-saved" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تم حفظ مفتاح Qwen."
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qwen কী সংরক্ষিত হয়েছে।"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qwen-Schlüssel gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qwen key saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de Qwen guardada."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clé Qwen enregistrée."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qwen कुंजी सहेजी गई।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kunci Qwen tersimpan."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chave do Qwen salva."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ключ Qwen сохранён."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "บันทึกคีย์ Qwen แล้ว"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qwen anahtarı kaydedildi."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qwen 密钥已保存。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已儲存 Qwen 金鑰。"
-          }
-        }
-      }
-    },
-    "status.moonshot-key-saved" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تم حفظ مفتاح Moonshot."
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moonshot কী সংরক্ষিত হয়েছে।"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moonshot-Schlüssel gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moonshot key saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de Moonshot guardada."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clé Moonshot enregistrée."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moonshot कुंजी सहेजी गई।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kunci Moonshot tersimpan."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chave do Moonshot salva."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ключ Moonshot сохранён."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "บันทึกคีย์ Moonshot แล้ว"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moonshot anahtarı kaydedildi."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moonshot 密钥已保存。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已儲存 Moonshot 金鑰。"
-          }
-        }
-      }
-    },
     "Open" : {
       "localizations" : {
         "ar" : {
@@ -64723,94 +65075,6 @@
         }
       }
     },
-    "status.google-key-saved" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ تم حفظ مفتاح Google."
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google কী সংরক্ষিত হয়েছে।"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google-Schlüssel gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google key saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Clave de Google guardada."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Clé Google enregistrée."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google कुंजी सहेजी गई।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Kunci Google tersimpan."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Chave do Google salva."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Ключ Google сохранён."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ บันทึกคีย์ Google แล้ว"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google anahtarı kaydedildi."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google 密钥已保存。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Google 金鑰已儲存。"
-          }
-        }
-      }
-    },
     "status.hermes-plugin-installed" : {
       "localizations" : {
         "ar" : {
@@ -65335,94 +65599,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "✓ 整合金鑰已儲存。"
-          }
-        }
-      }
-    },
-    "status.key-saved" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ تم حفظ المفتاح."
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ কী সংরক্ষিত হয়েছে।"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Schlüssel gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Key saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Clave guardada."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Clé enregistrée."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ कुंजी सहेजी गई।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Kunci tersimpan."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Chave salva."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Ключ сохранён."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ บันทึกคีย์แล้ว"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Anahtar kaydedildi."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ 密钥已保存。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ 金鑰已儲存。"
           }
         }
       }
@@ -66283,94 +66459,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "✓ Muse Code hooks 已移除。"
-          }
-        }
-      }
-    },
-    "status.openai-key-saved" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ تم حفظ مفتاح OpenAI."
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI কী সংরক্ষিত হয়েছে।"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI-Schlüssel gespeichert."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI key saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Clave de OpenAI guardada."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Clé OpenAI enregistrée."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI कुंजी सहेजी गई।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Kunci OpenAI tersimpan."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Chave da OpenAI salva."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Ключ OpenAI сохранён."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ บันทึกคีย์ OpenAI แล้ว"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI anahtarı kaydedildi."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI 密钥已保存。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ OpenAI 金鑰已儲存。"
           }
         }
       }

@@ -144,6 +144,21 @@ enum ChatProvider: String, CaseIterable, Codable {
         }
     }
 
+    /// The provider's own API, used when Settings leaves the base URL empty. Anthropic's is the
+    /// host (requests add `/v1/messages`); the others are OpenAI-compatible bases ending with
+    /// their version. Local servers have their own address in Settings.
+    var defaultBaseURL: String {
+        switch self {
+        case .anthropic: "https://api.anthropic.com"
+        case .google:    "https://generativelanguage.googleapis.com/v1beta/openai"
+        case .openai:    "https://api.openai.com/v1"
+        case .deepseek:  "https://api.deepseek.com/v1"
+        case .qwen:      "https://dashscope.aliyuncs.com/compatible-mode/v1"
+        case .moonshot:  "https://api.moonshot.cn/v1"
+        case .ollama, .lmstudio: ""
+        }
+    }
+
     var keychainKey: String {
         switch self {
         case .anthropic: "anthropic-api-key"

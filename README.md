@@ -283,6 +283,8 @@ xcodegen
 open NotchBuddy.xcodeproj   # then ⌘R
 ```
 
+Or with the `Makefile` at the repo root: `make build` (unsigned Debug), `make appstore`, `make release` (Developer ID), `make test` (the CI tests), `make install` (signed build in /Applications, same as `scripts/dev-install.sh`), `make windows` (Tauri dev), `make all`.
+
 **Windows** — requirements: [Rust](https://rustup.rs), Node 20+, MSVC build tools.
 
 ```powershell
@@ -329,6 +331,7 @@ On the Mac, open Coucou from the Dock or the menu bar: its window has every sett
 | **OpenAI API key** *(macOS)* | chat with OpenAI | Settings → Chat — other providers · Keychain |
 | **Ollama server** *(macOS)* | chat with local models via Ollama | Settings → Chat → Local models → **Connect** |
 | **LM Studio server** *(macOS)* | chat with local models via LM Studio | Settings → Chat → Local models → **Connect** |
+| **Compatible API** *(macOS, optional)* | point Anthropic, Google AI, OpenAI, DeepSeek, Qwen or Moonshot at an Anthropic- or OpenAI-compatible endpoint (a gateway, a proxy, another backend) and name its model | Settings → Chat · each provider's **Base URL** and **Model** fields, next to its key · https only (plain http only to this Mac); empty = the provider's own API |
 | **iPhone** *(macOS)* | sessions, approvals, questions and Mochi on your iPhone | Settings → General → iPhone · your private iCloud, see [docs/IPHONE.md](docs/IPHONE.md) |
 | **Android phone** *(Windows, Linux)* | sessions, approvals, questions and chat on your Android phone | Settings → Android phone · off by default, your local network only, see [android/README.md](android/README.md) |
 | **Active pills** *(macOS)* | choose which tools and agents appear in the island | Settings → Active pills |

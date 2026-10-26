@@ -384,7 +384,7 @@ final class NoteTaker: ObservableObject {
         guard !key.isEmpty else { return }
         working.insert(id)
         defer { working.remove(id) }
-        let model = AppState.shared.claudeModel.isEmpty ? AppState.defaultClaudeModel : AppState.shared.claudeModel
+        let model = AppState.shared.chatModel(for: .anthropic)
         var seen = Set<String>()
         let terms = (vocabulary + FlowStore.shared.words).filter { seen.insert($0.lowercased()).inserted }.prefix(400)
         var total = NoteBuilder.Correction(lines: [:], speakers: [:])
@@ -408,7 +408,7 @@ final class NoteTaker: ObservableObject {
 
     nonisolated private static func claude(system: String, user: String, key: String, model: String, maxTokens: Int) async -> String? {
         func call(_ model: String) async -> String? {
-            var request = URLRequest(url: URL(string: "https://api.anthropic.com/v1/messages")!)
+            var request = URLRequest(url: ProviderSettings.anthropicMessagesURL)
             request.httpMethod = "POST"
             request.timeoutInterval = 180
             request.setValue(key, forHTTPHeaderField: "x-api-key")
@@ -453,7 +453,7 @@ final class NoteTaker: ObservableObject {
         switch summaryEngine {
         case .claude:
             let key = KeychainStore.shared.get("anthropic-api-key") ?? ""
-            let model = AppState.shared.claudeModel.isEmpty ? AppState.defaultClaudeModel : AppState.shared.claudeModel
+            let model = AppState.shared.chatModel(for: .anthropic)
             reply = key.isEmpty ? nil : await Self.claudeSummary(transcript, key: key, model: model)
         case .apple:
             reply = await Self.appleSummary(transcript)

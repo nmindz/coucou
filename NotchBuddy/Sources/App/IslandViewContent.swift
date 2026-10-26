@@ -1664,8 +1664,40 @@ struct ModelPickerView: View {
         }
     }
 
-    @ViewBuilder
+    /// The model named in Settings → Chat sits above the provider's list: it is the one in use
+    /// until a model is picked below.
     private var modelListView: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if let custom = state.customChatModels[state.chatProvider] {
+                let accent = Color(hex: state.chatProvider.accentHex)
+                HStack(spacing: 6) {
+                    Text(custom)
+                        .font(.system(size: 12))
+                        .foregroundColor(accent)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                    Text(String(localized: "chat.model.from-settings"))
+                        .font(.system(size: 9.5, weight: .semibold))
+                        .foregroundColor(Color(hex: "#8A8F98"))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Capsule().fill(Color.white.opacity(0.08)))
+                    Spacer()
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(accent)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .background(accent.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+            }
+            fetchedModelsView
+        }
+    }
+
+    @ViewBuilder
+    private var fetchedModelsView: some View {
         if state.loadingProviderModels.contains(state.chatProvider) {
             HStack(spacing: 8) {
                 ProgressView().scaleEffect(0.7)
@@ -1685,16 +1717,7 @@ struct ModelPickerView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     ForEach(models, id: \.id) { model in
                         Button {
-                            switch state.chatProvider {
-                            case .anthropic: state.claudeModel = model.id
-                            case .google:    state.googleChatModel = model.id
-                            case .openai:    state.openAIChatModel = model.id
-                            case .ollama:    state.ollamaChatModel = model.id
-                            case .lmstudio:  state.lmstudioChatModel = model.id
-                            case .deepseek:  state.deepseekChatModel = model.id
-                            case .qwen:      state.qwenChatModel = model.id
-                            case .moonshot:  state.moonshotChatModel = model.id
-                            }
+                            state.pickChatModel(model.id, for: state.chatProvider)
                             isPresented = false
                             SoundEngine.shared.play("blip")
                         } label: {
@@ -2150,13 +2173,7 @@ struct IntegrationCardView: View {
                     let model = provider == .ollama ? appState.ollamaChatModel : appState.lmstudioChatModel
                     return String(localized: "Connected · \(model)")
                 }
-                let model: String
-                switch task.id {
-                case "ai_anthropic": model = appState.claudeModel
-                case "ai_google":    model = appState.googleChatModel
-                case "ai_openai":    model = appState.openAIChatModel
-                default:             model = ""
-                }
+                let model = appState.chatModel(for: provider)
                 return String(localized: "Key configured · \(model)")
             }
             return String(localized: "Connected · loading…")

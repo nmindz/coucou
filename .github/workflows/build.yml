@@ -60,6 +60,9 @@ jobs:
       - name: Test auto-close timing
         run: bash scripts/test-auto-close.sh
 
+      - name: Test chat provider base URLs (paths, https only, no credentials)
+        run: bash scripts/test-provider-endpoints.sh
+
       - name: Test Mac translations (Traditional Chinese coverage, format arguments, catalog keys)
         run: python3 scripts/test-localization.py
 

@@ -151,6 +151,21 @@ final class AppState: ObservableObject {
     @Published var lmstudioServerURL: String = "" {
         didSet { UserDefaults.standard.set(lmstudioServerURL, forKey: "lmstudioServerURL") }
     }
+    /// Model names typed in Settings → Chat; when set they win over the chat picker's choice.
+    @Published private(set) var customChatModels: [ChatProvider: String] = ProviderSettings.customModels()
+
+    func setCustomChatModel(_ model: String, for provider: ChatProvider) {
+        ProviderSettings.store(model, for: provider, in: ProviderSettings.modelsKey)
+        customChatModels = ProviderSettings.customModels()
+    }
+
+    /// Saves a provider's base URL (empty = its own API) and drops the model list fetched from
+    /// the previous one.
+    func setBaseURL(_ url: String, for provider: ChatProvider) {
+        ProviderSettings.store(url, for: provider, in: ProviderSettings.baseURLsKey)
+        fetchedProviderModels[provider] = nil
+        providerModelFetchError[provider] = nil
+    }
 
     // The always-on workspace pill (default: VS Code). Persisted.
     @Published var mainPillId: String = PillCatalog.defaultMainPillId {
@@ -212,60 +227,75 @@ final class AppState: ObservableObject {
             let models: [(id: String, label: String)]
             switch provider {
             case .anthropic: models = await ClaudeService.fetchModels(apiKey: apiKey)
-            case .google:    models = await ClaudeService.fetchGoogleModels(apiKey: apiKey)
-            case .openai:    models = await ClaudeService.fetchOpenAIModels(apiKey: apiKey)
-            case .deepseek:  models = await ClaudeService.fetchOpenAICompatibleModels(baseURL: "https://api.deepseek.com/v1", apiKey: apiKey)
-            case .qwen:      models = await ClaudeService.fetchOpenAICompatibleModels(baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1", apiKey: apiKey)
-            case .moonshot:  models = await ClaudeService.fetchOpenAICompatibleModels(baseURL: "https://api.moonshot.cn/v1", apiKey: apiKey)
+            case .google where !ProviderSettings.hasCustomBaseURL(.google):
+                models = await ClaudeService.fetchGoogleModels(apiKey: apiKey)
+            case .openai where !ProviderSettings.hasCustomBaseURL(.openai):
+                models = await ClaudeService.fetchOpenAIModels(apiKey: apiKey)
             case .ollama, .lmstudio: models = []  // handled above
+            default:
+                // A compatible backend's own list, unfiltered: its names are its own.
+                models = await ClaudeService.fetchOpenAICompatibleModels(
+                    baseURL: ProviderSettings.openAICompatibleBase(provider), apiKey: apiKey)
             }
             loadingProviderModels.remove(provider)
             if models.isEmpty {
                 providerModelFetchError[provider] = "Failed to load models. Check your API key."
             } else {
                 fetchedProviderModels[provider] = models
-                switch provider {
-                case .anthropic:
-                    if !models.contains(where: { $0.id == claudeModel }) {
-                        claudeModel = models.first(where: { $0.id.contains("sonnet") })?.id ?? models.first!.id
+                // The picked model is gone from the list: the provider's usual pick instead.
+                if !models.contains(where: { $0.id == pickedChatModel(provider) }) {
+                    let hint: String? = switch provider {
+                    case .anthropic: "sonnet"
+                    case .google:    "flash"
+                    case .openai:    "mini"
+                    default:         nil
                     }
-                case .google:
-                    if !models.contains(where: { $0.id == googleChatModel }) {
-                        googleChatModel = models.first(where: { $0.id.contains("flash") })?.id ?? models.first!.id
-                    }
-                case .openai:
-                    if !models.contains(where: { $0.id == openAIChatModel }) {
-                        openAIChatModel = models.first(where: { $0.id.contains("mini") })?.id ?? models.first!.id
-                    }
-                case .deepseek:
-                    if !models.contains(where: { $0.id == deepseekChatModel }) {
-                        deepseekChatModel = models.first!.id
-                    }
-                case .qwen:
-                    if !models.contains(where: { $0.id == qwenChatModel }) {
-                        qwenChatModel = models.first!.id
-                    }
-                case .moonshot:
-                    if !models.contains(where: { $0.id == moonshotChatModel }) {
-                        moonshotChatModel = models.first!.id
-                    }
-                case .ollama, .lmstudio: break
+                    let usual = hint.flatMap { h in models.first(where: { $0.id.contains(h) }) }
+                    setPickedChatModel((usual ?? models.first!).id, for: provider)
                 }
             }
         }
     }
 
+    /// The model a provider's chat uses: the name typed in Settings, else the one picked in the chat.
+    func chatModel(for provider: ChatProvider) -> String {
+        if let custom = customChatModels[provider], !custom.isEmpty { return custom }
+        let picked = pickedChatModel(provider).trimmingCharacters(in: .whitespacesAndNewlines)
+        return picked.isEmpty ? provider.defaultModel : picked
+    }
+
     /// The model currently active for chat (provider-aware).
-    var activeChatModel: String {
-        switch chatProvider {
-        case .anthropic: return claudeModel
-        case .google:    return googleChatModel
-        case .openai:    return openAIChatModel
-        case .ollama:    return ollamaChatModel
-        case .lmstudio:  return lmstudioChatModel
-        case .deepseek:  return deepseekChatModel
-        case .qwen:      return qwenChatModel
-        case .moonshot:  return moonshotChatModel
+    var activeChatModel: String { chatModel(for: chatProvider) }
+
+    /// Picked from the chat's list: it replaces any model name typed in Settings.
+    func pickChatModel(_ id: String, for provider: ChatProvider) {
+        setPickedChatModel(id, for: provider)
+        if customChatModels[provider] != nil { setCustomChatModel("", for: provider) }
+    }
+
+    private func pickedChatModel(_ provider: ChatProvider) -> String {
+        switch provider {
+        case .anthropic: claudeModel
+        case .google:    googleChatModel
+        case .openai:    openAIChatModel
+        case .ollama:    ollamaChatModel
+        case .lmstudio:  lmstudioChatModel
+        case .deepseek:  deepseekChatModel
+        case .qwen:      qwenChatModel
+        case .moonshot:  moonshotChatModel
+        }
+    }
+
+    private func setPickedChatModel(_ id: String, for provider: ChatProvider) {
+        switch provider {
+        case .anthropic: claudeModel = id
+        case .google:    googleChatModel = id
+        case .openai:    openAIChatModel = id
+        case .ollama:    ollamaChatModel = id
+        case .lmstudio:  lmstudioChatModel = id
+        case .deepseek:  deepseekChatModel = id
+        case .qwen:      qwenChatModel = id
+        case .moonshot:  moonshotChatModel = id
         }
     }
 
