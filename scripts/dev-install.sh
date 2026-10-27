@@ -89,5 +89,11 @@ for old in "${HOME}"/Library/Developer/Xcode/DerivedData/NotchBuddy-*/Build/Prod
 done
 "${LSREGISTER}" -f "${TARGET}" >/dev/null 2>&1 || true
 
-open "${TARGET}"
+# Launch arguments override saved preferences for this launch only; `<false/>` is a plist Bool
+# (a bare NO would arrive as a string).
+if [ "${COUCOU_BACKGROUND:-}" = "1" ]; then
+  open -g "${TARGET}" --args -coucouOpenAtLaunch '<false/>'
+else
+  open "${TARGET}"
+fi
 echo "Coucou is running from ${TARGET}."

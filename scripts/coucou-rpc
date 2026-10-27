@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""Calls Coucou's debug JSON-RPC (docs/RPC.md) and prints the result.
+
+    scripts/coucou-rpc rpc.discover
+    scripts/coucou-rpc screen.get '{"screen":"settings"}'
+    scripts/coucou-rpc mcp.preview '{"agent":"cursor","action":"add"}'
+
+The socket is $COUCOU_RPC_SOCK, else Coucou's support folder. Exit code 1 on an RPC error.
+"""
+import json, os, socket, sys
+
+DEFAULT = os.path.expanduser('~/Library/Application Support/NotchBuddy/coucou-rpc.sock')
+
+
+def main():
+    if len(sys.argv) < 2 or sys.argv[1] in ('-h', '--help'):
+        print(__doc__.strip())
+        return 0
+    method = sys.argv[1]
+    params = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
+    path = os.environ.get('COUCOU_RPC_SOCK', DEFAULT)
+    request = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': params}
+    try:
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        sock.connect(path)
+    except OSError as e:
+        print('Coucou RPC unreachable at %s: %s (a Debug build, or launched with COUCOU_RPC=1?)' % (path, e),
+              file=sys.stderr)
+        return 2
+    with sock:
+        sock.sendall((json.dumps(request) + '\n').encode())
+        data = b''
+        while not data.endswith(b'\n'):
+            chunk = sock.recv(65536)
+            if not chunk:
+                break
+            data += chunk
+    reply = json.loads(data)
+    if 'error' in reply:
+        print(json.dumps(reply['error'], indent=2, ensure_ascii=False), file=sys.stderr)
+        return 1
+    print(json.dumps(reply['result'], indent=2, ensure_ascii=False))
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

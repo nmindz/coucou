@@ -337,6 +337,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #if !APPSTORE
         _ = VoiceEngine.shared  // registers system observers; starts mic only if the user enabled voice
         FlowDictation.shared.start()  // watches the dictation key only if Flow dictation is on
+        CoucouScreens.start()         // what the windows draw, published for them and the debug RPC
+        CoucouRPCServer.shared.start()  // Debug builds, or COUCOU_RPC=1
         #endif
         N8nPoller.shared.start()
         VercelPoller.shared.start()

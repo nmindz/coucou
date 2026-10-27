@@ -11,7 +11,7 @@ enum CoucouMCP {
 
     static var enabled: Bool { UserDefaults.standard.bool(forKey: enabledKey) }
 
-    static var scriptPath: String { HookServer.supportDir.appendingPathComponent("coucou-mcp").path }
+    nonisolated static var scriptPath: String { HookServer.supportDir.appendingPathComponent("coucou-mcp").path }
 
     /// One tool call from coucou-mcp, as the JSON line sent back on the socket.
     static func answer(tool: String, args: [String: Any]) -> String {
@@ -43,18 +43,11 @@ enum CoucouMCP {
         _ = try? FileManager.default.setAttributes([.posixPermissions: 0o755 as NSNumber], ofItemAtPath: url.path)
     }
 
-    /// How to add the server to each agent, for Settings' copy buttons.
+    /// For agents Settings cannot set up: their MCP settings take this JSON.
+    static var jsonConfig: String { MCPConfigEdit.snippet(.cursor, script: scriptPath) }
+
+    /// What Settings runs for Claude Code (its `~/.claude.json` is rewritten by every session).
     static var claudeCodeCommand: String { "claude mcp add --scope user coucou -- \"\(scriptPath)\"" }
-    static var codexCommand: String { "codex mcp add coucou -- \"\(scriptPath)\"" }
-    static var jsonConfig: String {
-        """
-        {
-          "mcpServers": {
-            "coucou": { "command": "\(scriptPath)" }
-          }
-        }
-        """
-    }
 
     // MARK: The server
 
@@ -207,44 +200,274 @@ if __name__ == '__main__':
 """#
 }
 
-/// Settings → Agents → Coucou MCP.
+/// Adds Coucou MCP to the agents on this Mac, or takes it out: a dated backup of the agent's
+/// config, then the edit from `MCPConfigEdit`. Claude Code goes through its own `claude mcp`.
+enum MCPAgentSetup {
+    private static var home: URL { FileManager.default.homeDirectoryForCurrentUser }
+
+    /// Symlinks followed, so a config kept in a dotfiles repo stays a link.
+    static func configURL(_ agent: MCPAgent) -> URL {
+        home.appendingPathComponent(agent.configPath).resolvingSymlinksInPath()
+    }
+
+    static func isPresent(_ agent: MCPAgent) -> Bool {
+        FileManager.default.fileExists(atPath: home.appendingPathComponent(agent.homeMarker).path)
+    }
+
+    static func status(_ agent: MCPAgent) -> MCPConfigEdit.Status {
+        MCPConfigEdit.status(agent, text: try? String(contentsOf: configURL(agent), encoding: .utf8),
+                             script: CoucouMCP.scriptPath)
+    }
+
+    static func displayPath(_ agent: MCPAgent) -> String { "~/" + agent.configPath }
+
+    static func apply(_ agent: MCPAgent, install: Bool) async throws {
+        if agent == .claudeCode { return try await claudeCode(install: install) }
+        let url = configURL(agent)
+        let fm = FileManager.default
+        let old = try? String(contentsOf: url, encoding: .utf8)
+        let new = install ? try MCPConfigEdit.install(agent, text: old, script: CoucouMCP.scriptPath)
+                          : try MCPConfigEdit.remove(agent, text: old ?? "")
+        guard new != old, install || old != nil else { return }
+        let perms = try? fm.attributesOfItem(atPath: url.path)[.posixPermissions]
+        if old != nil {
+            let stamp = DateFormatter()
+            stamp.locale = Locale(identifier: "en_US_POSIX")
+            stamp.dateFormat = "yyyyMMdd-HHmmss"
+            try fm.copyItem(at: url, to: url.deletingLastPathComponent()
+                .appendingPathComponent("\(url.lastPathComponent).bak-\(stamp.string(from: Date()))"))
+        }
+        try fm.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try new.write(to: url, atomically: true, encoding: .utf8)
+        if let perms { try? fm.setAttributes([.posixPermissions: perms], ofItemAtPath: url.path) }
+        appendAppLog("nb.log", "[MCP] \(install ? "added to" : "removed from") \(agent.name) (\(displayPath(agent)))")
+    }
+
+    enum ClaudeFailure: Error { case notFound, failed(String) }
+
+    /// `claude` as installed by its native installer, Homebrew or npm.
+    private static func claudeCLI() -> String? {
+        [home.appendingPathComponent(".local/bin/claude").path, home.appendingPathComponent(".claude/local/claude").path,
+         "/opt/homebrew/bin/claude", "/usr/local/bin/claude"]
+            .first { FileManager.default.isExecutableFile(atPath: $0) }
+    }
+
+    private static func claudeCode(install: Bool) async throws {
+        guard let cli = claudeCLI() else { throw ClaudeFailure.notFound }
+        if status(.claudeCode) != .absent {
+            try await run(cli, ["mcp", "remove", "--scope", "user", MCPConfigEdit.serverName])
+        }
+        if install {
+            try await run(cli, ["mcp", "add", "--scope", "user", MCPConfigEdit.serverName, "--", CoucouMCP.scriptPath])
+        }
+        appendAppLog("nb.log", "[MCP] \(install ? "added to" : "removed from") Claude Code (claude mcp)")
+    }
+
+    private static func run(_ cli: String, _ args: [String]) async throws {
+        try await Task.detached {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: cli)
+            process.arguments = args
+            let err = Pipe()
+            process.standardError = err
+            process.standardOutput = FileHandle.nullDevice
+            try process.run()
+            process.waitUntilExit()
+            guard process.terminationStatus == 0 else {
+                let text = String(data: err.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+                throw ClaudeFailure.failed(text.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+        }.value
+    }
+
+    static func message(_ error: Error, agent: MCPAgent) -> String {
+        switch error {
+        case MCPConfigEdit.Failure.unreadable:
+            return String(format: String(localized: "mcp.error.unreadable %@"), displayPath(agent))
+        case MCPConfigEdit.Failure.unsupportedShape:
+            return String(format: String(localized: "mcp.error.shape %@"), displayPath(agent))
+        case ClaudeFailure.notFound:
+            return String(localized: "mcp.error.no-claude")
+        case ClaudeFailure.failed(let text):
+            return "claude mcp: \(text.isEmpty ? "error" : text)"
+        default:
+            return error.localizedDescription
+        }
+    }
+}
+
+/// What the Coucou MCP section's buttons do; the debug RPC calls the same functions. Each one
+/// republishes the `coucouMCP` part of the `settings` screen, which the section draws.
+@MainActor
+enum CoucouMCPActions {
+    private static var store: ScreenStore { .shared }
+    /// Agent statuses from the last read of their configs (files are read on refresh, not per change).
+    private static var statuses: [(MCPAgent, MCPConfigEdit.Status)] = []
+
+    private static var pending: (agent: MCPAgent, install: Bool)? {
+        guard let raw = store.ui(.settings, "mcpPending") as? [String: Any],
+              let agent = (raw["agent"] as? String).flatMap(MCPAgent.init(rawValue:)),
+              let install = raw["install"] as? Bool else { return nil }
+        return (agent, install)
+    }
+
+    static func publish(rescan: Bool = false) {
+        if rescan || statuses.isEmpty {
+            statuses = MCPAgent.allCases.filter(MCPAgentSetup.isPresent).map { ($0, MCPAgentSetup.status($0)) }
+        }
+        let screen = CoucouMCPScreen.build(enabled: CoucouMCP.enabled, statuses: statuses, pending: pending,
+                                           busy: store.ui(.settings, "mcpBusy") as? Bool ?? false,
+                                           script: CoucouMCP.scriptPath, claudeCommand: CoucouMCP.claudeCodeCommand)
+        store.publish(.settings, CoucouMCPScreen.key, screen)
+    }
+
+    static func setEnabled(_ on: Bool) {
+        UserDefaults.standard.set(on, forKey: CoucouMCP.enabledKey)
+        publish()
+    }
+
+    /// Add / Update / Remove: shows what will change; nothing is written yet.
+    static func preview(_ agent: MCPAgent, install: Bool) throws {
+        guard MCPAgentSetup.isPresent(agent) else {
+            throw RPCFailure.app("not_found", "\(agent.name) is not set up on this Mac.")
+        }
+        store.mergeUI(.settings, ["mcpPending": ["agent": agent.rawValue, "install": install]])
+        publish()
+    }
+
+    static func cancel() {
+        store.mergeUI(.settings, ["mcpPending": NSNull()])
+        publish()
+    }
+
+    /// Confirm and write: the previewed change, then the status line, as after the button.
+    @discardableResult
+    static func confirm() async throws -> String {
+        guard let pending else { throw RPCFailure.app("nothing_pending", "No Coucou MCP change to confirm.") }
+        store.mergeUI(.settings, ["mcpBusy": true])
+        publish()
+        defer {
+            store.mergeUI(.settings, ["mcpBusy": false, "mcpPending": NSNull()])
+            publish(rescan: true)
+        }
+        do {
+            try await MCPAgentSetup.apply(pending.agent, install: pending.install)
+        } catch {
+            let message = MCPAgentSetup.message(error, agent: pending.agent)
+            store.mergeUI(.settings, ["status": "❌ " + message])
+            throw RPCFailure.app("write_failed", message)
+        }
+        let message = String(format: String(localized: pending.install ? "mcp.done-add %@" : "mcp.done-remove %@"),
+                             pending.agent.name)
+        store.mergeUI(.settings, ["status": message])
+        return message
+    }
+
+    static func copyJSON() {
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(CoucouMCP.jsonConfig, forType: .string)
+        store.mergeUI(.settings, ["status": String(localized: "mcp.copied")])
+    }
+}
+
+/// Settings → Agents → Coucou MCP: draws the published `coucouMCP` part, nothing else.
 struct CoucouMCPSettingsSection: View {
-    @AppStorage(CoucouMCP.enabledKey) private var enabled = false
-    @Binding var statusMessage: String
+    @ObservedObject private var screens = ScreenStore.shared
 
     var body: some View {
         GroupBox(String(localized: "mcp.title")) {
-            VStack(alignment: .leading, spacing: 10) {
-                Toggle(String(localized: "mcp.toggle"), isOn: $enabled)
-                Text(String(localized: "mcp.description"))
+            if let model = screens.part(.settings, CoucouMCPScreen.key, as: CoucouMCPScreen.self) {
+                content(model).padding(6)
+            }
+        }
+        .onAppear { CoucouMCPActions.publish(rescan: true) }
+    }
+
+    private func content(_ model: CoucouMCPScreen) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Toggle(String(localized: "mcp.toggle"), isOn: Binding(
+                get: { model.enabled }, set: { CoucouMCPActions.setEnabled($0) }))
+            Text(String(localized: "mcp.description"))
+                .coucouText(.detail)
+                .foregroundColor(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Divider().padding(.vertical, 2)
+            Text(String(localized: "mcp.agents.title")).coucouText(.rowTitle)
+            Text(String(localized: "mcp.agents.hint"))
+                .coucouText(.detail)
+                .foregroundColor(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            if let hint = model.offHint {
+                Text(hint)
                     .coucouText(.detail)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.orange)
                     .fixedSize(horizontal: false, vertical: true)
-                Text(CoucouMCP.scriptPath)
-                    .coucouText(.mono)
-                    .foregroundColor(.secondary)
-                    .textSelection(.enabled)
-                HStack(spacing: 8) {
-                    copyButton("mcp.copy-claude", CoucouMCP.claudeCodeCommand)
-                    copyButton("mcp.copy-codex", CoucouMCP.codexCommand)
-                    copyButton("mcp.copy-json", CoucouMCP.jsonConfig)
-                }
-                Text(String(localized: "mcp.json-hint"))
+            }
+            VStack(alignment: .leading, spacing: 6) {
+                ForEach(model.agents, id: \.id) { agentRow($0, busy: model.busy) }
+            }
+            if let preview = model.preview { previewBox(preview, busy: model.busy) }
+
+            Divider().padding(.vertical, 2)
+            HStack(spacing: 10) {
+                Button(String(localized: "mcp.copy-json")) { CoucouMCPActions.copyJSON() }
+                    .coucouButton()
+                Text(String(localized: "mcp.json-other"))
                     .coucouText(.detail)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(6)
+            Text(model.scriptPath)
+                .coucouText(.mono)
+                .foregroundColor(.secondary)
+                .textSelection(.enabled)
         }
     }
 
-    private func copyButton(_ key: String.LocalizationValue, _ text: String) -> some View {
-        Button(String(localized: key)) {
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(text, forType: .string)
-            statusMessage = String(localized: "mcp.copied")
+    private func agentRow(_ agent: CoucouMCPScreen.Agent, busy: Bool) -> some View {
+        HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(agent.name).coucouText(.body)
+                Text(agent.path)
+                    .coucouText(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer(minLength: 8)
+            Text(agent.statusText)
+                .coucouText(.caption)
+                .foregroundColor(agent.status == "installed" ? .green : agent.status == "otherPath" ? .orange : .secondary)
+            ForEach(agent.actions, id: \.self) { action in
+                Button(String(localized: action == "add" ? "mcp.add" : action == "update" ? "mcp.update" : "mcp.remove")) {
+                    guard let id = MCPAgent(rawValue: agent.id) else { return }
+                    try? CoucouMCPActions.preview(id, install: action != "remove")
+                }
+                .coucouButton()
+            }
         }
-        .coucouButton()
+        .disabled(busy)
+    }
+
+    /// What will change, before anything is written.
+    private func previewBox(_ preview: CoucouMCPScreen.Preview, busy: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(preview.heading).coucouText(.detail)
+            if let code = preview.code {
+                Text(code)
+                    .coucouText(.mono)
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            HStack(spacing: 8) {
+                Button(String(localized: "hooks.confirm-write")) { Task { try? await CoucouMCPActions.confirm() } }
+                    .coucouButton(primary: true)
+                Button(String(localized: "Cancel")) { CoucouMCPActions.cancel() }
+                    .coucouButton()
+            }
+            .disabled(busy)
+        }
+        .padding(10)
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.primary.opacity(0.05)))
     }
 }
 #endif

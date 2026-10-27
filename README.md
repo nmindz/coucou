@@ -285,6 +285,8 @@ open NotchBuddy.xcodeproj   # then ⌘R
 
 Or with the `Makefile` at the repo root: `make build` (unsigned Debug), `make appstore`, `make release` (Developer ID), `make test` (the CI tests), `make install` (signed build in /Applications, same as `scripts/dev-install.sh`), `make windows` (Tauri dev), `make all`.
 
+To check what the windows show without screenshots or clicks, Debug builds answer a local JSON-RPC: `scripts/coucou-rpc screen.get '{"screen":"plan"}'` returns exactly what the plan card draws. `COUCOU_BACKGROUND=1 make install` relaunches Coucou without taking focus. See [docs/RPC.md](docs/RPC.md).
+
 **Windows** — requirements: [Rust](https://rustup.rs), Node 20+, MSVC build tools.
 
 ```powershell

@@ -27,7 +27,15 @@ struct SettingsView: View {
         return list + [(id: state.claudeModel, label: state.claudeModel)]
     }
     @State private var launchAtStartup: Bool = (SMAppService.mainApp.status == .enabled)
-    @State private var statusMessage: String = ""
+    /// The status line under the page: UI state in the `settings` screen, so the debug RPC sees it.
+    @ObservedObject private var screens = ScreenStore.shared
+    private var statusMessage: String {
+        get { screens.ui(.settings, "status") as? String ?? "" }
+        nonmutating set { screens.mergeUI(.settings, ["status": newValue]) }
+    }
+    private var statusBinding: Binding<String> {
+        Binding(get: { statusMessage }, set: { statusMessage = $0 })
+    }
     @State private var showDiff: Bool = false
     @State private var pendingHookJSON: String = ""
     @State private var hookNeedsUpdate: Bool = HookServer.hooksNeedUpdate()
@@ -959,7 +967,7 @@ struct SettingsView: View {
             .padding(6)
         }
 
-        CoucouMCPSettingsSection(statusMessage: $statusMessage)
+        CoucouMCPSettingsSection()
 
         GroupBox(String(localized: "plugin.hermes.title")) {
             VStack(alignment: .leading, spacing: 10) {
@@ -1100,7 +1108,7 @@ struct SettingsView: View {
                     }
                 }
                 Divider()
-                ClaudeLBPlanSourceView(statusMessage: $statusMessage)
+                ClaudeLBPlanSourceView(statusMessage: statusBinding)
                 Divider()
                 Text("Shows your Codex plan usage (weekly limit and free resets left) in the notch header. Coucou asks the Codex CLI (codex app-server) when the pill shows; nothing is installed. Codex must be signed in with ChatGPT.")
                     .coucouFont(size: 14)
@@ -1123,7 +1131,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 8) {
                 CloudProviderSettings(provider: .anthropic, title: nil,
                                       keyPlaceholder: String(localized: "chat.api-key.claude"),
-                                      showsModelField: false, statusMessage: $statusMessage)
+                                      showsModelField: false, statusMessage: statusBinding)
 
                 Divider().padding(.vertical, 2)
 
@@ -1170,20 +1178,20 @@ struct SettingsView: View {
 
                 CloudProviderSettings(provider: .google, title: String(localized: "chat.google-ai"),
                                       keyPlaceholder: String(localized: "chat.api-key.google"),
-                                      statusMessage: $statusMessage)
+                                      statusMessage: statusBinding)
                 Divider()
                 CloudProviderSettings(provider: .openai, title: String(localized: "chat.openai"),
                                       keyPlaceholder: String(localized: "chat.api-key.openai"),
-                                      statusMessage: $statusMessage)
+                                      statusMessage: statusBinding)
                 Divider()
                 CloudProviderSettings(provider: .deepseek, title: "DeepSeek",
-                                      keyPlaceholder: String(localized: "API key"), statusMessage: $statusMessage)
+                                      keyPlaceholder: String(localized: "API key"), statusMessage: statusBinding)
                 Divider()
                 CloudProviderSettings(provider: .qwen, title: "Qwen (Alibaba)",
-                                      keyPlaceholder: String(localized: "API key"), statusMessage: $statusMessage)
+                                      keyPlaceholder: String(localized: "API key"), statusMessage: statusBinding)
                 Divider()
                 CloudProviderSettings(provider: .moonshot, title: "Moonshot (Kimi)",
-                                      keyPlaceholder: String(localized: "API key"), statusMessage: $statusMessage)
+                                      keyPlaceholder: String(localized: "API key"), statusMessage: statusBinding)
             }
             .padding(.vertical, 4)
         }
@@ -2425,9 +2433,14 @@ private struct CloudProviderSettings: View {
 
     private func save() {
         let url = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !url.isEmpty, case .failure = ProviderEndpoint.openAICompatibleBase(url) {
-            statusMessage = String(localized: "chat.base-url.invalid")
-            return
+        if !url.isEmpty {
+            let ok: Result<Void, ProviderEndpoint.Failure> = provider == .anthropic
+                ? ProviderEndpoint.anthropicMessages(url).map { _ in () }
+                : ProviderEndpoint.openAICompatibleBase(url).map { _ in () }
+            if case .failure = ok {
+                statusMessage = String(localized: "chat.base-url.invalid")
+                return
+            }
         }
         KeychainStore.shared.set(provider.keychainKey, value: key)
         if url != ProviderSettings.baseURL(provider) { state.setBaseURL(url, for: provider) }

@@ -65,6 +65,7 @@ struct IslandViewContent: View {
 
 struct OverviewView: View {
     @ObservedObject var state: AppState
+    @ObservedObject private var screens = ScreenStore.shared
     @State private var showingN8nDetail = false
     @State private var activeDiffId: Int? = nil
 
@@ -137,20 +138,14 @@ struct OverviewView: View {
                     Group {
                         if state.planDetailIsCodex {
                             CodexPlanCardView(usage: state.codexPlanUsage)
-                        } else {
-                            // Claude and Codex both on: the header shows only the Claude pill,
-                            // Codex is a third row here that opens its own card.
-                            let bothPlans = state.claudePlanAvailable && state.showCodexPlanInNotch
-                            ClaudePlanCardView(usage: state.claudePlanUsage,
-                                               sourceNote: state.planFromClaudeLB ? state.claudeLBSourceNote : nil,
-                                               codexRow: bothPlans,
-                                               codexUsage: state.codexPlanUsage,
-                                               onCodex: {
-                                                   withAnimation(.spring(response: 0.28, dampingFraction: 0.82)) {
-                                                       state.planDetailIsCodex = true
-                                                   }
-                                                   state.refreshCodexPlanUsage()
-                                               })
+                        } else if let card = screens.part(.plan, PlanCardScreen.key, as: PlanCardScreen.self) {
+                            // The `card` part of the `plan` screen, as the debug RPC returns it.
+                            ClaudePlanCardView(card: card, onCodex: {
+                                withAnimation(.spring(response: 0.28, dampingFraction: 0.82)) {
+                                    state.planDetailIsCodex = true
+                                }
+                                state.refreshCodexPlanUsage()
+                            })
                         }
                     }
                     .transition(.opacity)

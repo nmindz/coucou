@@ -525,6 +525,7 @@ struct IslandContentView: View {
 
 struct IslandHeader: View {
     @ObservedObject var state: AppState
+    @ObservedObject private var screens = ScreenStore.shared
     @State private var gearHovered  = false
     @State private var soundHovered = false
     @State private var closeHovered = false
@@ -554,12 +555,10 @@ struct IslandHeader: View {
             // Right: plan pill (GitHub build, home view only) + action icons
             HStack(spacing: 8) {
                 #if !APPSTORE
-                // Claude and Codex both on: only Claude here (two pills and the icons do not
-                // clear the notch); Codex is a row in the Claude plan card.
-                if state.view == .overview && state.claudePlanAvailable {
-                    ClaudePlanHeaderPill(state: state)
-                } else if state.view == .overview && state.showCodexPlanInNotch {
-                    ClaudePlanHeaderPill(state: state, codex: true)
+                // The `pill` part of the `plan` screen (Claude and Codex both on: only Claude here,
+                // two pills and the icons do not clear the notch; Codex is a row in the Claude card).
+                if let pill = screens.part(.plan, PlanPillScreen.key, as: PlanPillScreen.self), pill.shown {
+                    ClaudePlanHeaderPill(state: state, pill: pill)
                 }
                 #endif
                 HStack(spacing: 14) {
@@ -641,32 +640,22 @@ struct TabButton: View {
 // MARK: - Claude Plan header pill (GitHub build only)
 
 #if !APPSTORE
+/// Draws the `pill` part of the `plan` screen.
 struct ClaudePlanHeaderPill: View {
     @ObservedObject var state: AppState
-    var codex: Bool = false
+    let pill: PlanPillScreen
     @State private var isHovered = false
 
-    private var effectiveColor: String {
-        if codex { return CodexPlanGauge.color(state.codexPlanUsage) }
-        return ClaudePlanGauge.color(for: (state.demoPlanUsageOverride ?? state.claudePlanUsage).flatMap { ClaudePlanGauge.dominantPct($0) })
-    }
-
-    private var label: String {
-        if codex { return CodexPlanGauge.pillLabel(state.codexPlanUsage) }
-        guard let usage = state.demoPlanUsageOverride ?? state.claudePlanUsage,
-              let pct = ClaudePlanGauge.dominantPct(usage) else { return "Claude —" }
-        return "Claude \(Int(pct.rounded()))%"
-    }
-
-    private var isOpen: Bool { state.showingPlanDetail && state.planDetailIsCodex == codex }
-    private var isActive: Bool { isOpen || isHovered }
+    private var codex: Bool { pill.kind == "codex" }
+    private var effectiveColor: String { pill.color }
+    private var label: String { pill.label }
+    private var isActive: Bool { pill.open || isHovered }
 
     var body: some View {
         Button(action: {
             withAnimation(.spring(response: 0.28, dampingFraction: 0.82)) {
-                let open = isOpen
                 state.planDetailIsCodex = codex
-                state.showingPlanDetail = !open
+                state.showingPlanDetail = !pill.open
             }
             if codex { state.refreshCodexPlanUsage() } else { state.refreshClaudeLBUsage() }
         }) {

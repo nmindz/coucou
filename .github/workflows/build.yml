@@ -66,8 +66,11 @@ jobs:
       - name: Test claude-lb plan source (quota parsing, average/most-used/single)
         run: bash scripts/test-claudelb-quota.sh
 
-      - name: Test Coucou MCP (query engine, stdio server over a fake Coucou)
-        run: bash scripts/test-coucou-query.sh && bash scripts/test-coucou-mcp.sh
+      - name: Test Coucou MCP (query engine, stdio server over a fake Coucou, agent config edits)
+        run: bash scripts/test-coucou-query.sh && bash scripts/test-coucou-mcp.sh && bash scripts/test-mcp-config.sh
+
+      - name: Test screen store and debug RPC (revisions, wait, JSON-RPC errors)
+        run: bash scripts/test-screen-rpc.sh
 
       - name: Test Mac translations (Traditional Chinese coverage, format arguments, catalog keys)
         run: python3 scripts/test-localization.py

@@ -16,6 +16,8 @@ enum ClaudeLB {
     struct Window: Equatable {
         let usedPct: Double
         let resetsAt: Date
+        /// claude-lb's pace estimate for the end of the window (`projectedUtilizationPercent`).
+        var projectedPct: Double? = nil
     }
 
     struct Account: Equatable, Identifiable {
@@ -57,7 +59,8 @@ enum ClaudeLB {
               let reset = (w["resetAt"] as? String).flatMap(parseDate) else { return nil }
         // A rolled-over window reports 0; claude-lb can report over 100.
         let passed = (w["resetPassed"] as? Bool) ?? false
-        return Window(usedPct: passed ? 0 : min(100, max(0, pct)), resetsAt: reset)
+        let projected = passed ? nil : (w["projectedUtilizationPercent"] as? NSNumber)?.doubleValue
+        return Window(usedPct: passed ? 0 : min(100, max(0, pct)), resetsAt: reset, projectedPct: projected)
     }
 
     private static func parseDate(_ s: String) -> Date? {

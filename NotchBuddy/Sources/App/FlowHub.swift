@@ -136,6 +136,8 @@ final class FlowHubController {
     let router = HubRouter()
     let windowState = HubWindowState()
     private var window: NSWindow?
+    /// The window exists and is on screen (not closed, not minimized).
+    var isWindowVisible: Bool { window?.isVisible ?? false }
 
     static let showInDockKey = "coucouShowInDock"
     static let openAtLaunchKey = "coucouOpenAtLaunch"

@@ -7,7 +7,8 @@ PROJECT    := NotchBuddy
 # Same list as .github/workflows/build.yml.
 TESTS := screen-geometry claude-hooks display-choice session-registry approval-queue \
 	flow-keys flow-text notetaker whatsapp mac-update whats-new-mac claude-desktop-chat \
-	desktop-mochi auto-close provider-endpoints claudelb-quota coucou-query coucou-mcp island-hover voice-wake voice-vad voice-island \
+	desktop-mochi auto-close provider-endpoints claudelb-quota coucou-query coucou-mcp mcp-config screen-rpc \
+	island-hover voice-wake voice-vad voice-island \
 	voice-intent voice-entity voice-query voice-runner voice-conversation voice-gender \
 	voice-spotter-gen voice-wake-blocked turn-end-policy ask-question chat-parsing \
 	claude-host claude-response claude-settings conversation-context diff-engine \

@@ -116,10 +116,34 @@ enum ClaudePlanGaugeTests {
         // ── pillLabel ──────────────────────────────────────────────────────────
         print("ClaudePlanGauge.pillLabel")
 
-        check("nil usage → 'Claude plan'",             ClaudePlanGauge.pillLabel(nil),    "Claude plan")
-        check("no windows → 'Claude plan'",            ClaudePlanGauge.pillLabel(empty),  "Claude plan")
+        check("nil usage → 'Claude —'",                ClaudePlanGauge.pillLabel(nil),    "Claude —")
+        check("no windows → 'Claude —'",               ClaudePlanGauge.pillLabel(empty),  "Claude —")
         check("70 pct → 'Claude 70%'",                 ClaudePlanGauge.pillLabel(both),   "Claude 70%")
         check("55 pct → 'Claude 55%'",                 ClaudePlanGauge.pillLabel(fhOnly), "Claude 55%")
+
+        // ── plan card model (what the card draws and the RPC returns) ─────────
+        print("PlanGaugeRow / PlanCardScreen")
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        let in90 = PlanWindow(usedPct: 42.6, resetsAt: now.addingTimeInterval(90 * 60))
+        let row = PlanGaugeRow.make(label: "5h", window: in90, now: now)
+        checkTrue("row: rounded %, fill, color", row.pct == 43 && abs(row.fill - 0.426) < 0.0001 && row.color == "#22C55E")
+        checkTrue("row: reset in 1 h 30", row.reset == String(format: String(localized: "plan.reset-in-hm %lld %lld"), Int64(1), Int64(30)))
+        let past = PlanGaugeRow.make(label: "5h", window: PlanWindow(usedPct: 90, resetsAt: now.addingTimeInterval(-1)), now: now)
+        checkTrue("row: passed reset → 0 %, resetting", past.pct == 0 && past.reset == String(localized: "plan.resetting"))
+        let none = PlanGaugeRow.make(label: "5h", window: nil, now: now)
+        checkTrue("row: no window → no % and grey", none.pct == nil && none.reset == nil && none.color == "#6B7079")
+        let busy = PlanUsage(fiveHour: in90, sevenDay: PlanWindow(usedPct: 85, resetsAt: now.addingTimeInterval(86_400)),
+                             updatedAt: now.addingTimeInterval(-5 * 60))
+        let card = PlanCardScreen.build(open: true, usage: busy, sourceNote: "claude-lb · avg of 3", codexRow: false,
+                                        codexWindow: nil, codexWeekly: false, now: now)
+        checkTrue("card: source note then age",
+                  card.subtitle == "claude-lb · avg of 3 · " + String(format: String(localized: "plan.mins-ago %lld"), Int64(5)))
+        checkTrue("card: dot follows the busier window", card.dotColor == "#F4505E")
+        checkTrue("card: two rows, no Codex row", card.rows.count == 2 && card.codexRow == nil)
+        let waiting = PlanCardScreen.build(open: false, usage: nil, sourceNote: nil, codexRow: true,
+                                           codexWindow: in90, codexWeekly: false, now: now)
+        checkTrue("card: no data → waiting, Codex row kept",
+                  waiting.subtitle == String(localized: "plan.waiting") && waiting.codexRow?.pct == 43)
 
         // ── finish ─────────────────────────────────────────────────────────────
         if failures == 0 {
