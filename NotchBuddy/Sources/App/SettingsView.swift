@@ -82,6 +82,7 @@ struct SettingsView: View {
     @State private var ampPendingInstall: Bool = true
 
     @State private var ompExtensionInstalled: Bool = HookServer.ompExtensionInstalled()
+    @State private var ompExtensionOutdated: Bool = HookServer.shared.ompExtensionOutdated()
     @State private var showOmpDiff: Bool = false
     @State private var pendingOmpContent: String = ""
     @State private var ompPendingInstall: Bool = true
@@ -907,6 +908,16 @@ struct SettingsView: View {
 
         GroupBox(String(localized: "plugin.omp.title")) {
             VStack(alignment: .leading, spacing: 10) {
+                if ompExtensionOutdated {
+                    HStack(spacing: 6) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                        Text(String(localized: "plugin.omp.outdated"))
+                            .coucouFont(size: 14)
+                            .foregroundColor(.orange)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
                 Text(ompExtensionInstalled
                      ? String(localized: "plugin.omp.installed")
                      : String(localized: "plugin.omp.path"))
@@ -2086,6 +2097,7 @@ struct SettingsView: View {
             showOmpDiff = false
             pendingOmpContent = ""
             ompExtensionInstalled = ompPendingInstall
+            ompExtensionOutdated = false
             statusMessage = ompPendingInstall
                 ? String(localized: "status.omp-extension-installed")
                 : String(localized: "status.omp-extension-removed")

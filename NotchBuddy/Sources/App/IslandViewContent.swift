@@ -356,8 +356,11 @@ struct EmptyStateView: View {
 
 struct ApprovalView: View {
     @ObservedObject var state: AppState
+    /// The request on screen: kept while the answered card animates out, so its buttons and
+    /// command don't change under the user's click.
+    @State private var lastShown: ApprovalInfo?
 
-    var approval: ApprovalInfo? { state.pendingApproval }
+    var approval: ApprovalInfo? { state.pendingApproval ?? lastShown }
 
     /// The pill, named after the session that asks (several sessions can share a pill).
     private var asker: AgentTask? {
@@ -406,11 +409,8 @@ struct ApprovalView: View {
                         PrimaryButton("Allow") {
                             HookServer.shared.sendApprovalDecision("allow", for: shownId)
                         }
-                        // Codex, Copilot CLI, Muse Code and OMP do not support updatedPermissions
-                        let hideAlways = approval?.pillId == "agent_codex"
-                            || approval?.pillId == "agent_copilot"
-                            || approval?.pillId == "agent_muse"
-                            || approval?.pillId == "agent_omp"
+                        // Codex, Copilot CLI and Muse Code have no "allow from now on".
+                        let hideAlways = approval.map { ["agent_codex", "agent_copilot", "agent_muse"].contains($0.pillId) } ?? true
                         if !hideAlways {
                             SecondaryButton("Always") {
                                 HookServer.shared.sendApprovalDecision("always", for: shownId)
@@ -423,6 +423,10 @@ struct ApprovalView: View {
             .padding(.trailing, 16)
             .padding(.vertical, 4)
             .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .onAppear { lastShown = state.pendingApproval ?? lastShown }
+        .onChange(of: state.pendingApproval?.id) { _, _ in
+            if let current = state.pendingApproval { lastShown = current }
         }
     }
 }

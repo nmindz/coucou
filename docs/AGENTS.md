@@ -202,17 +202,19 @@ Coucou supports [OMP](https://github.com/can1357/oh-my-pi) (oh-my-pi) via **Sett
 | `agent_start` | `UserPromptSubmit` |
 | `tool_execution_start` | `PreToolUse` (+ `Notification` with the question for the `ask` tool) |
 | `tool_execution_end` | `PostToolUse`, or `PostToolUseFailure` when `isError` |
-| `tool_approval_requested` | `Notification` (OMP is waiting for an approval in its terminal) |
+| `tool_approval_requested` | `Notification` (OMP is waiting for an approval in its terminal), or a `PermissionRequest` for a tool ticked in the notch (below) |
 | `agent_end` (not `willContinue`) | `Stop`, with `last_assistant_message` (first 600 characters of the reply) |
 | `session_shutdown` | `SessionEnd` |
 
 **Reply ready.** With **Mochi jumps when an OMP reply is ready** on (Settings → Agents → OMP, default on), a `Stop` from OMP makes Mochi jump unless OMP's terminal is in front, as Claude Desktop chats do; the pill shows the start of the reply.
 
-**Approvals in the notch (opt-in).** OMP extensions can observe OMP's approval prompt but not answer it, so with **Approve OMP tools in the notch** on, Coucou becomes the gate instead. The extension re-reads `~/Library/Application Support/NotchBuddy/omp-gate.json` (`{approvals, tools}`) on every `tool_call`. For a listed tool (default `bash`, `eval`, `edit`, `ast_edit`, `write`) it sends a `PermissionRequest` through `nb-hook --agent omp` and waits up to 115 s:
+**Approvals in the notch (opt-in).** OMP alone decides when a call needs approval: its `tools.approvalMode` (`yolo`, `write`, `always-ask`, from settings or `--approval-mode`), `tools.approval.<tool>` rules and provider safety checks. Coucou changes none of them. With **Approve OMP tools in the notch** on, the extension re-reads `~/Library/Application Support/NotchBuddy/omp-gate.json` (`{approvals, tools}`), and when OMP asks before a listed tool (default `bash`, `eval`, `edit`, `ast_edit`, `write`):
 
-- **Allow** → the tool runs; **Deny** → `{ block: true, reason: "Denied in Coucou" }`. There is no **Always**.
-- **No answer** (Coucou closed, timeout, "reply in terminal") → OMP's own `ui.confirm` in the terminal; with no terminal UI the call is blocked.
-- While the gate is on, the extension sets two in-memory settings (never persisted): `tools.approvalMode = yolo`, so OMP does not ask a second time, and `extensionHandlers.toolCallTimeoutMs = 130000`, so the wait fits the `tool_call` budget (30 s by default, fail-closed). Both are cleared when the gate turns off or the session ends. Deny rules from OMP's config and tool-declared denies still apply; unlisted tools run without a prompt.
+- `tool_approval_requested` (emitted once OMP decided to ask, just before its dialog) sends a `PermissionRequest` through `nb-hook --agent omp` with the call's input (kept from its `tool_call`), and returns at once: event handlers time out after 30 s.
+- OMP then opens its own Approve / Deny dialog through `ui.select`, which the extension wraps: the terminal dialog and the notch card race, and **the first answer wins**. A notch answer closes the terminal dialog (its abort signal); a terminal answer kills the `nb-hook` relay, and Coucou takes the card down ("Handled in OMP").
+- **Allow** → Approve; **Deny** → Deny; **Always** → Approve, and that tool no longer asks for the rest of the session (kept in the extension's memory, like OMP's own "Always allow"; a new session asks again). **No answer** (Coucou closed, its 115 s timeout, "Reply in terminal") → the terminal dialog stays and decides.
+- Unlisted tools, dialogs with provider safety checks, and sessions without a terminal UI stay OMP's own. In `yolo`, OMP asks nothing, so nothing reaches the notch.
+- An extension written by an older Coucou overrode `tools.approvalMode` to `yolo` while the gate was on and read **Always** as **Allow**; Settings → Agents → OMP says when the installed extension is outdated, and **Install plugin** replaces it (preview, dated backup). New OMP sessions load it.
 
 ### Amp (macOS)
 

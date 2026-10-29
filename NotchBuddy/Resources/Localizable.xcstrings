@@ -3350,85 +3350,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الأدوات المحددة أدناه تطلب «سماح / رفض» في النوتش قبل تشغيلها. يقرر Coucou في هذه الجلسة بدلًا من وضع الموافقة في OMP؛ وتبقى قواعد الرفض لديك سارية. إن كان Coucou مغلقًا أو لم يُجب: يسأل OMP في الطرفية."
+            "value" : "عندما يسأل OMP قبل تشغيل إحدى الأدوات المحددة أدناه، يظهر الطلب أيضًا في النوتش: أجب هناك أو في الطرفية، والعبرة بأول إجابة. يحدد وضع الموافقة وقواعدك في OMP ما الذي يتطلب السؤال (في وضع yolo لا شيء). «دائمًا» يسمح بتلك الأداة حتى نهاية جلسة OMP."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "নিচে টিক দেওয়া টুলগুলো চালানোর আগে নচে অনুমতি / প্রত্যাখ্যান জিজ্ঞাসা করে। এই সেশনে OMP-এর অনুমোদন মোডের বদলে Coucou সিদ্ধান্ত নেয়; আপনার প্রত্যাখ্যানের নিয়ম বহাল থাকে। Coucou বন্ধ বা উত্তর না দিলে: OMP টার্মিনালে জিজ্ঞাসা করে।"
+            "value" : "নিচে টিক দেওয়া কোনো টুল চালানোর আগে OMP জিজ্ঞাসা করলে অনুরোধটি নচেও দেখায়: সেখানে বা টার্মিনালে উত্তর দিন, প্রথম উত্তরটিই গণ্য হয়। কী জিজ্ঞাসা করবে তা আপনার OMP অনুমোদন মোড ও নিয়ম ঠিক করে (yolo-তে কিছুই না)। «সবসময়» সেই টুলটিকে OMP সেশনের শেষ পর্যন্ত অনুমতি দেয়।"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die unten angehakten Tools fragen vor dem Start in der Notch nach Erlauben / Ablehnen. Coucou entscheidet in dieser Sitzung statt OMPs Freigabemodus; deine Ablehnungsregeln gelten weiter. Ist Coucou geschlossen oder antwortet nicht, fragt OMP im Terminal."
+            "value" : "Wenn OMP vor einem der unten angehakten Tools fragt, erscheint die Anfrage auch in der Notch: antworte dort oder im Terminal, die erste Antwort zählt. Dein OMP-Freigabemodus und deine Regeln entscheiden, was fragt (in yolo nichts). „Immer“ erlaubt dieses Tool bis zum Ende der OMP-Sitzung."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The tools ticked below ask Allow / Deny in the notch before they run. Coucou decides for this session instead of OMP's approval mode; your deny rules still apply. Coucou closed or no answer: OMP asks in the terminal."
+            "value" : "When OMP asks before one of the tools ticked below, the request also shows in the notch: answer there or in the terminal, the first answer counts. Your OMP approval mode and rules decide what asks (in yolo, nothing does). Always allows that tool for the rest of the OMP session."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Las herramientas marcadas abajo piden Permitir / Denegar en el notch antes de ejecutarse. Coucou decide en esta sesión en lugar del modo de aprobación de OMP; tus reglas de denegación siguen vigentes. Si Coucou está cerrado o no responde, OMP pregunta en la terminal."
+            "value" : "Cuando OMP pregunta antes de una de las herramientas marcadas abajo, la solicitud también aparece en el notch: responde allí o en la terminal, cuenta la primera respuesta. Tu modo de aprobación y tus reglas de OMP deciden qué pregunta (en yolo, nada). «Siempre» permite esa herramienta hasta el final de la sesión de OMP."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les outils cochés ci-dessous demandent Autoriser / Refuser dans l’encoche avant de s’exécuter. Coucou décide pour cette session à la place du mode d’approbation d’OMP ; tes règles de refus s’appliquent toujours. Coucou fermé ou sans réponse : OMP demande dans le terminal."
+            "value" : "Quand OMP demande avant l’un des outils cochés ci-dessous, la demande s’affiche aussi dans l’encoche : réponds là ou dans le terminal, la première réponse compte. Ton mode d’approbation et tes règles OMP décident de ce qui demande (en yolo, rien). « Toujours » autorise cet outil jusqu’à la fin de la session OMP."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "नीचे चुने गए टूल चलने से पहले नॉच में अनुमति / अस्वीकार पूछते हैं। इस सत्र में OMP के अनुमोदन मोड के बजाय Coucou तय करता है; आपके अस्वीकार नियम लागू रहते हैं। Coucou बंद हो या जवाब न दे: OMP टर्मिनल में पूछता है।"
+            "value" : "जब OMP नीचे चुने गए किसी टूल को चलाने से पहले पूछता है, तो अनुरोध नॉच में भी दिखता है: वहाँ या टर्मिनल में जवाब दें, पहला जवाब मान्य होता है। क्या पूछा जाएगा, यह आपका OMP अनुमोदन मोड और नियम तय करते हैं (yolo में कुछ नहीं)। «हमेशा» उस टूल को OMP सत्र के अंत तक अनुमति देता है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alat yang dicentang di bawah meminta Izinkan / Tolak di notch sebelum berjalan. Coucou yang memutuskan untuk sesi ini, menggantikan mode persetujuan OMP; aturan tolak Anda tetap berlaku. Coucou tertutup atau tidak menjawab: OMP bertanya di terminal."
+            "value" : "Saat OMP bertanya sebelum menjalankan salah satu alat yang dicentang di bawah, permintaan juga muncul di notch: jawab di sana atau di terminal, jawaban pertama yang berlaku. Mode persetujuan dan aturan OMP Anda menentukan apa yang ditanyakan (di yolo, tidak ada). Selalu mengizinkan alat itu sampai sesi OMP berakhir."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "As ferramentas marcadas abaixo pedem Permitir / Negar no notch antes de rodar. O Coucou decide nesta sessão no lugar do modo de aprovação do OMP; suas regras de negação continuam valendo. Coucou fechado ou sem resposta: o OMP pergunta no terminal."
+            "value" : "Quando o OMP pergunta antes de uma das ferramentas marcadas abaixo, o pedido também aparece no notch: responda lá ou no terminal, vale a primeira resposta. Seu modo de aprovação e suas regras do OMP decidem o que pergunta (em yolo, nada). “Sempre” permite essa ferramenta até o fim da sessão do OMP."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отмеченные ниже инструменты перед запуском спрашивают «Разрешить / Запретить» в вырезе. В этом сеансе решает Coucou вместо режима подтверждений OMP; ваши правила запрета продолжают действовать. Если Coucou закрыт или не ответил, OMP спросит в терминале."
+            "value" : "Когда OMP спрашивает перед запуском одного из отмеченных ниже инструментов, запрос появляется и в вырезе: ответьте там или в терминале, засчитывается первый ответ. Что спрашивать, решают ваш режим подтверждений и правила OMP (в yolo — ничего). «Всегда» разрешает этот инструмент до конца сеанса OMP."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เครื่องมือที่เลือกด้านล่างจะถาม อนุญาต / ปฏิเสธ ในรอยบากก่อนทำงาน Coucou เป็นผู้ตัดสินในเซสชันนี้แทนโหมดอนุมัติของ OMP กฎปฏิเสธของคุณยังมีผล หาก Coucou ปิดอยู่หรือไม่ตอบ OMP จะถามในเทอร์มินัล"
+            "value" : "เมื่อ OMP ถามก่อนเรียกใช้เครื่องมือที่เลือกไว้ด้านล่าง คำขอจะแสดงในรอยบากด้วย ตอบที่นั่นหรือในเทอร์มินัลก็ได้ คำตอบแรกจะถูกใช้ โหมดอนุมัติและกฎของ OMP เป็นตัวกำหนดว่าอะไรต้องถาม (ใน yolo ไม่มีอะไรถาม) เสมอ จะอนุญาตเครื่องมือนั้นจนจบเซสชัน OMP"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aşağıda işaretli araçlar çalışmadan önce çentikte İzin ver / Reddet sorar. Bu oturumda OMP'nin onay modu yerine Coucou karar verir; reddetme kurallarınız geçerli kalır. Coucou kapalıysa veya yanıt yoksa OMP terminalde sorar."
+            "value" : "OMP aşağıda işaretli araçlardan birini çalıştırmadan önce sorduğunda, istek çentikte de görünür: orada ya da terminalde yanıtlayın, ilk yanıt geçerlidir. Neyin sorulacağına OMP onay modunuz ve kurallarınız karar verir (yolo'da hiçbir şey). Her zaman, o araca OMP oturumunun sonuna kadar izin verir."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下方勾选的工具在运行前会在刘海中询问“允许 / 拒绝”。本会话由 Coucou 代替 OMP 的批准模式做决定；你的拒绝规则仍然有效。Coucou 关闭或未回应时，OMP 会在终端中询问。"
+            "value" : "当 OMP 在运行下方勾选的某个工具前询问时，请求也会显示在刘海中：在那里或终端中回答，以先回答的为准。由你的 OMP 批准模式和规则决定哪些需要询问（yolo 模式下都不询问）。“始终”会在本次 OMP 会话结束前一直允许该工具。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下方勾選的工具在執行前會在瀏海中詢問「允許 / 拒絕」。本工作階段由 Coucou 取代 OMP 的核准模式做決定；你的拒絕規則仍然有效。Coucou 關閉或未回應時，OMP 會在終端機中詢問。"
+            "value" : "當 OMP 在執行下方勾選的某個工具前詢問時，請求也會顯示在瀏海中：在那裡或終端機中回答，以先回答的為準。由你的 OMP 核准模式和規則決定哪些需要詢問（yolo 模式下都不詢問）。「永遠」會在本次 OMP 工作階段結束前一直允許該工具。"
           }
         }
       }
@@ -3517,6 +3517,95 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已安裝 — 開始新的 OMP 工作階段以載入"
+          }
+        }
+      }
+    },
+    "plugin.omp.outdated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإضافة قديمة: ثبّتها مجددًا، ثم ابدأ جلسة OMP جديدة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এক্সটেনশন পুরোনো: আবার ইনস্টল করুন, তারপর নতুন OMP সেশন শুরু করুন।"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweiterung veraltet: installiere sie neu und starte dann eine neue OMP-Sitzung."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extension outdated: install it again, then start a new OMP session."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensión desactualizada: vuelve a instalarla y luego inicia una nueva sesión de OMP."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extension obsolète : réinstalle-la, puis lance une nouvelle session OMP."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक्सटेंशन पुराना है: इसे फिर से इंस्टॉल करें, फिर नया OMP सत्र शुरू करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekstensi usang: pasang ulang, lalu mulai sesi OMP baru."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensão desatualizada: instale de novo e depois abra uma nova sessão do OMP."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расширение устарело: установите его заново, затем начните новый сеанс OMP."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่วนขยายล้าสมัย: ติดตั้งใหม่ แล้วเริ่มเซสชัน OMP ใหม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uzantı eski: yeniden yükleyin, ardından yeni bir OMP oturumu başlatın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扩展已过期：请重新安装，然后开启新的 OMP 会话。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "擴充功能已過期：請重新安裝，然後開啟新的 OMP 工作階段。"
           }
         }
       }
